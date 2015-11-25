@@ -8,7 +8,7 @@
 *If providing only static factory methods, classes without public or protected constructors cannot be subclassed (encourage to use composition instead inheritance http://www.objectmentor.com/resources/articles/lsp.pdf)
 *They are not readily distinguishable from other static methods (Some common names (each with a differnt pourpose) are: valueOf, of, getInstance, newInstance, getType and newType)
 
-```
+```java
 > 	
 	public static Boolean valueOf(boolean b){
 		return b ? Boolean.TRUE :  Boolean.FALSE;
@@ -22,7 +22,7 @@ Is a good choice when designing classes whose constructors or static factories w
 Builder pattern simulates named optional parameters as in ADA and Python.
 
 
-```
+```java
 >	
 	public class NutritionFacts {
 		private final int servingSize;
@@ -84,7 +84,7 @@ Builder pattern simulates named optional parameters as in ADA and Python.
 	}
 ```
 *Calling the builder*
-```
+```java
 > 	
 	NutritionFacts cocaCola = new NutritionFacts.Builder(240,8).calories(100).sodium(35).carbohydrate(27).build();
 
