@@ -1,4 +1,5 @@
-#1. Use STATIC FACTORY METHODS instead of constructors
+#CREATING AND DESTROYING OBJECTS
+##1. Use STATIC FACTORY METHODS instead of constructors
 *ADVANTAGES*
 *Unlike constructors, they have names
 *Unlike constructors, they are not requires to create a new object each time they're invoked
@@ -16,7 +17,7 @@
 
 ```
 
-#2. Use BUILDERS when faced with many constructors
+##2. Use BUILDERS when faced with many constructors
 Is a good choice when designing classes whose constructors or static factories would have more than a handful of parameters.
 
 Builder pattern simulates named optional parameters as in ADA and Python.
@@ -89,4 +90,55 @@ Builder pattern simulates named optional parameters as in ADA and Python.
 	NutritionFacts cocaCola = new NutritionFacts.Builder(240,8).calories(100).sodium(35).carbohydrate(27).build();
 
 ```
+
+##3. Enforce the singleton property with a private constructor or an enum type
+There are different ways to create singletons:
+
+*Public fnial field*
+```java
+> 	public class Elvis{
+		public static final Elvis INSTANCE = new Elvis();
+		private Elvis(){...}
+		...
+		public void singASong(){...}
+	}
+```
+
+One problem is that a privileged client can invoke  the private construstor reflectively. Against this attack the construstor needs to be  modified to send  an exception iif it is asked to create a second instance.
+
+*Singleton with static factory*
+
+```java
+> 	public class Elvis{
+		private static final Elvis INSTANCE = new Elvis();
+		private Elvis(){...}
+		public static Elvis getInstance(){ return INSTANCE; }
+		...
+		public void singASong(){...}
+	}
+```
+
+In this approach it can be change to a non singleton class without changing the class API.
+
+*Serialize a singleton*
+It is needed a _readResolve_ method and declare all the fields _transient_ in addtion to the _implements Serializable_ to mantain the singleton guarantee. 
+
+```java
+>		private Object readResolve(){
+	//Return the one true Elvis and let the garbage collector take care of the Elvis impersonator
+	return INSTANCE;
+	}
+```
+
+*Enum Singleton, the preferred approach (JAVA 1.5)*
+```java
+> 	public Elvis(){
+		INSTANCE;
+		...
+		public void singASong(){...}
+	}
+```
+
+Equivalent to the public field, more concise, provides serialization machinery for free, and guarantee against multiple instantiation, even for reflection attacks and sophisticated serialization. _It is the best way to implement a singleton_.
+
 
