@@ -1,11 +1,11 @@
 #CREATING AND DESTROYING OBJECTS
 ##1. Use STATIC FACTORY METHODS instead of constructors
-**ADVANTAGES**
+**_ADVANTAGES_**
 *Unlike constructors, they have names
 *Unlike constructors, they are not requires to create a new object each time they're invoked
 *Unlike constructors, they can return an object of nay subtype of their return type
 *They reduce verbosity of creating parameterized type instances
-**DISADVANTAGES**
+**_DISADVANTAGES_**
 *If providing only static factory methods, classes without public or protected constructors cannot be subclassed (encourage to use composition instead inheritance http://www.objectmentor.com/resources/articles/lsp.pdf)
 *They are not readily distinguishable from other static methods (Some common names (each with a differnt pourpose) are: valueOf, of, getInstance, newInstance, getType and newType)
 
@@ -84,7 +84,7 @@ Builder pattern simulates named optional parameters as in ADA and Python.
 		}
 	}
 ```
-**Calling the builder**
+**_Calling the builder_**
 ```java
 > 	
 	NutritionFacts cocaCola = new NutritionFacts.Builder(240,8).calories(100).sodium(35).carbohydrate(27).build();
@@ -94,7 +94,7 @@ Builder pattern simulates named optional parameters as in ADA and Python.
 ##3. Enforce the singleton property with a private constructor or an enum type
 There are different ways to create singletons:
 
-**Public fnial field**
+**_Public fnial field_**
 ```java
 > 	public class Elvis{
 		public static final Elvis INSTANCE = new Elvis();
@@ -106,7 +106,7 @@ There are different ways to create singletons:
 
 One problem is that a privileged client can invoke  the private construstor reflectively. Against this attack the construstor needs to be  modified to send  an exception iif it is asked to create a second instance.
 
-**Singleton with static factory**
+**_Singleton with static factory_**
 
 ```java
 > 	public class Elvis{
@@ -120,7 +120,7 @@ One problem is that a privileged client can invoke  the private construstor refl
 
 In this approach it can be change to a non singleton class without changing the class API.
 
-**Serialize a singleton**
+**_Serialize a singleton_**
 
 It is needed a _readResolve_ method and declare all the fields _transient_ in addtion to the _implements Serializable_ to mantain the singleton guarantee. 
 
@@ -131,7 +131,7 @@ It is needed a _readResolve_ method and declare all the fields _transient_ in ad
 	}
 ```
 
-**Enum Singleton, the preferred approach (JAVA 1.5)**
+**_Enum Singleton, the preferred approach (JAVA 1.5)_**
 
 ```java
 > 	public Elvis(){
