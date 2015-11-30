@@ -138,7 +138,7 @@ It is needed a _readResolve_ method and declare all the fields _transient_ in ad
 **_Enum Singleton, the preferred approach (JAVA 1.5)_**
 
 ```java
-> 	public Elvis(){
+> 	public enum Elvis(){
 		INSTANCE;
 		...
 		public void singASong(){...}
