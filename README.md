@@ -108,7 +108,7 @@ There are different ways to create singletons:
 	}
 ```
 
-One problem is that a privileged client can invoke  the private construstor reflectively. Against this attack the construstor needs to be  modified to send  an exception iif it is asked to create a second instance.
+One problem is that a privileged client can invoke  the private constructor reflectively. Against this attack the constructor needs to be  modified to send  an exception iif it is asked to create a second instance.
 
 **_Singleton with static factory_**
 
@@ -129,7 +129,7 @@ In this approach it can be change to a non singleton class without changing the 
 It is needed a _readResolve_ method and declare all the fields _transient_ in addtion to the _implements Serializable_ to mantain the singleton guarantee. 
 
 ```java
->		private Object readResolve(){
+>	private Object readResolve(){
 	//Return the one true Elvis and let the garbage collector take care of the Elvis impersonator
 	return INSTANCE;
 	}
@@ -147,4 +147,19 @@ It is needed a _readResolve_ method and declare all the fields _transient_ in ad
 
 Equivalent to the public field, more concise, provides serialization machinery for free, and guarantee against multiple instantiation, even for reflection attacks and sophisticated serialization. _It is the best way to implement a singleton_.
 
+##4. Enforce noninstantiablillity with a private constructor
+For classes that group static methods and static fields. 
+* Group related methods on primitive values or arrays.
+* Group static methods, including factory methods, for objects tha implement a particular interface.
+* Group methods on a final class instead of extending the class.
 
+**_Include a private constructor_**
+```java
+>	public class UtilityClass{
+		// Supress deafult constructor for noninstantiablillity (Add comment to clarify why the constructor is expressly provided)
+		private UtilityClass(){
+			throw new AssertionError();
+		}
+		...
+	}
+```
