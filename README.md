@@ -149,6 +149,7 @@ Equivalent to the public field, more concise, provides serialization machinery f
 
 ##4. Enforce noninstantiablillity with a private constructor
 For classes that group static methods and static fields. 
+Used for example to: 
 * Group related methods on primitive values or arrays.
 * Group static methods, including factory methods, for objects tha implement a particular interface.
 * Group methods on a final class instead of extending the class.
