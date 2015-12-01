@@ -175,7 +175,7 @@ Used for example to:
 >	String s = new String("stringette");		
 ```
 
-Every call creates a new String instance. The argument *"stringette"* is itself an instance. This call in a loop would create many instances.
+Every call creates a new String instance. The argument *"stringette"* is itself one. This call in a loop would create many of them.
 
 **_Do this_**
 
@@ -187,16 +187,14 @@ This one uses a single String instance rather than creating a new one.
 
 **_Use static factory methods in preference to constructors (Item 1)_**
 
-*Booelan.valueOf(String);* Is preferable to the constructor *Booelan(String)*
+*Booelan.valueOf(String);* Is preferable to the constructor *Booelan(String)*.
 
 **REUSE MUTABLE OBJECTS THAT WON'T BE MODIFIED**
 
-
-```java
+**_Don't do this_**
 >	public class Person {
 	private final Date birthDate;
 	...
-		///DON'T DO THIS
 		public booelan isBabyBoomer(){
 			//Unnecesary allocation of expensive object.
 			Calendar gmtCal= Calendar.getInstance(TimeZone.getTimeZone("GMT"));
@@ -247,5 +245,6 @@ isBabyBoomer creates a new Calendar,TimeZone and two Date instances each time is
 *sum* is declared as *Long* instead of *long* that means that the programs constructs  unnecesary Long instances. 
 
 **_Object polls are normally bad ideas_**
+
 Unless objects in the pool are extremly heavyweight, like a database connections.
 
