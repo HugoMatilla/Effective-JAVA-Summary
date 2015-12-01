@@ -164,3 +164,88 @@ Used for example to:
 		...
 	}
 ```
+
+##5. Avoid creating unnecesary objects
+
+**REUSE INMUTABLE OBJECTS**
+
+**_Don't do this_**
+
+```java
+>	String s = new String("stringette");		
+```
+
+Every call creates a new String instance. The argument *"stringette"* is itself an instance. This call in a loop would create many instances.
+
+**_Do this_**
+
+```java
+>	String s ="stringette";		
+```
+
+This one uses a single String instance rather than creating a new one.
+
+**_Use static factory methods in preference to constructors (Item 1)_**
+
+*Booelan.valueOf(String);* Is preferable to the constructor *Booelan(String)*
+
+**REUSE MUTABLE OBJECTS THAT WON'T BE MODIFIED**
+
+
+```java
+>	public class Person {
+	private final Date birthDate;
+	...
+		///DON'T DO THIS
+		public booelan isBabyBoomer(){
+			//Unnecesary allocation of expensive object.
+			Calendar gmtCal= Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+			gmtCal.set(1946,Calendar.JANUARY,1,0,0,0);
+			Date boomStart = gmtCal.getTime();
+			gmtCal.set(1965,Calendar.JANUARY,1,0,0,0);
+			Date boomEnd = gmtCal.getTime();
+			return birthDate.compareTo(boomStart) >= 0 &&birthDate.compareTo(boomEnd)<0;
+		}
+	}
+```
+
+isBabyBoomer creates a new Calendar,TimeZone and two Date instances each time is invoked.
+
+```java
+>	public class Person {
+	private final Date birthDate;
+	...
+	private static final Date BOOM_START;
+	private static final Date BOOM_END;
+
+	static {
+			Calendar gmtCal= Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+			gmtCal.set(1946,Calendar.JANUARY,1,0,0,0);
+			BOOM_START = gmtCal.getTime();
+			gmtCal.set(1965,Calendar.JANUARY,1,0,0,0);
+			BOOM_END = gmtCal.getTime();
+	}
+		public booelan isBabyBoomer(){
+			return birthDate.compareTo(BOOM_START) >= 0 &&birthDate.compareTo(BOOM_END)<0;
+		}
+	}
+```
+
+**_Prefer primitives to boxed primitives, and wtach out for unintentional autoboxing_**
+
+```java
+>	//Slow program. Where is the object creation?
+	public static void main (String[] args){
+		Long sum = 0L;
+		for (long i = 0 ; i<= Integer.MAX_VALUE; i++){
+			sum+=i;
+		}
+		System.out.println(sum);
+	}
+```	
+
+*sum* is declared as *Long* instead of *long* that means that the programs constructs  unnecesary Long instances. 
+
+**_Object polls are normally bad ideas_**
+Unless objects in the pool are extremly heavyweight, like a database connections.
+
