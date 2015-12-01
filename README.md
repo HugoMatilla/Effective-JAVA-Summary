@@ -192,6 +192,8 @@ This one uses a single String instance rather than creating a new one.
 **REUSE MUTABLE OBJECTS THAT WON'T BE MODIFIED**
 
 **_Don't do this_**
+
+```java
 >	public class Person {
 	private final Date birthDate;
 	...
