@@ -250,3 +250,60 @@ isBabyBoomer creates a new Calendar,TimeZone and two Date instances each time is
 
 Unless objects in the pool are extremly heavyweight, like a database connections.
 
+##6. Eliminate obsole object references
+```java
+>	//Can you spot the memory leak?
+	public class Stack{
+		private Object[] elements;
+		private int size = 0;
+		private static final int DEFAULT_INITAIL_CAPACITY = 16;
+
+		public Stack(){
+			elements new Object [DEFAULT_INITAIL_CAPACITY];
+		}
+
+		public void push(Object e){
+			ensureCapacity();
+			elements[size++] = e;
+		}
+
+		public pop(){
+			if (size == 0)
+				throw new EmptyStacjException();
+			return elements[--size];
+		}
+
+		private void ensureCapacity(){
+			if(elements.length == size)
+				elements = Array.copyOf(elements, 2 * size + 1);
+		}
+	}
+``` 
+
+If the stack grows and shrinks the objects popped will not be garbage collected. The stack mantains obsolete references (a reference that will never be dereferenced).
+
+**_Null out references_**
+
+```java
+>	public pop(){
+		if (size == 0)
+			throw new EmptyStacjException();
+		Object result = elements[--size];
+		elements[size] = null; // Eliminate obsolete references.
+		return result;
+	}
+```
+
+Nulling out objects references should be the exception not the norm.  Do not overcompensate by nulling out every object.
+
+Null out objects only in classes that manages its own memory.
+
+**_Memory leaks in cache_**
+ Using _WeakHashMap_ is useful when if desired lifetime of cache entries is determined by external references to the key, not the value.
+ Clean oldest entries in cache is a common practice. To acommplish this behaviors, it can be used: background threads, automatically delete older after a new insertion or the _LinkedHashMap_ and its method _removeEldestEntry.
+
+**_Memory leaks in listeners and callbacks_**
+If clients register callbacks, but never deregister them explicity.
+To solve it store only _weak references_ to them, for example storing them as keys in a _WeakHashMap_.
+
+__Use a Heap Profiler from time to time to find unseen memory leaks__
