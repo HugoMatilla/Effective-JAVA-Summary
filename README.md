@@ -251,9 +251,9 @@ isBabyBoomer creates a new Calendar,TimeZone and two Date instances each time is
 Unless objects in the pool are extremly heavyweight, like a database connections.
 
 ##6. Eliminate obsole object references
+**_Can you spot the memory leak?_**
 ```java
->	//Can you spot the memory leak?
-	public class Stack{
+>	public class Stack{
 		private Object[] elements;
 		private int size = 0;
 		private static final int DEFAULT_INITAIL_CAPACITY = 16;
