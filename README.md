@@ -301,11 +301,13 @@ Null out objects only in classes that manages its own memory.
 **_Memory leaks in cache_**
 
  Using _WeakHashMap_ is useful when if desired lifetime of cache entries is determined by external references to the key, not the value.
+
  Clean oldest entries in cache is a common practice. To acommplish this behaviors, it can be used: background threads, automatically delete older after a new insertion or the _LinkedHashMap_ and its method _removeEldestEntry.
 
 **_Memory leaks in listeners and callbacks_**
 
 If clients register callbacks, but never deregister them explicity.
+
 To solve it store only _weak references_ to them, for example storing them as keys in a _WeakHashMap_.
 
 __Use a Heap Profiler from time to time to find unseen memory leaks__
