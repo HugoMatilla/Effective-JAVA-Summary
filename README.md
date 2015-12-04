@@ -311,3 +311,38 @@ If clients register callbacks, but never deregister them explicity.
 To solve it store only _weak references_ to them, for example storing them as keys in a _WeakHashMap_.
 
 __Use a Heap Profiler from time to time to find unseen memory leaks__
+
+##7. Avoid finalizers
+ Finalizers are unpredictable, often dangerous and generally unnecesary. 
+
+**Never do anything time-critical in a finalizer.**
+>There is no guarantee they'll be executed promptly. 
+
+**Never depend on a finalizer to update critical persistent state.**
+>There is no guarantee they'll be executed at all. 
+
+Uncaught exceptions inside a finalizer won't even print a warning.
+
+Ther is a severe performance penalty for using finalizers.
+
+**Possible Solution**
+
+Provide an _explicit termiantion method_ like the _close_ on  _InputStream_, _OutputStream_, _java.sql.Connection_...
+
+Explicit termination methods are typically used in combination with the _try-finally_ construct to ensure termination.
+```
+>	Foo foo = new Foo(...);
+	try {
+	    // Do what must be done with foo
+	    ...
+	} finally {
+	    foo.terminate();  // Explicit termination method
+	}
+```
+
+**They are good for this two cases**
+
+* As a safety net. Ask yourself if the extra protection is worth the extra cost.
+* Use in native peers. Garbage collector doesn't know about this objects.
+
+In this cases always remember to invoke super.finalize. 
