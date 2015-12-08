@@ -315,22 +315,22 @@ __Use a Heap Profiler from time to time to find unseen memory leaks__
 ##7. Avoid finalizers
  Finalizers are unpredictable, often dangerous and generally unnecesary. 
 
-**Never do anything time-critical in a finalizer.**
+**_Never do anything time-critical in a finalizer._**
 >There is no guarantee they'll be executed promptly. 
 
-**Never depend on a finalizer to update critical persistent state.**
+**_Never depend on a finalizer to update critical persistent state._**
 >There is no guarantee they'll be executed at all. 
 
 Uncaught exceptions inside a finalizer won't even print a warning.
 
 Ther is a severe performance penalty for using finalizers.
 
-**Possible Solution**
+**_Possible Solution_**
 
 Provide an _explicit termiantion method_ like the _close_ on  _InputStream_, _OutputStream_, _java.sql.Connection_...
 
 Explicit termination methods are typically used in combination with the _try-finally_ construct to ensure termination.
-```
+```java
 >	Foo foo = new Foo(...);
 	try {
 	    // Do what must be done with foo
@@ -352,7 +352,7 @@ In this cases always remember to invoke super.finalize.
 
 **_Dont override if:_**
 
-* Each instance of the class is inherently unique. I.e._Thread_)
+* Each instance of the class is inherently unique. I.e._Thread_
 * You dont care wheter the class provides a "logical equallity" test. I.e. _java.util.Random_
 * A superclass has already overriden _equals_, and the superclass behavior is appropriate for this class I.e. _Set_
 * The class is private or package-private, and you are certain  that its _equals_ method will never be invoked
@@ -364,14 +364,19 @@ A class has a notion of _logical equality_ that differs from mere object identit
 **_Equals implements an "equivalence relation"_**
 
 * Reflexive
+
 	*x.equals(x)==true*
 * Symmetric
+
 	*x.equals(y)==y.equals(x)*
 * Transitive
+
 	*x.equals(y)==y.equals(z)==z.equals(x)*
 * Consistent
+
 	*x.equals(y)==x.equals(y)==x.equals(y)==...*
 * Non-nullity
+
 	*x.equals(null)->false*
 
 **_The Recipe_**
