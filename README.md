@@ -348,7 +348,7 @@ Explicit termination methods are typically used in combination with the _try-fin
 In this cases always remember to invoke super.finalize. 
 
 #METHODS COMMON TO ALL OBJECTS
-##1. Obey the general contract when overriding *equals*
+##8. Obey the general contract when overriding *equals*
 
 **_Dont override if:_**
 
