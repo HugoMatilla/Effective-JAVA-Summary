@@ -363,21 +363,11 @@ A class has a notion of _logical equality_ that differs from mere object identit
 
 **_Equals implements an "equivalence relation"_**
 
-* Reflexive
-
-	*x.equals(x)==true*
-* Symmetric
-
-	*x.equals(y)==y.equals(x)*
-* Transitive
-
-	*x.equals(y)==y.equals(z)==z.equals(x)*
-* Consistent
-
-	*x.equals(y)==x.equals(y)==x.equals(y)==...*
-* Non-nullity
-
-	*x.equals(null)->false*
+* Reflexive: *x.equals(x)==true*
+* Symmetric: *x.equals(y)==y.equals(x)*
+* Transitive: *x.equals(y)==y.equals(z)==z.equals(x)*
+* Consistent: *x.equals(y)==x.equals(y)==x.equals(y)==...*
+* Non-nullity: *x.equals(null)->false*
 
 **_The Recipe_**
 
