@@ -352,39 +352,41 @@ In this cases always remember to invoke super.finalize.
 
 **_Dont override if:_**
 
-* **Each instance of the class is inherently unique. I.e._Thread_)**
-* **You dont care wheter the class provides a "logical equallity" test. I.e. _java.util.Random_**
-* **A superclass has already overriden _equals_, and the superclass behavior is appropriate for this class I.e. _Set_**
-* **The class is private or package-private, and you are certain  that its _equals_ method will never be invoked**
+* Each instance of the class is inherently unique. I.e._Thread_)
+* You dont care wheter the class provides a "logical equallity" test. I.e. _java.util.Random_
+* A superclass has already overriden _equals_, and the superclass behavior is appropriate for this class I.e. _Set_
+* The class is private or package-private, and you are certain  that its _equals_ method will never be invoked
 
 **_Override if:_**
 
-**A class has a notion of _logical equality_ that differs from mere object identity, and a superclass has not already overriden _equals_ to implement the desired behavior.**
+A class has a notion of _logical equality_ that differs from mere object identity, and a superclass has not already overriden _equals_ to implement the desired behavior.
 
-**Equals implements an _equivalence relation_**
-* *Reflexive*
-> x.equals(x)==true
-* *Symmetric*
-> x.˝(y)==y.equals(x)
-* *Transitive*
-> x.equals(y)==y.equals(z)==z.equals(x)
-* *Consistent*
-> x.equals(y)==x.equals(y)==x.equals(y)==...
-* *Non-nullity*
-> x.equals(null)->false
+**_Equals implements an "equivalence relation"_**
 
-**_Ther recipe_**
+* Reflexive
+	*x.equals(x)==true*
+* Symmetric
+	*x.equals(y)==y.equals(x)*
+* Transitive
+	*x.equals(y)==y.equals(z)==z.equals(x)*
+* Consistent
+	*x.equals(y)==x.equals(y)==x.equals(y)==...*
+* Non-nullity
+	*x.equals(null)->false*
 
-1* **Use the == operator to check if the argument is a reference to this object (for performance)**
-2* **Use the _instanceof_ operator to check if the argument has the correct type**
-3* **Cast the argument to the correct type**
-4* **For each "significant" field in the class, check if that field of the argument matches the corresponding field of this object**
-5* **When you are finished writting your _equals_ method, ask yourself three questions: Is it Symmetric? Is it Transitive? Is it Consistent? (the other 2 usually take care of themselves)**
+**_The Recipe_**
+
+* Use the == operator to check if the argument is a reference to this object (for performance)
+* Use the _instanceof_ operator to check if the argument has the correct type
+* Cast the argument to the correct type
+* For each "significant" field in the class, check if that field of the argument matches the corresponding field of this object
+* When you are finished writting your _equals_ method, ask yourself three questions: Is it Symmetric? Is it Transitive? Is it Consistent? (the other 2 usually take care of themselves)
 
 **_Never Forget_**
-* **Always override _hashCode_ when you override _equals_**
-* **Don't try to be too clever (simplicity is your friend)**
-* **Don't substiture another type for _Object_ in the _equals_ declaration**
+
+* Always override _hashCode_ when you override _equals_
+* Don't try to be too clever (simplicity is your friend)
+* Don't substiture another type for _Object_ in the _equals_ declaration
 
 
 
