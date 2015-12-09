@@ -2,15 +2,15 @@
 ##1. Use STATIC FACTORY METHODS instead of constructors
 **_ADVANTAGES_**
 
-*Unlike constructors, they have names
-*Unlike constructors, they are not requires to create a new object each time they're invoked
-*Unlike constructors, they can return an object of nay subtype of their return type
-*They reduce verbosity of creating parameterized type instances
+* Unlike constructors, they have names
+* Unlike constructors, they are not requires to create a new object each time they're invoked
+* Unlike constructors, they can return an object of nay subtype of their return type
+* They reduce verbosity of creating parameterized type instances
 
 **_DISADVANTAGES_**
 
-*If providing only static factory methods, classes without public or protected constructors cannot be subclassed (encourage to use composition instead inheritance http://www.objectmentor.com/resources/articles/lsp.pdf)
-*They are not readily distinguishable from other static methods (Some common names (each with a differnt pourpose) are: valueOf, of, getInstance, newInstance, getType and newType)
+* If providing only static factory methods, classes without public or protected constructors cannot be subclassed (encourage to use composition instead inheritance http://www.objectmentor.com/resources/articles/lsp.pdf)
+* They are not readily distinguishable from other static methods (Some common names (each with a differnt pourpose) are: valueOf, of, getInstance, newInstance, getType and newType)
 
 ```java
 > 	public static Boolean valueOf(boolean b){
