@@ -371,11 +371,28 @@ A class has a notion of _logical equality_ that differs from mere object identit
 
 **_The Recipe_**
 
-* Use the == operator to check if the argument is a reference to this object (for performance)
-* Use the _instanceof_ operator to check if the argument has the correct type
-* Cast the argument to the correct type
-* For each "significant" field in the class, check if that field of the argument matches the corresponding field of this object
-* When you are finished writting your _equals_ method, ask yourself three questions: Is it Symmetric? Is it Transitive? Is it Consistent? (the other 2 usually take care of themselves)
+1. Use the == operator to check if the argument is a reference to this object (for performance)
+2. Use the _instanceof_ operator to check if the argument has the correct type
+3. Cast the argument to the correct type
+4. For each "significant" field in the class, check if that field of the argument matches the corresponding field of this object
+5. When you are finished writting your _equals_ method, ask yourself three questions: Is it Symmetric? Is it Transitive? Is it Consistent? (the other 2 usually take care of themselves)
+
+
+```java
+>	@Override
+	public boolean equals (Object o){
+		if(o == this)
+			return true;
+
+		if (!(o instanceof PhoneNumber))
+			return false;
+
+		PhoneNumber pn = (PhoneNumber)o;
+		return pn.lineNumber == lineNumber
+			&& pn.prefix == prefix
+			&& pn.areaCode == areaCode;
+	}
+```
 
 **_Never Forget_**
 
@@ -384,5 +401,44 @@ A class has a notion of _logical equality_ that differs from mere object identit
 * Don't substiture another type for _Object_ in the _equals_ declaration
 
 
+##9. Always override _hashCode_ when you override *equals*
 
+**_Contract of hashCode_**
 
+* Whenever _hashCode_ is invoked in the same object it should return the same itnteger.
+* If two objects are equals according to the  _equals_, the should return the same integer calling _hashCode_.
+* Is not required (but recommended) that two non _equals_ objects return distinct _hashCode_.
+
+The second condition is the one that is more often violated.
+
+**_The Recipe_**
+
+1. Store constant value i.e. 17 in and integer called _result_.
+2. For each field _f_ used in _equals_ do:
+  * Compute _c_
+    *	boolean: _(f ? 1 : 0)_
+    *	byte, char, short or int: _(int) f_
+    *	long: _(int) (f ^ (.f >>> 32))_
+    *	float: _Float.floatToIntBits(f)_
+    *	double: _Double.doubleToLongBits(f)_ and compute as a long
+    *	object reference: if _equals_ of the reference use recutsivity, use recursivity for the _hashCode_
+    *	array: each element as a separate field.
+  * Combine: _result = 31 * result + c_
+3. Return _result_
+4. Ask yourself if equal instances have equal hash codes.
+
+```java
+>	private volatile int hashCode; // Item 71 (Lazily initialized, cached hashCode)
+
+	@Override public int hashCode(){
+		int result = hashCode;
+		if (result == 0){
+			result = 17;
+			result = 31 * result + areaCode;
+			result = 31 * result + prefix;
+			result = 31 * result + lineNumber;
+			hashCode = result;
+		}
+		return result;
+	}
+```	
