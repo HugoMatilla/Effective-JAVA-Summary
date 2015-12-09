@@ -13,8 +13,7 @@
 *They are not readily distinguishable from other static methods (Some common names (each with a differnt pourpose) are: valueOf, of, getInstance, newInstance, getType and newType)
 
 ```java
-> 	
-	public static Boolean valueOf(boolean b){
+> 	public static Boolean valueOf(boolean b){
 		return b ? Boolean.TRUE :  Boolean.FALSE;
 	}
 
@@ -27,8 +26,7 @@ Builder pattern simulates named optional parameters as in ADA and Python.
 
 
 ```java
->	
-	public class NutritionFacts {
+>	public class NutritionFacts {
 		private final int servingSize;
 		private final int servings;
 		private final int calories;
