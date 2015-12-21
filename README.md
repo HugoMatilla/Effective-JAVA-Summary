@@ -480,7 +480,7 @@ Obtain many of the benfits of reflection incurring few of its costs by **creatin
 		//Instantiate the class
 		Set<String> s = null;
 		try{
-			s = (Set<String>) cl.newInstance();
+			s = (Set<String>) cl.newInstance(); //  The class can be either a HashSet or a TreeSet
 		} catch(IllegalAccessException e){
 			System.err.println("Class not accessible");
 			System.exit(1);
@@ -490,8 +490,8 @@ Obtain many of the benfits of reflection incurring few of its costs by **creatin
 		}
 
 		//Excersice the Set
-		// Print the remaining arguments. the order depends in the class. If it is a HashSet 
-		// the order will be random. If it is a TreeSet it will be alphabetically
+		// Print the remaining arguments. The order depends in the class. If it is a HashSet 
+		// the order will be random, if it is a TreeSet it will be alphabetically
 		s.addAll(Arrays.asList(args).subList(1,args.length));
 		System.out.println(s);
 	}
