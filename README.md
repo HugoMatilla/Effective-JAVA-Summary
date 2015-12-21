@@ -440,3 +440,64 @@ The second condition is the one that is more often violated.
 		return result;
 	}
 ```	
+##10. Always override _toString_
+
+Providing a good _toString_ implementation makes your class much more pleasant to read.
+
+When practival, the _toString_ method return all of the  interesting information contained in the object.
+
+It is possible to specify the format of return value in the documentation. 
+
+Always provide programmatic access to all of the information contained in the value returned by _toString_ so the users of the object don't need to parse the output of the _toString_
+
+##53. Prefer interfaces to reflection
+_java.lang.reflection_ offers access to information about loaded classes.
+
+Given a _Class_ object, you can obtain _Constructor_, _Method_ and _Field_ instances.
+
+Allows one class to use another, even if the latter class did not exist when the former was compiled.
+
+*	Lose of al benefits of compile-time type checking
+*	Code to perform reflective access is clumsy and verbose
+*	Performance suffers.
+
+**As a rule, objects should not be accessed reflectively in normal applications at runtime**
+
+Obtain many of the benfits of reflection incurring few of its costs by **creating instances reflectively and access them normally via their interface or superclass**.
+
+```java
+>	// Reflective instantiation with interface access
+	public static void main (String[] args){
+		// Translate the class name into a class object
+		Class<?> cl =  null;
+		try{
+			cl = Class.forName(args[0]);// Class is specified by the first command line argument
+		}catch(ClassNotFoundException e){
+			System.err.println("Class not found");
+			System.exit(1);
+		}
+
+		//Instantiate the class
+		Set<String> s = null;
+		try{
+			s = (Set<String>) cl.newInstance();
+		} catch(IllegalAccessException e){
+			System.err.println("Class not accessible");
+			System.exit(1);
+		}catch(InstantionationException e){
+			System.err.println("Class not instantiable");
+			System.exit(1);
+		}
+
+		//Excersice the Set
+		// Print the remaining arguments. the order depends in the class. If it is a HashSet 
+		// the order will be random. If it is a TreeSet it will be alphabetically
+		s.addAll(Arrays.asList(args).subList(1,args.length));
+		System.out.println(s);
+	}
+```
+
+A legitimate use of reflection is to manage a class's dependencies on other classes, methods or fields that may be absent at runtime.
+
+Reflection is powerfull and usefull in some sophisticated systems programming tasks. It has many disadvantages.
+Use reflection, if possible, only to instantiate objects and access the objects using an interface or a superclass that is known at compile time.
