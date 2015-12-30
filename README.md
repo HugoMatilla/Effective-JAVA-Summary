@@ -451,24 +451,22 @@ It is possible to specify the format of return value in the documentation.
 Always provide programmatic access to all of the information contained in the value returned by _toString_ so the users of the object don't need to parse the output of the _toString_
 
 ##12. Consider implementing _Comparable_
-_Comparable_ is an interface not declared in _Object_
+_Comparable_ is an interface. It is not declared in _Object_
 
-Sorting an array of objects that implement _Comparable_ is as simple as 
-
-`Array.sort(a);`
+Sorting an array of objects that implement _Comparable_ is as simple as `Array.sort(a);`
 
 The class will interoperate with many generic algorithms and collection implementations that depend on this interfce. You gain lot of power with small effort.
 
 Follow this provisions (Reflexive, Transitive, Symmetric): 
 
-1.	if a > b then b < a ; if a == b then b == a ; if a < b then b > a
-2.	if a > b and b > c then a > c
-3.	if a ==  b and b == c then a == c
-4.	Strong suggestion: a.equals(b) == a.compareTo(b)
+1.	`if a > b then b < a`  `if a == b then b == a`  `if a < b then b > a`
+2.	`if a > b and b > c then a > c`
+3.	`if a ==  b and b == c then a == c`
+4.	Strong suggestion: `a.equals(b) == a.compareTo(b)`
 
 For integral primitives use `<` and `>`operators. 
 
-For floating-point fields use. _Float.compare_ or _Double.compare_
+For floating-point fields use _Float.compare_ or _Double.compare_
 
 For arrays start with the most significant field and work your way down.
 
