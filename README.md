@@ -487,7 +487,7 @@ For floating-point fields use _Float.compare_ or _Double.compare_
 
 For arrays start with the most significant field and work your way down.
 
-# Classes and interfaces
+# CLASSES AND INTERFACES
 ##13. Minimiza the accesibility of classes and members
 
 __Encapsulation__:
