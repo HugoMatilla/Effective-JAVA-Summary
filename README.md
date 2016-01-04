@@ -517,12 +517,13 @@ Nonzero-length array is always mutable.
 	//Potential security hole!
 	public static final Thing[] VALUES = {...}
 ```
-Solutions
+Solution:
 ```java
 	
 	private static final Thing[] PRIVATE_VALUES ={...}
 	public static final List<Thing> VALUES = Collections.unmodifiableList(Arrays.asList(PRIVATE_VALUES));
 ```
+Or:
 ```java
 	
 	private static final Thing[] PRIVATE_VALUES ={...}
