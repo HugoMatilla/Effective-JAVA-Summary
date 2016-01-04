@@ -13,7 +13,8 @@
 * They are not readily distinguishable from other static methods (Some common names (each with a differnt pourpose) are: valueOf, of, getInstance, newInstance, getType and newType)
 
 ```java
-> 	public static Boolean valueOf(boolean b){
+
+	public static Boolean valueOf(boolean b){
 		return b ? Boolean.TRUE :  Boolean.FALSE;
 	}
 
@@ -26,7 +27,8 @@ Builder pattern simulates named optional parameters as in ADA and Python.
 
 
 ```java
->	public class NutritionFacts {
+
+	public class NutritionFacts {
 		private final int servingSize;
 		private final int servings;
 		private final int calories;
@@ -98,7 +100,8 @@ There are different ways to create singletons:
 **_Public fnial field_**
 
 ```java
-> 	public class Elvis{
+	
+	public class Elvis{
 		public static final Elvis INSTANCE = new Elvis();
 		private Elvis(){...}
 		...
@@ -111,7 +114,8 @@ One problem is that a privileged client can invoke  the private constructor refl
 **_Singleton with static factory_**
 
 ```java
-> 	public class Elvis{
+	
+	public class Elvis{
 		private static final Elvis INSTANCE = new Elvis();
 		private Elvis(){...}
 		public static Elvis getInstance(){ return INSTANCE; }
@@ -127,7 +131,8 @@ In this approach it can be change to a non singleton class without changing the 
 It is needed a _readResolve_ method and declare all the fields _transient_ in addtion to the _implements Serializable_ to mantain the singleton guarantee. 
 
 ```java
->	private Object readResolve(){
+
+	private Object readResolve(){
 	//Return the one true Elvis and let the garbage collector take care of the Elvis impersonator
 	return INSTANCE;
 	}
@@ -136,7 +141,8 @@ It is needed a _readResolve_ method and declare all the fields _transient_ in ad
 **_Enum Singleton, the preferred approach (JAVA 1.5)_**
 
 ```java
-> 	public enum Elvis(){
+
+	public enum Elvis(){
 		INSTANCE;
 		...
 		public void singASong(){...}
@@ -154,7 +160,8 @@ Used for example to:
 
 **_Include a private constructor_**
 ```java
->	public class UtilityClass{
+
+	public class UtilityClass{
 		// Supress deafult constructor for noninstantiablillity (Add comment to clarify why the constructor is expressly provided)
 		private UtilityClass(){
 			throw new AssertionError();
@@ -170,7 +177,8 @@ Used for example to:
 **_Don't do this_**
 
 ```java
->	String s = new String("stringette");		
+
+	String s = new String("stringette");		
 ```
 
 Every call creates a new String instance. The argument *"stringette"* is itself one. This call in a loop would create many of them.
@@ -178,7 +186,8 @@ Every call creates a new String instance. The argument *"stringette"* is itself 
 **_Do this_**
 
 ```java
->	String s ="stringette";		
+
+	String s ="stringette";		
 ```
 
 This one uses a single String instance rather than creating a new one.
@@ -192,7 +201,8 @@ This one uses a single String instance rather than creating a new one.
 **_Don't do this_**
 
 ```java
->	public class Person {
+
+	public class Person {
 	private final Date birthDate;
 	...
 		public booelan isBabyBoomer(){
@@ -210,7 +220,8 @@ This one uses a single String instance rather than creating a new one.
 isBabyBoomer creates a new Calendar,TimeZone and two Date instances each time is invoked.
 
 ```java
->	public class Person {
+
+	public class Person {
 	private final Date birthDate;
 	...
 	private static final Date BOOM_START;
@@ -232,7 +243,8 @@ isBabyBoomer creates a new Calendar,TimeZone and two Date instances each time is
 **_Prefer primitives to boxed primitives, and wtach out for unintentional autoboxing_**
 
 ```java
->	//Slow program. Where is the object creation?
+
+	//Slow program. Where is the object creation?
 	public static void main (String[] args){
 		Long sum = 0L;
 		for (long i = 0 ; i<= Integer.MAX_VALUE; i++){
@@ -251,7 +263,8 @@ Unless objects in the pool are extremly heavyweight, like a database connections
 ##6. Eliminate obsole object references
 **_Can you spot the memory leak?_**
 ```java
->	public class Stack{
+
+	public class Stack{
 		private Object[] elements;
 		private int size = 0;
 		private static final int DEFAULT_INITAIL_CAPACITY = 16;
@@ -283,7 +296,8 @@ If the stack grows and shrinks the objects popped will not be garbage collected.
 **_Null out references_**
 
 ```java
->	public pop(){
+
+	public pop(){
 		if (size == 0)
 			throw new EmptyStacjException();
 		Object result = elements[--size];
@@ -329,7 +343,8 @@ Provide an _explicit termiantion method_ like the _close_ on  _InputStream_, _Ou
 
 Explicit termination methods are typically used in combination with the _try-finally_ construct to ensure termination.
 ```java
->	Foo foo = new Foo(...);
+
+	Foo foo = new Foo(...);
 	try {
 	    // Do what must be done with foo
 	    ...
@@ -377,7 +392,8 @@ A class has a notion of _logical equality_ that differs from mere object identit
 
 
 ```java
->	@Override
+
+	@Override
 	public boolean equals (Object o){
 		if(o == this)
 			return true;
@@ -426,7 +442,8 @@ The second condition is the one that is more often violated.
 4. Ask yourself if equal instances have equal hash codes.
 
 ```java
->	private volatile int hashCode; // Item 71 (Lazily initialized, cached hashCode)
+
+	private volatile int hashCode; // Item 71 (Lazily initialized, cached hashCode)
 
 	@Override public int hashCode(){
 		int result = hashCode;
@@ -450,7 +467,7 @@ It is possible to specify the format of return value in the documentation.
 
 Always provide programmatic access to all of the information contained in the value returned by _toString_ so the users of the object don't need to parse the output of the _toString_
 
-##12. Consider implementing _Comparable_
+##12. Consider implementing _Comparable_ 
 _Comparable_ is an interface. It is not declared in _Object_
 
 Sorting an array of objects that implement _Comparable_ is as simple as `Array.sort(a);`
@@ -470,6 +487,50 @@ For floating-point fields use _Float.compare_ or _Double.compare_
 
 For arrays start with the most significant field and work your way down.
 
+# Classes and interfaces
+##13. Minimiza the accesibility of classes and members
+
+__Encapsulation__:
+
+* A well designed module hides all of its implementation details. 
+* Separates its API from its implementation.
+* Decouples modules that comprise a system, allowing them to be isolated while: 
+	* developed (can be developed in parallel)
+	* tested (individual modules may prove succesful even if the system does not)
+	* optimized and modified (no harm to other modules)
+	* understood (dont need other modules to be understood)
+	* used 
+
+__Make each class or member as inaccesible as possible__ 
+
+If a package-private top level class is used  by only one class make it a  private nested class of the class that uses it. (Item 22)
+
+Is is acceptable to make a private member of a public class package-private in order to test it.
+
+__Instance fields should never be public__ (Item 14) Class will not be thread-safe.
+
+Static fields can be public if contain primitive values or references to inmutable objects. A final field containing a reference to a mutable object has all the disadvantages of a non final field.
+
+Nonzero-length array is always mutable.
+```java
+	
+	//Potential security hole!
+	public static final Thing[] VALUES = {...}
+```
+Solutions
+```java
+	
+	private static final Thing[] PRIVATE_VALUES ={...}
+	public static final List<Thing> VALUES = Collections.unmodifiableList(Arrays.asList(PRIVATE_VALUES));
+```
+```java
+	
+	private static final Thing[] PRIVATE_VALUES ={...}
+	public static final Thing[] values(){
+		return PRIVATE_VALUES.clone;
+	}
+```
+
 ##53. Prefer interfaces to reflection
 _java.lang.reflection_ offers access to information about loaded classes.
 
@@ -486,7 +547,8 @@ Allows one class to use another, even if the latter class did not exist when the
 Obtain many of the benfits of reflection incurring few of its costs by **creating instances reflectively and access them normally via their interface or superclass**.
 
 ```java
->	// Reflective instantiation with interface access
+
+	// Reflective instantiation with interface access
 	public static void main (String[] args){
 		// Translate the class name into a class object
 		Class<?> cl =  null;
