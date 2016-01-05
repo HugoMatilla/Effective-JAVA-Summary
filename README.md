@@ -532,6 +532,102 @@ Or:
 	}
 ```
 
+##14 Minimize Mutability
+All the information of the instance is provided when it is created.
+They are easier to design, implement and use. And they are less prone to errors and more secure
+
+* Don't provide any methods that modify the object's state (no mutators)
+* Ensure that the class can't be extended
+* Make all fields final
+* Make all fields private
+* Ensure exclusive access to any mutable component
+
+```java
+	
+	public final class Complex {
+		private final double re;
+		private final double im;
+
+		public Complex (double re, double im) {
+			this.re = re;
+			this.im = im;
+		}
+
+		// Accessors with no corresponding mutators
+		public double realPart() { return re;}
+		public double imaganaryPart() { return im;}
+
+		public Complex add(Complex c){
+			return new Complex(re + c.re, im + c.im);
+		}
+
+		public Complex subtract(Complex c){
+			return new Complex(re - c.re, im - c.im);
+		}
+
+		...
+
+		@Override public boolean equals (Object o){...}
+	}
+
+```
+
+The arithmetic operation __create and return a new instance__. (Functional approach)
+
+Inmutable objects are simple. They only have one state for its lifetime.
+
+Inmutable objects are thread-safe. Synchronization is not required. They can be shared freely and can reuse existing instances.
+
+```java
+
+	public static final Complex ZERO = new Complex(0,0)
+	public static final Complex ONE = new Complex(1,0)
+	public static final Complex I = new Complex(0,1)
+```
+
+Using static factories can cache frequently requested instances and serve them in future requests.
+
+Internals of the inmutable objects can also be share.
+
+They make great building blocks for other objects.
+
+The disadvantes is that require a separate object for distinct value. In some cases it could reach to a performance problem.
+
+__How to not allow subclassing in imnutable objects__
+
+1. Making it final
+
+2. Make all of its contructors private or package-private and add a public static factory
+
+```java
+
+	public class Complex {
+		private final double re;
+		private final double im;
+
+		private Complex (double re, double im){
+			this.re = re;
+			this.im = im;
+		}
+
+		public static Complex valueOf(double re, double im){
+			return new Complex(re,im);
+		}
+
+		...
+	}
+```
+
+Allows flexibily of multiple implementations, its possible to tune  the performance and permit to create more factories with names that clarify its function.
+
+Classes should be immutable unless there are godd reasons to make them mutable.
+
+If a  class can not be immutable, limit its mutability as much as possible.
+
+Make every field final unles there is a good reason not to do it.
+
+Notice thar some of alt the rules can be lightened to improve performance (caching, lazy initialization...).
+
 ##53. Prefer interfaces to reflection
 _java.lang.reflection_ offers access to information about loaded classes.
 
