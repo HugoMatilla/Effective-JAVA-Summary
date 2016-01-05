@@ -585,15 +585,15 @@ Inmutable objects are thread-safe. Synchronization is not required. They can be 
 	public static final Complex I = new Complex(0,1)
 ```
 
-Using static factories can cache frequently requested instances and serve them in future requests.
+Using static factories can create constants of frequently requested instances and serve them in future requests.
 
 Internals of the inmutable objects can also be share.
 
 They make great building blocks for other objects.
 
-The disadvantes is that require a separate object for distinct value. In some cases it could reach to a performance problem.
+The disadvantes is that require a separate object for distinct values. In some cases it could reach to a performance problem.
 
-__How to not allow subclassing in imnutable objects__
+__How to deny subclassing in imnutable objects__
 
 1. Making it final
 
@@ -618,15 +618,17 @@ __How to not allow subclassing in imnutable objects__
 	}
 ```
 
-Allows flexibily of multiple implementations, its possible to tune  the performance and permit to create more factories with names that clarify its function.
+This technique allows flexibily of multiple implementations, it's possible to tune  the performance and permit to create more factories with names that clarify its function.
 
-Classes should be immutable unless there are godd reasons to make them mutable.
+__Summary__
+
+Classes should be immutable unless there are good reasons to make them mutable.
 
 If a  class can not be immutable, limit its mutability as much as possible.
 
 Make every field final unles there is a good reason not to do it.
 
-Notice thar some of alt the rules can be lightened to improve performance (caching, lazy initialization...).
+Some of the rules can be lightened to improve performance (caching, lazy initialization...).
 
 ##53. Prefer interfaces to reflection
 _java.lang.reflection_ offers access to information about loaded classes.
