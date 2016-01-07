@@ -630,6 +630,71 @@ Make every field final unles there is a good reason not to do it.
 
 Some of the rules can be lightened to improve performance (caching, lazy initialization...).
 
+##16 Favor composition over inheritance
+Inheritance in this case is when a class extends another (_implementation inheritance_) Not interface inheritance.
+
+**Inheritance violates encapsulation**
+
+Fragility causes
+
+1. A subclass depends on the implementation details of its superclass. If the superclass change the subclass may break.
+
+2. The superclass can aquire new methods in new releases that might not be added in the subclass.
+
+**Compostion**
+Instead of extending, give your new class a private field that references an instance of the existing class.
+
+_Forwarding_: Each instance method in the new class invokes the corresponding method on the contained instance of the existing (_forwarding methods_)class and returns the results.
+
+
+**Wrapper (Decorator Patterm)**
+```java
+
+	// Wrapper class - uses composition in place of inheritance
+	public class InstrumentedSet<E> extends ForwardingSet<E> {
+		private int addCount = 0;
+		//It extends a class(inheritance),but it is ower forwarding class that is actually a compositon of the Set
+		(specifically a forwarding class), not the Set itself. 
+		public InstrumentedSet (Set<E> s){ 
+			super(s)
+		}
+
+		@Override
+		public boolean add(E e){
+			addCount++;
+			return super.add(e);
+		}
+
+		@Override
+		public boolean addAll (Collection< ? extends E> c){
+			addCount += c.size();
+			return super.addAll(c);
+		}
+
+		public int getAddCount() {
+			return addCount;
+		}
+	}
+```
+
+```java
+
+	// Reusable forwarding class
+	public class ForwardingSet<E> implements Set<E> {
+		private final Set<E> s; // This is the composition. It uses the Set but not extends it.
+		public ForwardingSet(Set<E> s) { this.s = s ; }
+
+		// It implemets the Set, using the interface, and create the forwarding methods.
+		public void clear() {s.clear();}
+		public boolean conatains(Object o) { return s.contains(o)}
+		...
+		public boolean add(E e) { return s.add(e)}
+		public boolean addAll (Collection< ? extends E> c){return s.addAll(c)}
+		...
+	}
+
+```
+
 ##53. Prefer interfaces to reflection
 _java.lang.reflection_ offers access to information about loaded classes.
 
