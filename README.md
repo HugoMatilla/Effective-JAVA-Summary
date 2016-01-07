@@ -645,9 +645,10 @@ Fragility causes
 2. The superclass can aquire new methods in new releases that might not be added in the subclass.
 
 **Compostion**
+
 Instead of extending, give your new class a private field that references an instance of the existing class.
 
-_Forwarding_: Each instance method in the new class invokes the corresponding method on the contained instance of the existing (_forwarding methods_)class and returns the results.
+Each instance method in the new class (_forwarding class_)invokes the corresponding method (_forwarding methods_) on the contained instance of the existing class and returns the results.
 
 
 **Wrapper (Decorator Patterm)**
@@ -684,7 +685,7 @@ _Forwarding_: Each instance method in the new class invokes the corresponding me
 
 	// Reusable forwarding class
 	public class ForwardingSet<E> implements Set<E> {
-		private final Set<E> s; // This is the composition. It uses the Set but not extends it.
+		private final Set<E> s; // Here is the composition. It uses the Set but not extends it.
 		public ForwardingSet(Set<E> s) { this.s = s ; }
 
 		// It implemets the Set, using the interface, and create the forwarding methods.
