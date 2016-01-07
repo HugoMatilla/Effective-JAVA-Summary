@@ -531,8 +531,11 @@ Or:
 		return PRIVATE_VALUES.clone;
 	}
 ```
+##14
 
-##14 Minimize Mutability
+ToBeDone
+
+##15 Minimize Mutability
 All the information of the instance is provided when it is created.
 They are easier to design, implement and use. And they are less prone to errors and more secure
 
