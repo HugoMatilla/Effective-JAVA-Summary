@@ -531,9 +531,54 @@ Or:
 		return PRIVATE_VALUES.clone;
 	}
 ```
-##14
+##14 In public classes, use accessot methods, not public fields
 
-ToBeDone
+Degenerate classes should not be public
+
+```java
+
+	class Point {
+		public double x;
+		public double y;
+	}
+```
+
+* The don't benefit from _encapsulation_ (Item 13)
+
+* Can't change representation without changing the API.
+
+* Can't enforce invariants.
+
+* Can't take auxiliary actions when a field is accessed.
+
+Replace them with _accessor methods_ (getters) and _mutators_ (setters).
+
+```java
+
+	class Point {
+		private double x;
+		private double y;
+
+		public Point(double x, double y){
+			this.x = x;
+			this.y = y;
+		}
+
+		public double getX() { return x; }
+		public double getY() { return y; }
+
+		public void setX(double x) { this.x = x; }
+		public void setY(double y) { this.y = y; }
+	}
+```
+
+If a class is accessed **outside its package**, provide **accesor methods**.
+
+If a class is **package-private or is a private nested class**, its **ok to expose** its data fields.
+
+In **public classes** it is a questionable option to **expose immutable fields**.
+
+
 
 ##15 Minimize Mutability
 All the information of the instance is provided when it is created.
