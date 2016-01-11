@@ -750,7 +750,7 @@ The class must document it _self-use_ of overridable methods.
 
 Methods and constructors should document which _overridable_ methods or constructors (nonfinal, and public or protected ) invokes. The description begins with the phrase "This implementation."
 
-To document  a class so that it can be safely subclassed, you must describe implementations details, otherwise left unspeceified.
+To document  a class so that it can be safely subclassed, you must describe implementations details.
 
 To allow programmers to write efficient subclasses without undue pain, a class may have to provide hooks into its internal working in the form of judiciously chosen protected methods.
 
@@ -763,7 +763,7 @@ Prohibit subclassing in classes that are not designed and documented to be safel
 * Declare the class final
 * Make all constructors private or package-private and add public static factories in place of the constructors. (Item 15)
 
-Consider use Item 16 if what you want is to increase the functionallity of your class.
+Consider use Item 16 if what you want is to increase the functionallity of your class instead of subclassing.
 
 ##53. Prefer interfaces to reflection
 _java.lang.reflection_ offers access to information about loaded classes.
