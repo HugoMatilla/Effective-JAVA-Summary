@@ -702,7 +702,7 @@ Each instance method in the new class (_forwarding class_)invokes the correspond
 	// Wrapper class - uses composition in place of inheritance
 	public class InstrumentedSet<E> extends ForwardingSet<E> {
 		private int addCount = 0;
-		//It extends a class(inheritance),but it is ower forwarding class that is actually a compositon of the Set
+		//It extends a class(inheritance),but it is a forwarding class that is actually a compositon of the Set
 		(specifically a forwarding class), not the Set itself. 
 		public InstrumentedSet (Set<E> s){ 
 			super(s)
@@ -743,6 +743,27 @@ Each instance method in the new class (_forwarding class_)invokes the correspond
 	}
 
 ```
+
+##17. Design and document for inheritance or else prohibit it.
+
+The class must document it _self-use_ of overridable methods.
+
+Methods and constructors should document which _overridable_ methods or constructors (nonfinal, and public or protected ) invokes. The description begins with the phrase "This implementation."
+
+To document  a class so that it can be safely subclassed, you must describe implementations details, otherwise left unspeceified.
+
+To allow programmers to write efficient subclasses without undue pain, a class may have to provide hooks into its internal working in the form of judiciously chosen protected methods.
+
+__Test the class for subclassing__. The only way to test a class desgined for inheritance is to write subclasses.
+
+Constructors must not invoke overridable methods. For _Serializable_ and  _Cloneable_ implementations neither _clone_ nor _readObject_ may  invoke overridable methods.
+
+Prohibit subclassing in classes that are not designed and documented to be safely subclassed. 2 options:
+
+* Declare the class final
+* Make all constructors private or package-private and add public static factories in place of the constructors. (Item 15)
+
+Consider use Item 16 if what you want is to increase the functionallity of your class.
 
 ##53. Prefer interfaces to reflection
 _java.lang.reflection_ offers access to information about loaded classes.
