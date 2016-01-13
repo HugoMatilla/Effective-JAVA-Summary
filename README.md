@@ -763,7 +763,58 @@ Prohibit subclassing in classes that are not designed and documented to be safel
 * Declare the class final
 * Make all constructors private or package-private and add public static factories in place of the constructors. (Item 15)
 
-Consider use Item 16 if what you want is to increase the functionallity of your class instead of subclassing.
+Consider use Item 16 if what you want is to increase the functionality of your class instead of subclassing.
+
+##18. Prefer interfaces to abstract classes
+Java permits only single Inheritance, this restriction on abstract classes severely contrains their use as type functions.
+
+Intefaces is generally yhe best way to define a type that permits multiple implementations.
+
+Existing classes can be easily retrofitted to implement a new interface.
+
+Interfaces are ideal for defining mixins (a type that a class can implement in addition to its primary type to declare that it provides some optional bahaviour)
+
+Interfaces allow the construction of nonhierarchical type frameworks.
+
+Interfaces enable safe, powerful functionality enhancements (Wrapper class. Item 16)
+
+Combine the virtues of interfaces and abstract classes, by providing an abstract **skeletal implementation** class to go with each **nontrivial interface** that you export.
+
+```java
+
+	//Concrete implementation built atop skeletal implementation
+	static List<Integer> intArrayAsList(final int[] a) {
+		if (a == null) throw new NullPointerException();
+
+
+		// From the documentation
+		//This class provides a skeletal implementation of the List interface to minimize the effort required to implement this interface backed by a "random access" data store (such as an array)
+		//To implement an unmodifiable list, the programmer needs only to extend this class and provide implementations for the get(int) and size() methods.
+		//To implement a modifiable list, the programmer must additionally override the set(int, E)
+
+		return new AbstractList<Integer>(){
+			public Integer get (int i){
+				return a[i]; // Autoboxing (Item 5)
+			}
+
+			@Override
+			public Intger set(int i, Integer val){
+				int oldVal = a[i]; 
+				a[i] = val;		// Auto-unboxing 
+				return oldVal;	// Autoboxing 
+			}
+
+			public int size(){
+				return a.length;
+			}
+		}
+	}
+```
+Sekeltal implementations are designed for inheritance so follow Item 17 guidelines.
+
+_simple implementation_ is like a skeletal implementation in that int implements the simplest possible working implementation.
+
+Cons: It is far easier to evolve an abstract class than an interface. Once an interface is released and widely implemented, it is almost imposible to change.
 
 ##53. Prefer interfaces to reflection
 _java.lang.reflection_ offers access to information about loaded classes.
