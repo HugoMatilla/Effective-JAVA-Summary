@@ -831,7 +831,7 @@ Any other use, like the _constant interface_ should be avoided.
 	}
 ```
 
-Better usea enum type (Item 31), or a noninstantiable _utility class_ (Item 4)
+Better use an enum type (Item 31), or a noninstantiable _utility class_ (Item 4)
 
 ```java
 	
