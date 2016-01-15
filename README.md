@@ -829,6 +829,7 @@ Any other use, like the _constant interface_ should be avoided.
 		static final double BOLTZAN_CONSTANT = 1.3806503e-23;
 		static final double ELECTRON_MASS = 9.10938188e-31;
 	}
+```
 
 Better usea enum type (Item 31), or a noninstantiable _utility class_ (Item 4)
 
