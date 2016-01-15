@@ -155,7 +155,7 @@ Equivalent to the public field, more concise, provides serialization machinery f
 For classes that group static methods and static fields. 
 Used for example to: 
 * Group related methods on primitive values or arrays.
-* Group static methods, including factory methods, for objects tha implement a particular interface.
+* Group static methods, including factory methods, for objects that implement a particular interface.
 * Group methods on a final class instead of extending the class.
 
 **_Include a private constructor_**
@@ -816,6 +816,51 @@ _simple implementation_ is like a skeletal implementation in that int implements
 
 Cons: It is far easier to evolve an abstract class than an interface. Once an interface is released and widely implemented, it is almost imposible to change.
 
+##19 Use interfaces only to define types
+When a class implements an interface, the interface serves as a _type_ that can be used to refer to instances of the class. 
+
+Any other use, like the _constant interface_ should be avoided.
+
+```java
+
+	// Constant interface antipattern 
+	public interface PhysicalConstants {
+		static final double AVOGRADOS_NUMBER = 6.02214199e23;
+		static final double BOLTZAN_CONSTANT = 1.3806503e-23;
+		static final double ELECTRON_MASS = 9.10938188e-31;
+	}
+
+Better usea enum type (Item 31), or a noninstantiable _utility class_ (Item 4)
+
+```java
+	
+	//Constant utility class
+	package com.effectivejava.science
+
+	public class PhysicalConstants{
+		private PhysicalConstants(){} // Prevents instantiation
+
+		public static final double AVOGRADOS_NUMBER = 6.02214199e23;
+		public static final double BOLTZAN_CONSTANT = 1.3806503e-23;
+		public static final double ELECTRON_MASS = 9.10938188e-31;
+	}	
+```
+
+To avoid the need of qualifying use _static import_.
+
+```java
+	
+	//Use of static import to avoid qualifying constants
+	import static com.effectivejava.science.PhysicalConstants.*
+
+	public class Test {
+		double atoms(double mols){
+			return AVOGRADOS_NUMBER * mols;
+		}
+		...
+		// Many more uses of PhysicalConstants justify the static import
+	}	
+```
 ##53. Prefer interfaces to reflection
 _java.lang.reflection_ offers access to information about loaded classes.
 
