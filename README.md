@@ -1,6 +1,6 @@
 This is my summary of the Effective Java 2nd Edition by Joshua Bloch. I use it while learning and as quick reference. It is not inteded to be an standalone substitution of the book so if you really want to learn the concepts here presented buy and read the book and use this repo as reference and a guide.
 
-If you are the publishers and think this repo should not be public just write me an email at hugomatilla [at] gmail.com
+If you are the publisher and think this repo should not be public, just write me an email at hugomatilla [at] gmail.com and I will make it private.
 
 #CREATING AND DESTROYING OBJECTS
 ##1. Use STATIC FACTORY METHODS instead of constructors
