@@ -1,3 +1,7 @@
+This is my summary of the Effective Java 2nd Edition by Joshua Bloch. I use it while learning and as quick reference. It is not inteded to be an standalone substitution of the book so if you really want to learn the concepts here presented buy and read the book and use this repo as reference and a guide.
+
+If you are the publishers and think this repo should not be public just write me an email at hugomatilla [at] gmail.com
+
 #CREATING AND DESTROYING OBJECTS
 ##1. Use STATIC FACTORY METHODS instead of constructors
 **_ADVANTAGES_**
@@ -89,7 +93,7 @@ Builder pattern simulates named optional parameters as in ADA and Python.
 ```
 **_Calling the builder_**
 ```java
-> 	
+
 	NutritionFacts cocaCola = new NutritionFacts.Builder(240,8).calories(100).sodium(35).carbohydrate(27).build();
 
 ```
@@ -816,7 +820,7 @@ _simple implementation_ is like a skeletal implementation in that int implements
 
 Cons: It is far easier to evolve an abstract class than an interface. Once an interface is released and widely implemented, it is almost imposible to change.
 
-##19 Use interfaces only to define types
+##19. Use interfaces only to define types
 When a class implements an interface, the interface serves as a _type_ that can be used to refer to instances of the class. 
 
 Any other use, like the _constant interface_ should be avoided.
@@ -862,6 +866,157 @@ To avoid the need of qualifying use _static import_.
 		// Many more uses of PhysicalConstants justify the static import
 	}	
 ```
+
+##20. Prefer class hierarchies to tagged classes
+Tagged classes are verbose, error-prone and inefficient.
+
+They have lot of boilerplate, bad readability, they increase memory footprint, and more shortcommings.
+
+```java
+
+	// Tagged Class
+	class Figure{
+		enum Shaple {RECTANGLE, CIRCLE};
+
+		fina Shape shape;
+		
+		// Rectangle fields
+		double length;
+		double width;
+
+		//Circle field
+		double radius;
+
+		// Circle Constructor
+		Figure (double radius) {
+			shape = Shape.CIRCLE;
+			this.radius=radius;
+		}
+
+		// Rectangle Constructor
+		Figure (double length, double width) {
+			shape = Shape.RECTANGLE;
+			this.length=length;
+			this.width=width;
+		}
+
+		double area(){
+			switch(shape){
+				case RECTANGLE:
+					return length*width;
+				case CIRCLE
+					return Math.PI * (radius * radius);
+				defalult
+					throw new AssertionError();
+			}
+		}
+	}
+```	
+
+A tagged class is just a palid imitation of a class hierarchy.
+
+* The code is simple and clear.
+* The specific implementations are in its own class
+* All fields are final
+* The compiler ensures that each class's constructor initializes its data fields. 
+* Extendability and flexibility (Square extends Rectangle)
+
+```java
+
+	abstract class Figure{
+		abstract double area();
+	}
+	class Circle extends Figure{
+		final double radius;
+
+		Circle(double radius) { this.radius=radius;}
+
+		double area(){return Math.PI * (radius * radius);}
+	}
+	class Rectangle extends Figure{
+		final double length;
+		final double width;
+
+		Rectangle (double length, double width) {
+			this.length=length;
+			this.width=width;
+		}
+
+		double area(){return length*width;}
+	}
+```
+
+##21.Use function objects to represent strategies
+Strategies are facilities that allow programs to store and transmit the ability to invoke a particular function. Similar to _function pointers_, _delegates_ or _lambda expression_.
+
+It is possible to define a object whose method perform operations on other objects.
+
+**Concrete strategy**
+``java
+
+	class StringLengthComparator{
+		public int compare(String s1, String s2){
+			return s1.length() - s2.length();
+		}
+	}
+```
+
+Concrete strategies are typically _stateless_ threfore they should be singletons.
+
+To be able to pass differnt strategies, clients should invoke methods from an _strategy interface_ instead of from a concrete class.
+
+**Comparator interface.** _Generic_(Item 26) 
+```java
+		
+	public interface Comparator<T>{
+		public int compare(T t1, T t2);
+	}
+```
+
+```java
+	
+	class StringLengthComparator implements Comparator<String>{
+		private StringLengthComparator(){} // Private constructor
+		public static final StringLengthComparator INSTANCE = new StringLengthComparator(); // Singleton instance
+		public int compare(String s1, String s2){
+			return s1.length() - s2.length();
+		}
+	}
+```
+
+Using **anonymous classes**
+
+```java
+
+	Array.sort(stringArray, new Comparator<String>(){
+		public int compare(String s1, String s2){
+			return s1.length() - s2.length();
+		}
+	})
+```
+
+An anonymous class will create a new instance each time the call is executed. Consider a private static final field and reusing it.
+
+Concrete strategy class don't need to be public, because the strategy interface serve as a type.
+A host class can export the a public static field or factory, whose type is the interface and the concrete strategy class is a private nested class.
+
+```java
+
+	// Exporting a concrete strategy
+	class Host{
+		private static class StringLengthComparator implements Comparator<String>, Serializable {
+			public int compare(String s1, String s2){
+				return s1.length() - s2.length();
+			}
+		}
+
+		//Returned comparator is serializable
+		public static final Comparator<String> STRING_LEGTH_COMPARATOR = new StringLengthComparator();
+
+		...
+	}
+```
+
 ##53. Prefer interfaces to reflection
 _java.lang.reflection_ offers access to information about loaded classes.
 
