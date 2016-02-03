@@ -1316,7 +1316,9 @@ Parameterized types are invariant.(Item 25) Ie _List<String>_ is not a subtype o
 ```
 
 **Bounded wildcard type**
+
 Producer
+
 ```java
 	
 	public void pushAll(Iterable<? Extends E> src){
@@ -1326,6 +1328,7 @@ Producer
 ```
 
 Consumer
+
 ```java
 	
 	public void popAll(Collection<? super E> dst){
