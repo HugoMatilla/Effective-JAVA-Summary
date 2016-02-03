@@ -1301,7 +1301,8 @@ To avoid ic create a _generic static factory method_
 ##28 Use bounded wildcards to increase API flexibility
 
 
-Parameterized types are invariant.(Item 25) Ie _List<String>_ is not a subtype of _List<Object>_
+Parameterized types are invariant.(Item 25) Ie `List<String>` is not a subtype of `List<Object>`
+
 ```java
 
 	public void pushAll(Iterable<E> src){
