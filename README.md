@@ -21,14 +21,12 @@ If you are the publisher and think this repo should not be public, just write me
 	public static Boolean valueOf(boolean b){
 		return b ? Boolean.TRUE :  Boolean.FALSE;
 	}
-
 ```
 
 ##2. Use BUILDERS when faced with many constructors
 Is a good choice when designing classes whose constructors or static factories would have more than a handful of parameters.
 
 Builder pattern simulates named optional parameters as in ADA and Python.
-
 
 ```java
 
@@ -274,7 +272,7 @@ Unless objects in the pool are extremly heavyweight, like a database connections
 		private static final int DEFAULT_INITAIL_CAPACITY = 16;
 
 		public Stack(){
-			elements new Object [DEFAULT_INITAIL_CAPACITY];
+			elements = new Object [DEFAULT_INITAIL_CAPACITY];
 		}
 
 		public void push(Object e){
@@ -282,7 +280,7 @@ Unless objects in the pool are extremly heavyweight, like a database connections
 			elements[size++] = e;
 		}
 
-		public pop(){
+		public Object pop(){
 			if (size == 0)
 				throw new EmptyStacjException();
 			return elements[--size];
@@ -535,7 +533,7 @@ Or:
 		return PRIVATE_VALUES.clone;
 	}
 ```
-##14 In public classes, use accessot methods, not public fields
+##14 In public classes, use accessor methods, not public fields
 
 Degenerate classes should not be public
 
@@ -772,7 +770,7 @@ Consider use Item 16 if what you want is to increase the functionality of your c
 ##18. Prefer interfaces to abstract classes
 Java permits only single Inheritance, this restriction on abstract classes severely contrains their use as type functions.
 
-Intefaces is generally yhe best way to define a type that permits multiple implementations.
+Intefaces is generally the best way to define a type that permits multiple implementations.
 
 Existing classes can be easily retrofitted to implement a new interface.
 
@@ -802,7 +800,7 @@ Combine the virtues of interfaces and abstract classes, by providing an abstract
 			}
 
 			@Override
-			public Intger set(int i, Integer val){
+			public Integer set(int i, Integer val){
 				int oldVal = a[i]; 
 				a[i] = val;		// Auto-unboxing 
 				return oldVal;	// Autoboxing 
@@ -814,9 +812,9 @@ Combine the virtues of interfaces and abstract classes, by providing an abstract
 		}
 	}
 ```
-Sekeltal implementations are designed for inheritance so follow Item 17 guidelines.
+Sekeletal implementations are designed for inheritance so follow Item 17 guidelines.
 
-_simple implementation_ is like a skeletal implementation in that int implements the simplest possible working implementation.
+_simple implementation_ is like a skeletal implementation in that it implements the simplest possible working implementation.
 
 Cons: It is far easier to evolve an abstract class than an interface. Once an interface is released and widely implemented, it is almost imposible to change.
 
@@ -944,6 +942,12 @@ A tagged class is just a palid imitation of a class hierarchy.
 
 		double area(){return length*width;}
 	}
+
+	class Square extends Rectangle {
+		Square(double side){
+			super(side,side);
+		}
+	}
 ```
 
 ##21.Use function objects to represent strategies
@@ -1017,7 +1021,387 @@ A host class can export the a public static field or factory, whose type is the 
 	}
 ```
 
-##53. Prefer interfaces to reflection
+##22 Favor static member classes over nonstatic
+4 types od nested classes.
+
+1. static
+2. nonstatic
+3. anonymous
+4. local
+
+A member class that does not require access to an enclosing instance must be _static_.  
+
+Storing references cost time, space and can cost not wanted behaviors of the garbage collector(Item 6)  
+
+Common use of static member class is a public helper in conjuctions with its outer class. A nested class enum _Operation_
+in  _Calculator_ class. `Calculator.Operation.PLUS`;
+
+Nonstatic member class instances are rquired to have an enclosing instance.
+
+Anonymous classes are us to create _function objects_ on the fly. (Item 21)
+
+Local class from the official docs: Use it if you need to create more than one instance of a class, access its constructor, or introduce a new, named type (because, for example, you need to invoke additional methods later).
+
+Anonymous class from the official docs: Use it if you need to declare fields or additional methods.
+
+##51. Beware the performance of string concatenation
+
+Using the string concatenation operator repeatedly to concatenate _n_ strings requires time quadratic in _n_.
+
+```java
+
+	// Inappropriate use of string concatenation - Performs horribly!
+	public String statement()
+		String result = "";
+		for (int i = 0; i < numItems(); i++)
+			result += lineForItem(i);
+		return result;
+		
+```
+
+To achieve acceptable performance, use StringBuilder in place of String.
+
+```java
+
+	public String statement(){
+		StringBuilder b = new StringBuilder(numItems() * LINE_WIDTH);
+		for (int i = 0; i < numItems(); i++)
+			b.append(lineForItem(i));
+		return b.toString();
+	}
+```
+# 5 GENERICS
+##23 Don't use raw types in new code
+Generic classes and interfaces are the ones who have one or more _type parameter_ as _generic_, i.e. `List<E>`
+
+Each generic type defines a set of _parametrzed types_ `List<String>`
+
+_Raw types_ is the generic type definition without type parameters. `List`
+
+```java
+
+	private final Collection stamps = ...
+
+	stamps.add(new Coin(...)); //Erroneous insertion. Does not throw any error
+
+	Stamp s = (Stamp) stamps.get(i); // Throws ClassCastException when getting the Coin
+```
+
+```java
+
+	private final Collection<Stamp> stamps = ...
+	
+	stamps.add(new Coin()); // Compile time error. Coin can not be add to Collection<Stamp>
+
+	Stamp s = stamps.get(i); // No need casting
+```
+
+Use of raw types lose safety and expresivenes of generics.
+
+Type safety is kept in a parametrzed type like `List<Object>` but not in raw types (`List`). 
+
+There are subtyping rules for generics. For example `List<String>` is a subtype of `List` but not of `List<Object>` (Item 25)
+
+**Unbounded Wildcard Types `Set<?>`**
+Used when a generic type is needed but we don't know or care the actual type.
+
+Never add elements (other than null) into a `Collection<?>`
+
+2 exceptions (because generic type information is erased at runtime):
+
+* Use raw types in class literals `List.class`,`String[].class` are legal, `List<String>.class`, `List<?>.class` are not.
+* Use of instanceof
+
+```java
+	
+	if (o instanceof Set){
+		Set<?> = (Set<?>) o;
+	}
+```
+##24 Eliminate unchecked warnings
+Eliminate every unchecked warning that you can, if you can't use _Suppress-Warnings_ annotation on the smallest scope possible.
+
+```java
+
+	Set<Lark> exaltation = new HashSet(); Warning, unchecked convertion found.
+	Set<Lark> exaltation = new HashSet<lark>(); Good
+```
+
+##25 Prefer lists to arrays
+Arrays are _covariant_: if `Sub` is a subtype of `Super`, `Sub[]` is a subtype of `Super[]`  
+Generics are _invariant_: for any two types `Type1` and `Type2`, `List<Type1>` in neither  sub or super type of `List<Type1>`
+
+``java
+	
+	// Fails at runtime
+	Object[] objectArray = new Long[1];
+	objectArray[0] ="I don't fit in" // Throws ArrayStoreException
+
+	// Won't compile
+	List<Object> ol = new ArrayList<Long>();//Incompatible types
+	ol.add("I don't fit in") 
+``
+
+Arrays are _reified_: Arrays know and enforce their element types at runtime.
+Generics are _erasure_: Enforce their type constrains only at compile time and discard (or _erase_) their element type information at runtime.
+
+Therefore it is illegal to create an array of a generic type, a parameterized type or a type parameter.
+
+`new List<E>[]`, `new List<String>`, `new E[]`  will result in _generic array creation_ errors.
+
+##26 Favor generic types
+Making Item 6. to use generics.
+```java
+
+	public class Stack{
+		private E[] elements;
+		private int size = 0;
+		private static final int DEFAULT_INITAIL_CAPACITY = 16;
+
+		public Stack(){
+			elements = new E [DEFAULT_INITAIL_CAPACITY];//Error: Can't create an array of a non-reifiable type.
+		}
+
+		public void push(E e){
+			ensureCapacity();
+			elements[size++] = e;
+		}
+
+		public E pop(){
+			if (size == 0)
+				throw new EmptyStacjException();
+			E result = elements[--size];
+			elements[size] = null;
+			return result;
+		}
+		...
+	}
+``` 
+
+There will be one error:
+
+```java
+	
+	//Error: Generic array creation. Can't create an array of a non-reifiable type.
+	elements = new E [DEFAULT_INITAIL_CAPACITY];
+```
+**First option** (more commonly used.)
+
+```java
+	
+	//Warning: Compiler can not prove the type safe, but we can.	
+	// This elements array will contain only E instances from push(E).
+	// This is sifficient to ensure type safety, but the runtime
+	//type of the array won't be E[]; it will always be Object[]!
+	@SupressWarnings("unchecked")
+	public Stack(){
+		elements = (E[]) new Object [DEFAULT_INITAIL_CAPACITY];
+	}
+```
+**Second Option**
+```java
+	
+	...
+	private Object[] elements;
+	...
+	result = elements[--size] // Error: found Object, required E
+```
+A cast  will generate a warning. Beacuse E is a non-reifiable type, there is no way the compiler can check the cast at runtime.
+```java
+	
+	result = (E) elements[--size]
+```
+
+The appropriate suppression of the unchecked warning
+
+```java
+
+	public E pop(){
+		if (size == 0)
+			throw new EmptyStacjException();
+
+		// push requires elements to be of type E, so cast is correct.
+		@SupressWarnings("unchecked") E result = elements[--size];
+
+		elements[size] = null;
+		return result;
+	}
+```
+
+##27 Favor generic Methods
+Generic Method
+```java
+	
+	// 
+	public static <E> Set<E> union(Set<E> s1, Set<E> s2){
+		Set<E> result = new HashSet<E>(s1);
+		result.addAll(s2);
+		return result;
+	}
+```
+
+**Type inference**: Compiler knows because of `Set<String>` that `E` is a _String_
+
+In generic constructors the type parameters have to be on both sides of the declaration. (Java 1.7 might have fix it)
+
+```java
+
+	Map<String,List<String>> anagrams = new HashMap<String, List<String>>();
+```
+
+To avoid ic create a _generic static factory method_
+
+```java
+
+	public static <K,V> HashMap<K,V> newHashMap(){
+		return new HashMap<K,V>();
+	}
+
+	//Use
+	Map<String,List<String>> anagrams = newHashMap(); 
+
+	
+```
+
+**Generic Singleton Pattern** Create an object that is immutable but applicable to many  different types.
+
+```java
+
+	public interface UnaryFunction<T>{
+		T apply(T arg);
+	}
+
+	// Generic singleton factory pattern
+	private static UnaryFunction<Object> IDENTITY_FUNCTION = new UnaryFunction<Object>(){
+		public Object apply(Object arg) {return arg;}
+	};
+
+	//IDENTITY_FUNCTION is stateless and its type parameter is unbounded so it's safe to share one instance across all types.
+	@SuppressWarnings("unchecked")
+	public static<T> UnaryFunction<T> identityFunction(){
+		return(UnaryFunction<T>) IDENTITY_FUNCTION;
+	}
+```
+
+**Recursive Type Bound** : When the type paremeter is bounded by some expression involving that type parameter itself.
+
+```java
+	
+	public static<T extends Comparable<T>> T max (List<T> list){
+		Iterator <T> i = list.iterator():
+		T result = i.next();
+		while (i.hasNext()) {
+			T t = i.next();
+			if(t.compareTo(result) > 0)
+				result = t;
+		}
+		return result;
+	}	
+```
+##28 Use bounded wildcards to increase API flexibility
+
+
+Parameterized types are invariant.(Item 25) Ie _List<String>_ is not a subtype of _List<Object>_
+```java
+
+	public void pushAll(Iterable<E> src){
+		for(E e : src)
+			puhs(e)
+	}
+
+	// Integer is a subtype of Number
+	Stack<Number> numberStack = new Stack<Number>();
+	Iterable<Integer> integers = ...
+	numberStack.pushAll(integers); //Error message here: List<Integer> is not a subtype of List<Number> 
+```
+
+**Bounded wildcard type**
+Producer
+```java
+	
+	public void pushAll(Iterable<? Extends E> src){
+		for (E e : src)
+			push(e);
+	}
+```
+
+Consumer
+```java
+	
+	public void popAll(Collection<? super E> dst){
+		while(!isEmpty())
+			dst.add(pop());
+	}
+```
+
+**PECS: producer-extends, consumer-super**
+
+If the parameter is a producer and a conusmer don't use _wildcards_
+
+Never use _wildcards_ in return values.
+
+Type inference in generics
+```java
+
+	Set<Integer> integers =...
+	Set<Double> doubles =...
+	Set<Number> numbers = union(integers,doubles);//Error
+
+	//Needs a 'explicit type parameter'
+	Set<Number> numbers = Union.<Number>union(integers,doubles);
+```
+
+Comparable and Comparators are always consumers. Use `Comparable<? super T>` and `Comparator<? super T>`
+
+If a type parameter appears only once in a method declaration, replace it with a wildcard.
+
+##29 Consider _typesafe heterogeneous containers_
+A container for accessing a heterogeneous list of types in a typesafe way.
+
+Thanks to the type of the class literal. `Class<T>`
+
+**API**
+```java
+
+	public class Favorites{
+		public <T> void putFavorites(Class<T> type, T instance);
+		public <T> getFavorite(Class<T> type);
+	}
+```
+
+**Client**
+```java
+
+	Favorites f - new Favorites();
+	f.putFavorites(String.class, "JAVA");
+	f.putFavorites(Integer.class, 0xcafecace);
+	f.putFavorites(Class.class, Favorite.class);
+
+	String s = f.getFavorites(String.class);
+	int i =f.getFavorites(Integer.class);
+	Class<?> c = f.getFavorites(Class.class);
+```
+
+**Implementation**
+```java
+
+	public class Favorites{
+		private Map<Class<?>, Object> favorites = new HashMap<Class<?>, Object>();
+
+		public <T> void putFavorites(Class<T> type, T instance){
+			if(type == null)
+				throw new NullPointerException("Type is null");
+			favorites.put(type, type.cast(instance));//runtime safety with a dynamic cast
+		}
+
+		public <T> getFavorite(Class<T> type){
+			return type.cast(favorites.get(type));
+		}
+	}
+```
+
+#6 Enums and Annotatons
+##53 Prefer interfaces to reflection
 _java.lang.reflection_ offers access to information about loaded classes.
 
 Given a _Class_ object, you can obtain _Constructor_, _Method_ and _Field_ instances.
