@@ -1405,6 +1405,123 @@ Thanks to the type of the class literal. `Class<T>`
 ```
 
 #6 Enums and Annotatons
+##30 Use enums instead of _int_ constants
+Enums are classes that export one instance for each enumeration constant via a public static final field.
+Clients can not create instances or extend them. 
+They are a generalization of singletons(Item 3)
+They are compile-time type safe.
+
+**Enums can have data associated**
+
+```java
+
+	public enum Planet{
+		MERCURY(3.334e+23,2.234e6)
+		VENUS(4.234e+23,6.636e6)
+		EARTH(5.865e+23,6.256e6)
+		...
+
+		private final double mass;
+		private final double radius;
+		private final double surfaceGravity;
+
+		private static final double G = 6.67300E-11;
+
+		Planet(double mass, double radius){
+			this.mass = mass;
+			this.radius = radius;
+			surfaceGravity = G * mass/(radius * radius);
+		}
+
+		public double mass() {return mass;}
+		public double radius() {return radius;}
+		public double surfaceGravity() {return surfaceGravity;}
+
+		public double surfaceWeight(double mass){
+			return mass * surfaceGravity;
+		}
+	}
+```
+Enums are immutable so their fields should be final(Item 15)
+Make fields private (Item 14)
+
+Enums should be a member class inside a top-level class if it is not generally used.
+
+**Enum type with constant-specific method implementations**
+
+```java
+	
+	public enum Operation{
+		PLUS { double apply(double x, double y){return x + y;}},
+		MINUS { double apply(double x, double y){return x - y;}},
+		TIMES { double apply(double x, double y){return x * y;}},
+		DIVIDE { double apply(double x, double y){return x / y;}};
+ 
+ 		// The abstract method force us not to forget to implement the method.
+		abstract double apply(double x, double y);
+
+	}
+```
+**Strategy enum pattern**
+Use it, if multiple enum constants share common behaviors.
+
+```java
+
+	enum PayrollDay{
+		MONDAY(PayType.WEEKDAY),
+		TUESDAY(PayType.WEEKDAY),
+		...
+		SATURDAY(PayType.WEEKEND),
+		SUNDAY(PayType.WEEKENd);
+
+		private final PayType payType;
+
+		PayrollDay(PayType payType) {this.payType = payType;}
+
+		double pay(double hoursWorked, double payRate){
+			return payType.pay(hoursWorked, payRate);
+		}
+		//The strategy  enum type
+		private enum PayType{
+			WEEKDAY{
+				double overtimePay(double hours, double payRate) { return ...}
+			};
+			WEEKEND{
+				double overtimePay(double hours, double payRate) { return ...}
+			};
+			private static final int HOURS_PER_SHIFT = 8;
+
+			abstract double overtimePay(double hours, double payRate);
+
+			double pay(double hoursWorked, double payRate){
+				double basePay = hoursWorked * payRate;
+				return basePay + overtimePay(hoursWorked, payRate);
+			}
+		}
+	}
+```
+
+##31 Use instance fields instead of ordinals
+Never derive a value of an enum to its ordinal
+```java
+	
+	public enum Ensemble{
+		SOLO, DUET, TRIO...;
+		public int numberOfMusicians() {return ordinal() + 1}
+	}
+```
+Better approach
+```java
+	
+	public enum Ensemble{
+		SOLO(1), DUET(2), TRIO(3)...TRIPLE_QUARTET(12);
+		private final int numberOfMusicians;
+		Ensemble(int size) {this.numberOfMusicians = size;}
+		public int numberOfMusicians() {return numberOfMusicians;}
+	}
+```
+
+
 ##53 Prefer interfaces to reflection
 _java.lang.reflection_ offers access to information about loaded classes.
 
