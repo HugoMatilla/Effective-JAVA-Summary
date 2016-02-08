@@ -2,7 +2,7 @@ This is my summary of the Effective Java 2nd Edition by Joshua Bloch. I use it w
 
 If you are the publisher and think this repo should not be public, just write me an email at hugomatilla [at] gmail [dot]com and I will make it private.
 
-#CREATING AND DESTROYING OBJECTS
+# 2. CREATING AND DESTROYING OBJECTS
 ##1. Use STATIC FACTORY METHODS instead of constructors
 **_ADVANTAGES_**
 
@@ -362,7 +362,7 @@ Explicit termination methods are typically used in combination with the _try-fin
 
 In this cases always remember to invoke super.finalize. 
 
-#METHODS COMMON TO ALL OBJECTS
+# 3 METHODS COMMON TO ALL OBJECTS
 ##8. Obey the general contract when overriding *equals*
 
 **_Dont override if:_**
@@ -489,7 +489,7 @@ For floating-point fields use _Float.compare_ or _Double.compare_
 
 For arrays start with the most significant field and work your way down.
 
-# CLASSES AND INTERFACES
+# 4 CLASSES AND INTERFACES
 ##13. Minimize the accesibility of classes and members
 
 __Encapsulation__:
@@ -533,7 +533,7 @@ Or:
 		return PRIVATE_VALUES.clone;
 	}
 ```
-##14 In public classes, use accessor methods, not public fields
+##14. In public classes, use accessor methods, not public fields
 
 Degenerate classes should not be public
 
@@ -582,7 +582,7 @@ In **public classes** it is a questionable option to **expose immutable fields**
 
 
 
-##15 Minimize Mutability
+##15. Minimize Mutability
 All the information of the instance is provided when it is created.
 They are easier to design, implement and use. And they are less prone to errors and more secure
 
@@ -680,7 +680,7 @@ Make every field final unles there is a good reason not to do it.
 
 Some of the rules can be lightened to improve performance (caching, lazy initialization...).
 
-##16 Favor composition over inheritance
+##16. Favor composition over inheritance
 Inheritance in this case is when a class extends another (_implementation inheritance_) Not interface inheritance.
 
 **Inheritance violates encapsulation**
@@ -950,7 +950,7 @@ A tagged class is just a palid imitation of a class hierarchy.
 	}
 ```
 
-##21.Use function objects to represent strategies
+##21. Use function objects to represent strategies
 Strategies are facilities that allow programs to store and transmit the ability to invoke a particular function. Similar to _function pointers_, _delegates_ or _lambda expression_.
 
 It is possible to define a object whose method perform operations on other objects.
@@ -1021,7 +1021,7 @@ A host class can export the a public static field or factory, whose type is the 
 	}
 ```
 
-##22 Favor static member classes over nonstatic
+##22. Favor static member classes over nonstatic
 4 types od nested classes.
 
 1. static
@@ -1044,34 +1044,9 @@ Local class from the official docs: Use it if you need to create more than one i
 
 Anonymous class from the official docs: Use it if you need to declare fields or additional methods.
 
-##51. Beware the performance of string concatenation
 
-Using the string concatenation operator repeatedly to concatenate _n_ strings requires time quadratic in _n_.
-
-```java
-
-	// Inappropriate use of string concatenation - Performs horribly!
-	public String statement()
-		String result = "";
-		for (int i = 0; i < numItems(); i++)
-			result += lineForItem(i);
-		return result;
-		
-```
-
-To achieve acceptable performance, use StringBuilder in place of String.
-
-```java
-
-	public String statement(){
-		StringBuilder b = new StringBuilder(numItems() * LINE_WIDTH);
-		for (int i = 0; i < numItems(); i++)
-			b.append(lineForItem(i));
-		return b.toString();
-	}
-```
 # 5 GENERICS
-##23 Don't use raw types in new code
+## 23. Don't use raw types in new code
 Generic classes and interfaces are the ones who have one or more _type parameter_ as _generic_, i.e. `List<E>`
 
 Each generic type defines a set of _parametrzed types_ `List<String>`
@@ -1118,7 +1093,7 @@ Never add elements (other than null) into a `Collection<?>`
 		Set<?> = (Set<?>) o;
 	}
 ```
-##24 Eliminate unchecked warnings
+## 24. Eliminate unchecked warnings
 Eliminate every unchecked warning that you can, if you can't use _Suppress-Warnings_ annotation on the smallest scope possible.
 
 ```java
@@ -1127,7 +1102,7 @@ Eliminate every unchecked warning that you can, if you can't use _Suppress-Warni
 	Set<Lark> exaltation = new HashSet<lark>(); Good
 ```
 
-##25 Prefer lists to arrays
+## 25. Prefer lists to arrays
 Arrays are _covariant_: if `Sub` is a subtype of `Super`, `Sub[]` is a subtype of `Super[]`  
 Generics are _invariant_: for any two types `Type1` and `Type2`, `List<Type1>` in neither  sub or super type of `List<Type1>`
 
@@ -1149,7 +1124,7 @@ Therefore it is illegal to create an array of a generic type, a parameterized ty
 
 `new List<E>[]`, `new List<String>`, `new E[]`  will result in _generic array creation_ errors.
 
-##26 Favor generic types
+## 26. Favor generic types
 Making Item 6. to use generics.
 ```java
 
@@ -1228,7 +1203,7 @@ The appropriate suppression of the unchecked warning
 	}
 ```
 
-##27 Favor generic Methods
+## 27. Favor generic Methods
 Generic Method
 ```java
 	
@@ -1298,7 +1273,7 @@ To avoid ic create a _generic static factory method_
 		return result;
 	}	
 ```
-##28 Use bounded wildcards to increase API flexibility
+## 28. Use bounded wildcards to increase API flexibility
 
 
 Parameterized types are invariant.(Item 25) Ie `List<String>` is not a subtype of `List<Object>`
@@ -1359,7 +1334,7 @@ Comparable and Comparators are always consumers. Use `Comparable<? super T>` and
 
 If a type parameter appears only once in a method declaration, replace it with a wildcard.
 
-##29 Consider _typesafe heterogeneous containers_
+## 29. Consider _typesafe heterogeneous containers_
 A container for accessing a heterogeneous list of types in a typesafe way.
 
 Thanks to the type of the class literal. `Class<T>`
@@ -1405,7 +1380,7 @@ Thanks to the type of the class literal. `Class<T>`
 ```
 
 #6 Enums and Annotatons
-##30 Use enums instead of _int_ constants
+## 30. Use enums instead of _int_ constants
 Enums are classes that export one instance for each enumeration constant via a public static final field.
 Clients can not create instances or extend them. 
 They are a generalization of singletons(Item 3)
@@ -1501,7 +1476,7 @@ Use it, if multiple enum constants share common behaviors.
 	}
 ```
 
-##31 Use instance fields instead of ordinals
+## 31. Use instance fields instead of ordinals
 Never derive a value of an enum to its ordinal
 ```java
 	
@@ -1520,9 +1495,117 @@ Better approach
 		public int numberOfMusicians() {return numberOfMusicians;}
 	}
 ```
+## 32. Use EnumSet instead of bit fields
+If the elements of an enumarated are used primarily in sets, use EnumSet.
 
+```java
 
-##53 Prefer interfaces to reflection
+	public class Text{
+		public enum Style { BOLD, ITALIC, UNDERLINE, STRIKETHROUGH }
+
+		//Any Set could be passed. Best EnumSet
+		public void applyStyles(Set<Style> styles){ ... }
+	}
+
+	//Use
+	text.applyStyles(EnumSet.of(Style.BOLD, Style. ITALIC));
+```
+
+It is a good practice to accept the interface instead of the implementation. 
+
+## 33. Use EnumMap instead of ordinal indexing
+
+Use EnumMap to associate data with an enum
+```java
+
+	Map<Herb.Type, Set<Herb>> herbsByType = new EnumMap<Herb.Type, Set<Herb>>(Herb.Type.class);
+	
+	for (Herb.Type t : Herb.Type.values())
+		herbsByType.put(t, new HashSet<Herb>())
+	
+	for (Herb h : garden)
+		herbsByType.get(h.type).add(h);
+
+	System.out.println(herbsByType);		
+
+```
+In case you need a multidimensional relationship use `EnumMap<..., EnumMap<...>>`
+
+## 34. Emulate extensible enums with interfaces
+Enums types can not extend another enum types.
+
+_Opcodes_ as a use case of enums extensibility.
+
+```java
+
+	public interface Operation{
+		double apply(double x, double y);
+	}
+	public enum BasicOperation implements Operation{
+		PLUS("+"){ 
+			public double apply(double x, double y) {return x + y}
+		},
+		MINUS("-"){...},TIMES("*"){...},DIVIDE("/"){...};
+
+		private final String symbol;
+		BasicOperation(String symbol){
+			this.symbol = symbol;
+		}
+		@Override
+		public String toString(){ return symbol; }
+	}
+```
+
+_BasicOperation_ is not extensible, but the interface type _Operation_ is, and it is the one used to represent operations in APIs.
+
+**Emulated extension type**
+```java
+	
+	public enum ExtendedOperation implements Operation{
+		EXP("^"){
+			public double apply(double x, double y) {return Math.pow(x,y)}
+		}
+		REMAINDER("%"){
+			public double apply(double x, double y) {return x % y}
+		}
+
+		private final String symbol;
+		ExtendedOperation(String symbol){
+			this.symbol = symbol;
+		}
+		@Override
+		public String toString(){ return symbol; }
+	}
+```
+
+## 51. Beware the performance of string concatenation
+
+Using the string concatenation operator repeatedly to concatenate _n_ strings requires time quadratic in _n_.
+
+```java
+
+	// Inappropriate use of string concatenation - Performs horribly!
+	public String statement()
+		String result = "";
+		for (int i = 0; i < numItems(); i++)
+			result += lineForItem(i);
+		return result;
+		
+```
+
+To achieve acceptable performance, use StringBuilder in place of String.
+
+```java
+
+	public String statement(){
+		StringBuilder b = new StringBuilder(numItems() * LINE_WIDTH);
+		for (int i = 0; i < numItems(); i++)
+			b.append(lineForItem(i));
+		return b.toString();
+	}
+```
+
+## 53. Prefer interfaces to reflection
 _java.lang.reflection_ offers access to information about loaded classes.
 
 Given a _Class_ object, you can obtain _Constructor_, _Method_ and _Field_ instances.
