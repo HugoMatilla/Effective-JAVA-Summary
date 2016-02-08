@@ -1,4 +1,4 @@
-This is my summary of the Effective Java 2nd Edition by Joshua Bloch. I use it while learning and as quick reference. It is not inteded to be an standalone substitution of the book so if you really want to learn the concepts here presented buy and read the book and use this repo as a reference and guide.
+This is my summary of the Effective Java 2nd Edition by Joshua Bloch. I use it while learning and as quick reference. It is not inteded to be an standalone substitution of the book so if you really want to learn the concepts here presented, buy and read the book and use this repo as a reference and guide.
 
 If you are the publisher and think this repo should not be public, just write me an email at hugomatilla [at] gmail [dot]com and I will make it private.
 
@@ -1511,7 +1511,7 @@ If the elements of an enumarated are used primarily in sets, use EnumSet.
 	text.applyStyles(EnumSet.of(Style.BOLD, Style. ITALIC));
 ```
 
-It is a good practice to accept the interface `Set` instead of the implementation `EnumSet`. 
+It is a good practice to accept the interface `Set` instead of the implementation `	EnumSet`. 
 
 ## 33. Use EnumMap instead of ordinal indexing
 
