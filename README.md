@@ -1511,7 +1511,7 @@ If the elements of an enumarated are used primarily in sets, use EnumSet.
 	text.applyStyles(EnumSet.of(Style.BOLD, Style. ITALIC));
 ```
 
-It is a good practice to accept the interface instead of the implementation. 
+It is a good practice to accept the interface `Set` instead of the implementation `EnumSet`. 
 
 ## 33. Use EnumMap instead of ordinal indexing
 
