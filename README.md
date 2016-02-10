@@ -1093,6 +1093,21 @@ Never add elements (other than null) into a `Collection<?>`
 		Set<?> = (Set<?>) o;
 	}
 ```
+
+| **Term**                | **Example**                        |**Item**|
+|-------------------------|------------------------------------|--------|
+| Parametrized type       | `List<String>`                     | 23     |
+| Actual type parameter   | `String`                           | 23     |
+| Generic type            | `List<E>`                          | 23, 26 |
+| Formal type parameter   | `E`                                | 23     |
+| Unbounded wildcard type | `List<?>`                          | 23     |
+| Raw type                | `List`                             | 23     |
+| Bounded type parameter  | `<E extends Number>`               | 26     |
+| Recursive type bound    | `<T extends Comparable<T>>`        | 27     |
+| Bounded wildcard type   | `List<? extends Number>`           | 28     |
+| Generic method          | `static <E> List<E> asList(E[] a)` | 27     |
+| Type token              | `String.class`                     | 29     |
+
 ## 24. Eliminate unchecked warnings
 Eliminate every unchecked warning that you can, if you can't use _Suppress-Warnings_ annotation on the smallest scope possible.
 
@@ -1578,6 +1593,107 @@ _BasicOperation_ is not extensible, but the interface type _Operation_ is, and i
 	}
 ```
 
+## 35. Prefer annotations to naming patterns	
+Sample of the _@Test_ annotation
+
+**Marker**
+```java
+
+	//Marker annotation type declaration
+	import java.lang.annotation.*;
+
+	//Indicates that the annotated method is a test method.
+	//Use only on parameterless static methods.
+	@Retention(RetentionPolicy.RUNTIME)
+	@Target(ElementType.METHOD)
+	public @interface Test {
+	}
+```
+`@Retention` and `@Target` are _meta-annotations_  
+
+`@Retention(RetentionPolicy.RUNTIME)`: indicates that the Test annotation should be retained at runtime.(It makes them visible to the test tool)
+
+`@Target(ElementType.METHOD)`indicates that is legal only on method declarations. Not in class, fields or other programms declarations
+
+**Use**
+```java
+
+	public class Smaple{
+		@Test public static void m1(){}		// Test pass
+		public static void m2(){} 			// Not test applied
+		@Test public static void m3(){ 		// Test fail
+			throw new RuntimeException("Boom")
+		}
+		@Test public void m4(){}			// Invalid use. Non static method.
+	}
+```
+
+**Process annotations**
+```java
+
+	import java.lang.reflect.*
+
+	public class RunTests{
+		public static void main(String[] args) throws Exception {
+			int tests = 0;
+			int passed  = 0;
+			Class testClass = Class.forName(args[0]);
+			for (Method m : testClass.getDeclaredMethods()){
+				if (m.isAnnotationPresent(Test.class)){
+					test++;
+					try{
+						m.invoke(null);
+						passed++;
+					} catch(InvocationTargetException wrappedExc){
+						Throwable exc = wrappedExc.getCause();
+						System.out.println(m + " failed: " + exc);
+					} catch (Exception exc){
+						System.out.println("INVALID @Test: " + m);
+					}
+				}
+			}
+			System.out.printf("Passed: %d, Failed: %d%n", passed, tests - passed);
+		}
+	}	
+```
+
+## 36. Consistently use the _Override_ annotation
+Use the _Override_ annotation on every method declaration that you believe to override a super class declaration.
+
+```java
+
+	public class Bigram {
+		private final class first;
+		private final class second;
+		public Bigram(char first, char second){
+			this.first = first;
+			this.second = second;
+		}
+		public boolean equals(Bigram b){ //ERROR.
+			return b.first == first && b.second == second;
+		}		
+		...
+	}
+```
+We are overloading equals instead of overriding it.  
+The correct sign to override the super method is:
+```java
+
+	public boolean equals(Object o){}
+```
+With the use of Override the compiler would alert us about our mistake.
+
+## 37. Use marker interfaces to define types
+Marker interface in Java is interfaces with no field or methods or in simple word empty interface in java is called marker interface.
+
+A _marker interface_ is an interface that contains no method declarations, but "marks" a class that implements the interface as having  some property.
+
+When your class implements `java.io.Serializable` interface it becomes Serializable in Java and gives compiler an indication that use Java Serialization mechanism to serialize this object. 
+
+* Marker interfaces define a type that is implemented by instances of the marked class; marker annotations do not. (Catch errors in compile time).
+* They can be targeted more precisely than marker annotations.
+* It's possible to add more information to an annotation type after it is already in use.
+
 ## 51. Beware the performance of string concatenation
 
 Using the string concatenation operator repeatedly to concatenate _n_ strings requires time quadratic in _n_.
@@ -1604,6 +1720,8 @@ To achieve acceptable performance, use StringBuilder in place of String.
 		return b.toString();
 	}
 ```
+
+
 
 ## 53. Prefer interfaces to reflection
 _java.lang.reflection_ offers access to information about loaded classes.
