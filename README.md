@@ -1694,6 +1694,105 @@ When your class implements `java.io.Serializable` interface it becomes Serializa
 * They can be targeted more precisely than marker annotations.
 * It's possible to add more information to an annotation type after it is already in use.
 
+# METHODS
+## 38. Check parameters for validity
+Check parameters before execution as soon as possible.
+
+Add in public methods _@throw_, and use _assertions_ in non public methods
+
+Do it also in constructors.
+
+## 39. Make defensive copies when needed.
+
+You must program defensively, with the assumption that clients of your class will do their best to destroy its invariants.
+
+```java
+
+	//Broken "immutable" time period
+	public final class Period{
+		private final Date start;
+		private final Date end;
+		/**
+		* @param start the beginning of the period
+		* @param end the end of the period; must not precede start;
+		* @throws IllegalArgumentException if start is after end
+		* @throws NullPointerException if start or end is null
+		*/
+		public Period(Date start, Date end) {
+			if(start.compare(end) > 0)
+				throw new IllegalArgumentException(start + " after " + end );
+			this.start = start;
+			this.end = end;	
+		}
+
+		public Date start(){
+			return start;
+		}
+
+		public Date end(){
+			return end;
+		}
+		...
+	}
+```
+
+Attak.  Because the client keep a copy (pointer) of the parameter, it can always change it after the construcntor.
+```java
+	
+	Date start = new Date();
+	Date end = new Date();
+	Period p = new Period(start, end);
+	end.setYear(78)// Modifies internal od p!
+```
+
+Make a _defensive copy_ of each mutable parameter to the constructor.
+
+```java
+
+	public Period(Date start, Date end) {
+		this.start = new Date(start.getTime());
+		this.end = new Date(end.getTime());
+		if(start.compare(end) > 0)
+			throw new IllegalArgumentException(start + " after " + end );
+		}
+```
+Defensive copies are made before checking the validity of the parameter (Item 38), and the validity check is performed on the copies rather than on the originals. It protects the class against changes to the parameters from another thread during the time between tha parameters are checked and the time they are copied.(_Window of vulneravility_,time-of-check/time-of-use _TOCTOU_ attack)
+
+
+Do not use _clone_ method to make a defensive copy of a parameter whose type is subclassable by untrusted parties.
+
+Second Attack. Because the accesor returns the object used in the Period class, the client can change its value without passing the constrains.
+```java
+
+	Date start = new Date();
+	Date end = new Date();
+	Period p = new Period(start, end);
+	p.end.setYear(78)// Modifies internal od p!
+```
+
+Return _defensive copies_ of mutable internal fields.
+
+```java
+
+	public Date start(){
+		return new Date(start.getTime());
+	}
+
+	public Date end(){
+		return new Date(end.getTime());
+	}
+```
+
+Preferable is to use **inmutable objects**(Item 15)
+
+##40 Design method signatures carefully
+
+* Choose method names carefully. (Item 56)
+* Don't go overboard in providing convenience methods. Don't add too many.
+* Avoid long parameter list. Make a subset of methods, helper classes (Item 22), or a builder (Item 2) instead.
+* For parameter types, favor interfaces over classes (Item 52) No reason to write a method that takes a _HashMap_ on input, use _Map_ instead.
+* Prefer two-element enum types to _boolean_ parameters. `public enum TemperatureScale {CELSIUS, FARENHEIT}`
+
 ## 51. Beware the performance of string concatenation
 
 Using the string concatenation operator repeatedly to concatenate _n_ strings requires time quadratic in _n_.
