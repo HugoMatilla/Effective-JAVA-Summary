@@ -14,7 +14,7 @@ If you are the publisher and think this repo should not be public, just write me
 **_DISADVANTAGES_**
 
 * If providing only static factory methods, classes without public or protected constructors cannot be subclassed (encourage to use composition instead inheritance http://www.objectmentor.com/resources/articles/lsp.pdf)
-* They are not readily distinguishable from other static methods (Some common names (each with a differnt pourpose) are: valueOf, of, getInstance, newInstance, getType and newType)
+* They are not readily distinguishable from other static methods (Some common names (each with a different pourpose) are: valueOf, of, getInstance, newInstance, getType and newType)
 
 ```java
 
@@ -967,7 +967,7 @@ It is possible to define a object whose method perform operations on other objec
 
 Concrete strategies are typically _stateless_ threfore they should be singletons.
 
-To be able to pass differnt strategies, clients should invoke methods from an _strategy interface_ instead of from a concrete class.
+To be able to pass different strategies, clients should invoke methods from an _strategy interface_ instead of from a concrete class.
 
 **Comparator interface.** _Generic_(Item 26) 
 ```java
@@ -1785,7 +1785,7 @@ Return _defensive copies_ of mutable internal fields.
 
 Preferable is to use **inmutable objects**(Item 15)
 
-##40 Design method signatures carefully
+## 40. Design method signatures carefully
 
 * Choose method names carefully. (Item 56)
 * Don't go overboard in providing convenience methods. Don't add too many.
@@ -1793,6 +1793,127 @@ Preferable is to use **inmutable objects**(Item 15)
 * For parameter types, favor interfaces over classes (Item 52) No reason to write a method that takes a _HashMap_ on input, use _Map_ instead.
 * Prefer two-element enum types to _boolean_ parameters. `public enum TemperatureScale {CELSIUS, FARENHEIT}`
 
+
+## 41. Use overloading judiciously
+The choice of which overloading to invoke is made at compile time.
+Selection among overloaded methods is static, while selection among overridden methods is dynamic.
+```java
+
+	// Broken! - What does this program print?
+	public class CollectionClassifier {
+		public static String classify(Set<?> s) {
+			return "Set";
+		}
+		public static String classify(List<?> lst) {
+			return "List";
+		}
+		public static String classify(Collection<?> c) {
+			return "Unknown Collection";
+		}
+		public static void main(String[] args) {
+			Collection<?>[] collections = {
+				new HashSet<String>(),
+				new ArrayList<BigInteger>(),
+				new HashMap<String, String>().values()
+			};
+		for (Collection<?> c : collections)
+			System.out.println(classify(c)); // Returns "Unknown Collection" 3 times
+		}
+	}
+```	
+Overriding works different. The “most specific” overriding method always gets executed.
+
+```java
+
+	class Wine {
+		String name() { return "wine"; }
+	}
+	class SparklingWine extends Wine {
+		@Override String name() { return "sparkling wine"; }
+	}
+	class Champagne extends SparklingWine {
+		@Override String name() { return "champagne"; }
+	}
+	public class Overriding {
+		public static void main(String[] args) {
+			Wine[] wines = {
+				new Wine(), new SparklingWine(), new Champagne()
+			};
+			for (Wine wine : wines)
+				System.out.println(wine.name()); // prints: wine, sparkling wine, and champagne
+		}	
+	}		
+```
+
+Overloading does not give the functionallity we want in the first sample. A possible solution is:
+
+```java
+
+	public static String classify(Collection<?> c) {
+		return 	c instanceof Set ? "Set" :
+				c instanceof List ? "List" : "Unknown Collection";
+	}
+```
+
+Do not have overloaded methods in APIs to avoid confusing the clients of the API.
+
+A conservative policy to is never to export two overloadings with the same number of parameters. Use different names.`writeBoolean(boolean)`, `writeInt(int)`, and `writeLong(long)`
+
+For constructors you can use static factories (Item 1)
+
+If parameters are radically different this rules can be violat but always ensure that all overloadings behave identically
+when passed the same parameters. To ensure this, have the more specific overloading forward to the more general.
+```java
+	
+	public boolean contentEquals(StringBuffer sb) {
+		return contentEquals((CharSequence) sb);
+	}
+```
+
+## 42. Use varargs judiciously
+varargs methods are a convenient way to define methods that require a variable number of arguments, but they should not be overused.
+```java
+
+	// The right way to use varargs to pass one or more arguments
+	static int min(int firstArg, int... remainingArgs) {
+		int min = firstArg;
+		for (int arg : remainingArgs)
+			if (arg < min)
+				min = arg;
+			return min;
+	}
+```
+
+## 43. Return empty arrays or collections, not nulls
+There is no reason ever to return null from an array- or collection-valued method instead of returning an empty array or collection
+
+Return an inmutable empty array instead of null.
+```java
+
+	// The right way to return an array from a collection
+	private final List<Cheese> cheesesInStock = ...;
+	
+	private static final Cheese[] EMPTY_CHEESE_ARRAY = new Cheese[0];
+
+	/**
+	* @return an array containing all of the cheeses in the shop.
+	*/
+	public Cheese[] getCheeses() {
+		return cheesesInStock.toArray(EMPTY_CHEESE_ARRAY);
+	}
+```	
+ In Collections emptySet, emptyList and emptyMap methods do the same job.
+
+ ```java
+
+	// The right way to return a copy of a collection
+	public List<Cheese> getCheeseList() {
+		if (cheesesInStock.isEmpty())
+			return Collections.emptyList(); // Always returns same list
+		else
+			return new ArrayList<Cheese>(cheesesInStock);
+	}
+ ```
 ## 51. Beware the performance of string concatenation
 
 Using the string concatenation operator repeatedly to concatenate _n_ strings requires time quadratic in _n_.
