@@ -1394,7 +1394,7 @@ Thanks to the type of the class literal. `Class<T>`
 	}
 ```
 
-#6 Enums and Annotatons
+#6 Enums and Annotations
 ## 30. Use enums instead of _int_ constants
 Enums are classes that export one instance for each enumeration constant via a public static final field.
 Clients can not create instances or extend them. 
@@ -1947,7 +1947,7 @@ Have special care in:
 
 * Generics: document all type parameters
 * Enums: document all the constants, the type and the public methods.
-* Generics: document all members an the type.
+* Annotations: document all members an the type.
 
 Don't forget to documment:
 
@@ -1956,10 +1956,10 @@ Don't forget to documment:
 
 #GENERAL PROGRAMMING
 ## 45. Minimize the scope of local variables.
-Declare local variable where it is first used.
-Most local variable declaration should contain an initializer.
-Prefer for loops to while loops.
-Keep methods small and focused. 
+Declare local variable where it is first used.  
+Most local variable declaration should contain an initializer.  
+Prefer for loops to while loops.  
+Keep methods small and focused.   
 
 ## 46. Prefer for-each lopps to traditional for loops.
 ```java
@@ -2042,7 +2042,7 @@ Every programmer should be familiar with:
 * java.lang
 * java.util
 * java.io
-* java.util.concurrent 
+* java.util.concurrent  
 
 ## 51. Beware the performance of string concatenation
 
