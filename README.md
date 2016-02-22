@@ -1914,6 +1914,46 @@ Return an inmutable empty array instead of null.
 			return new ArrayList<Cheese>(cheesesInStock);
 	}
  ```
+
+## 44. Write _doc comments_ for all exposed API elemnts
+To document your API properly, you must precede every exported class, interface, constructor, method, and field declaration with a doc comment. 
+
+The doc comment for a method should describe succinctly:
+
+* The _contract_ between the method and its client, what the method does rather than how it does its job.
+* The _preconditions_  described implicity by the _@throws_ tag.
+* The _postconditions_, things that will be true after the invocation has completed successfully.
+* The _side effects_, change in the state of the system.
+* The _thread safety_ of the class and methods
+* The _summary description of the element_, the first “sentence” of each doc comment.Should not contains a space after a period. 
+
+```java
+
+	/**
+	* Returns the element at the specified position in this list. *
+	* <p>This method is <i>not</i> guaranteed to run in constant
+	* time. In some implementations it may run in time proportional * to the element position.
+	*
+	* @param index index of element to return; must be
+	* non-negative and less than the size of this list
+	* @return the element at the specified position in this list
+	* @throws IndexOutOfBoundsException if the index is out of range
+	*		({@code index < 0 || index >= this.size()})
+	*/
+	E get(int index);
+```
+
+Have special care in:
+
+* Generics: document all type parameters
+* Enums: document all the constants, the type and the public methods.
+* Generics: document all members an the type.
+
+Don't forget to documment:
+
+* The _thread-safety level_  (Item 70)
+* The _serialized form_ (Item 75), if the class is _serializable_
+
 ## 51. Beware the performance of string concatenation
 
 Using the string concatenation operator repeatedly to concatenate _n_ strings requires time quadratic in _n_.
