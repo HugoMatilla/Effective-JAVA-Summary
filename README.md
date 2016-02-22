@@ -2027,6 +2027,22 @@ Situations where you can’t use a for-each loop:
 * **Transforming—If** you need to traverse a list or array and replace some or all of the values of its elements, then you need the list iterator or array index in order to set the value of an element.
 * **Parallel iteration—If** you need to traverse multiple collections in parallel, then you need explicit control over the iterator or index variable, so that all it- erators or index variables can be advanced in lockstep (as demonstrated unin-tentionally in the buggy card examples above).
 
+## 47. Know and use libraries
+By using a standard library:
+
+* Advantage of the knowledge of the experts who wrote it and the experience of those who used it before you.
+* Don’t have to waste your time writing ad hoc solutions to problems that are only marginally related to your work. 
+* Their performance tends to improve over time
+* Your code will be easily readable, maintainable, and reusable.
+
+Numerous features are added to the libraries in every major release, and it pays to keep abreast of these additions
+
+Every programmer should be familiar with:
+
+* java.lang
+* java.util
+* java.io
+* java.util.concurrent 
 
 ## 51. Beware the performance of string concatenation
 
