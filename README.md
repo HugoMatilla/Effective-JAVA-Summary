@@ -1954,6 +1954,80 @@ Don't forget to documment:
 * The _thread-safety level_  (Item 70)
 * The _serialized form_ (Item 75), if the class is _serializable_
 
+#GENERAL PROGRAMMING
+## 45. Minimize the scope of local variables.
+Declare local variable where it is first used.
+Most local variable declaration should contain an initializer.
+Prefer for loops to while loops.
+Keep methods small and focused. 
+
+## 46. Prefer for-each lopps to traditional for loops.
+```java
+
+	 // No longer the preferred idiom to iterate over a collection!
+		for (Iterator i = c.iterator(); i.hasNext(); ) { 
+			doSomething((Element) i.next()); // (No generics before 1.5)
+	}
+	// No longer the preferred idiom to iterate over an array!
+	   for (int i = 0; i < a.length; i++) {
+	       doSomething(a[i]);
+	}
+```
+Use for each loop:
+
+```java
+
+	// The preferred idiom for iterating over collections and arrays
+	   for (Element e : elements) {
+	       doSomething(e);
+	}
+```
+
+Error when iterating in nested loops
+
+```java
+
+	 // Can you spot the bug?
+	   enum Suit { CLUB, DIAMOND, HEART, SPADE }
+	   enum Rank { ACE, DEUCE, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT,
+	               NINE, TEN, JACK, QUEEN, KING }
+	   ...
+	   Collection<Suit> suits = Arrays.asList(Suit.values());
+	   Collection<Rank> ranks = Arrays.asList(Rank.values());
+	   List<Card> deck = new ArrayList<Card>();
+	   for (Iterator<Suit> i = suits.iterator(); i.hasNext(); )
+	       for (Iterator<Rank> j = ranks.iterator(); j.hasNext(); )
+	           deck.add(new Card(i.next(), j.next())); // i.next() should be run only in the outer loop
+
+```
+
+A solution
+
+```java
+
+	// Fixed, but ugly - you can do better!
+	for (Iterator<Suit> i = suits.iterator(); i.hasNext(); ) {
+	   Suit suit = i.next();
+	   for (Iterator<Rank> j = ranks.iterator(); j.hasNext(); )
+			deck.add(new Card(suit, j.next()));
+	}
+```	
+For each loop fix this directly
+
+```java
+
+	// Preferred idiom for nested iteration on collections and arrays
+	   for (Suit suit : suits)
+	       for (Rank rank : ranks)
+	           deck.add(new Card(suit, rank));
+```
+Situations where you can’t use a for-each loop:
+
+* **Filtering—If** you need to traverse a collection and remove selected elements, then you need to use an explicit iterator so that you can call its remove method.
+* **Transforming—If** you need to traverse a list or array and replace some or all of the values of its elements, then you need the list iterator or array index in order to set the value of an element.
+* **Parallel iteration—If** you need to traverse multiple collections in parallel, then you need explicit control over the iterator or index variable, so that all it- erators or index variables can be advanced in lockstep (as demonstrated unin-tentionally in the buggy card examples above).
+
+
 ## 51. Beware the performance of string concatenation
 
 Using the string concatenation operator repeatedly to concatenate _n_ strings requires time quadratic in _n_.
