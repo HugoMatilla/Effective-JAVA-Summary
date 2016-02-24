@@ -1,4 +1,4 @@
-This is my summary of the Effective Java 2nd Edition by Joshua Bloch. I use it while learning and as quick reference. It is not inteded to be an standalone substitution of the book so if you really want to learn the concepts here presented, buy and read the book and use this repo as a reference and guide.
+This is my summary of the Effective Java 2nd Edition by Joshua Bloch. I use it while learning and as quick reference. It is not intended to be an standalone substitution of the book so if you really want to learn the concepts here presented, buy and read the book and use this repo as a reference and guide.
 
 If you are the publisher and think this repo should not be public, just write me an email at hugomatilla [at] gmail [dot]com and I will make it private.
 
@@ -1049,7 +1049,7 @@ Anonymous class from the official docs: Use it if you need to declare fields or 
 ## 23. Don't use raw types in new code
 Generic classes and interfaces are the ones who have one or more _type parameter_ as _generic_, i.e. `List<E>`
 
-Each generic type defines a set of _parametrzed types_ `List<String>`
+Each generic type defines a set of _parametrized types_ `List<String>`
 
 _Raw types_ is the generic type definition without type parameters. `List`
 
@@ -1073,7 +1073,7 @@ _Raw types_ is the generic type definition without type parameters. `List`
 
 Use of raw types lose safety and expresivenes of generics.
 
-Type safety is kept in a parametrzed type like `List<Object>` but not in raw types (`List`). 
+Type safety is kept in a parametrized type like `List<Object>` but not in raw types (`List`). 
 
 There are subtyping rules for generics. For example `List<String>` is a subtype of `List` but not of `List<Object>` (Item 25)
 
@@ -1756,18 +1756,18 @@ Make a _defensive copy_ of each mutable parameter to the constructor.
 			throw new IllegalArgumentException(start + " after " + end );
 		}
 ```
-Defensive copies are made before checking the validity of the parameter (Item 38), and the validity check is performed on the copies rather than on the originals. It protects the class against changes to the parameters from another thread during the time between tha parameters are checked and the time they are copied.(_Window of vulneravility_,time-of-check/time-of-use _TOCTOU_ attack)
+Defensive copies are made before checking the validity of the parameter (Item 38), and the validity check is performed on the copies rather than on the originals. It protects the class against changes to the parameters from another thread during the time between the parameters are checked and the time they are copied.(_Window of vulnerability_,time-of-check/time-of-use _TOCTOU_ attack)
 
 
-Do not use _clone_ method to make a defensive copy of a parameter whose type is subclassable by untrusted parties.
+Do not use _clone_ method to make a defensive copy of a parameter whose type is subclass-able by untrusted parties.
 
-Second Attack. Because the accesor returns the object used in the Period class, the client can change its value without passing the constrains.
+Second Attack. Because the accessors returns the object used in the Period class, the client can change its value without passing the constrains.
 ```java
 
 	Date start = new Date();
 	Date end = new Date();
 	Period p = new Period(start, end);
-	p.end.setYear(78)// Modifies internal od p!
+	p.end.setYear(78)// Modifies internal of p!
 ```
 
 Return _defensive copies_ of mutable internal fields.
@@ -1783,7 +1783,7 @@ Return _defensive copies_ of mutable internal fields.
 	}
 ```
 
-Preferable is to use **inmutable objects**(Item 15)
+Preferable is to use **immutable objects**(Item 15)
 
 ## 40. Design method signatures carefully
 
@@ -1861,7 +1861,7 @@ A conservative policy to is never to export two overloadings with the same numbe
 
 For constructors you can use static factories (Item 1)
 
-If parameters are radically different this rules can be violat but always ensure that all overloadings behave identically
+If parameters are radically different this rules can be violate but always ensure that all overloadings behave identically
 when passed the same parameters. To ensure this, have the more specific overloading forward to the more general.
 ```java
 	
@@ -1947,7 +1947,7 @@ Have special care in:
 
 * Generics: document all type parameters
 * Enums: document all the constants, the type and the public methods.
-* Annotations: document all members an the type.
+* Annotatons: document all members an the type.
 
 Don't forget to documment:
 
@@ -2044,6 +2044,63 @@ Every programmer should be familiar with:
 * java.io
 * java.util.concurrent  
 
+## 48. Avoid float and double if exact answer are required
+For monetary calculations use _int_(until 9 digits) or _long_ (until 18 digits) taken you care of the decimal part and you don't care too much about the rounding. Use _BigDecimal_ for numbers bigger that 18 digits and if you need full control of the rounding methods used.
+
+## 49. Prefer primitive types to boxed primitives
+Primitives: _int_, _double_, _boolean_
+Boxed Primitives: _Integer_, _Double_, _Boolean_
+Differences:
+
+* Two boxed primitives could have the same value but different identity.
+* Boxed primitives have one nonfunctional value: _null_.
+* Primitives are more space and time efficient.
+
+Don't use **==** between boxed primitives.
+```java
+
+	first = new Integer(1);
+	second = new Integer(1);
+	first == second; //Use unboxing  Don't have to be true.
+```
+Use Auto-unboxing to create new primitives
+```java
+	
+	...
+	int f = first;  //Auto-unboxing 
+	int s = second  //Auto-unboxing 
+	f == s;// This is true
+```
+
+If a Boxed primitive is not initialize it will return null
+```java
+	
+	Integer  i;
+	i == 42 // NullPointerException
+```
+
+Performance can be perturbed when boxing primitives values due to the creation of unnecessary objects. 
+
+When you **must** use boxed primitives:
+
+* As elements, keys and values in Collections
+* As type parameters in parametrized types (Chapter 5)
+* When making reflective invocations (Item 53) 
+
+In other cases prefer primitives.
+
+## 50. Avoid Strings where other types are more appropriate
+* Strings are more cumbersome than other types.
+* Strings are less flexible than other types.
+* String are slower than other types.
+* Strings are more error-prone than other types.
+* Strings are poor substitutes for other value types.
+* Strings are poor substitutes for _enum_ types.
+* Strings are poor substitutes for _aggregate_ types.
+* Strings are poor substitutes for _capabilities_.
+
+So, use String to represent text!
+
 ## 51. Beware the performance of string concatenation
 
 Using the string concatenation operator repeatedly to concatenate _n_ strings requires time quadratic in _n_.
@@ -2071,7 +2128,33 @@ To achieve acceptable performance, use StringBuilder in place of String.
 	}
 ```
 
+## 52. Refer to objects by their interface
+If appropriate interface types exist, then parameters, return values, variables, and fields should all be declared using interface types.
 
+```java
+
+	// Good - uses interface as type
+	List<Subscriber> subscribers = new Vector<Subscriber>();
+```
+rather than this:
+```java
+
+	// Bad - uses class as type!
+	Vector<Subscriber> subscribers = new Vector<Subscriber>();
+```
+
+It makes the program much more flexible. We could change the implementation of the `subscribers` changing just one line.
+```java
+
+	List<Subscriber> subscribers = new ArrayList<Subscriber>();
+```
+**Caveat**: if the original implementation has a special functionality not required the interface contract and the code depended on that functionality, the new implementation must provide this functionality.
+
+If there is not an appropriate interface we can refer to the object by a class. Like:
+
+* Value classes: String, BigDecimal...
+* Framework classes
+* Classes that extend the interface functionality with extra methods.
 
 ## 53. Prefer interfaces to reflection
 _java.lang.reflection_ offers access to information about loaded classes.
@@ -2080,13 +2163,13 @@ Given a _Class_ object, you can obtain _Constructor_, _Method_ and _Field_ insta
 
 Allows one class to use another, even if the latter class did not exist when the former was compiled.
 
-*	Lose of al benefits of compile-time type checking
+*	Lose of all benefits of compile-time type checking
 *	Code to perform reflective access is clumsy and verbose
 *	Performance suffers.
 
 **As a rule, objects should not be accessed reflectively in normal applications at runtime**
 
-Obtain many of the benfits of reflection incurring few of its costs by **creating instances reflectively and access them normally via their interface or superclass**.
+Obtain many of the benefits of reflection incurring few of its costs by **creating instances reflectively and access them normally via their interface or superclass**.
 
 ```java
 
@@ -2123,5 +2206,13 @@ Obtain many of the benfits of reflection incurring few of its costs by **creatin
 
 A legitimate use of reflection is to manage a class's dependencies on other classes, methods or fields that may be absent at runtime.
 
-Reflection is powerfull and usefull in some sophisticated systems programming tasks. It has many disadvantages.
+Reflection is powerful and useful in some sophisticated systems programming tasks. It has many disadvantages.
 Use reflection, if possible, only to instantiate objects and access the objects using an interface or a superclass that is known at compile time.
+## 54. Use native methods judiciously
+Historically, native methods have had three main uses. 
+
+* They provided access to platform-specific facilities.
+* They provided access to libraries of legacy code.
+* To write performance-critical parts
+
+New Java versions make use of NDK rarely advisable for improve performance.
