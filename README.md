@@ -2048,8 +2048,8 @@ Every programmer should be familiar with:
 For monetary calculations use _int_(until 9 digits) or _long_ (until 18 digits) taken you care of the decimal part and you don't care too much about the rounding. Use _BigDecimal_ for numbers bigger that 18 digits and if you need full control of the rounding methods used.
 
 ## 49. Prefer primitive types to boxed primitives
-Primitives: _int_, _double_, _boolean_
-Boxed Primitives: _Integer_, _Double_, _Boolean_
+Primitives: _int_, _double_, _boolean_   
+Boxed Primitives: _Integer_, _Double_, _Boolean_   
 Differences:
 
 * Two boxed primitives could have the same value but different identity.
