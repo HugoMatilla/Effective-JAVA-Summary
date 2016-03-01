@@ -172,7 +172,8 @@ Used for example to:
 	}
 ```
 
-##5. Avoid creating unnecesary objects
+##5. Avoid creating 
+ objects
 
 **REUSE INMUTABLE OBJECTS**
 
@@ -208,7 +209,8 @@ This one uses a single String instance rather than creating a new one.
 	private final Date birthDate;
 	...
 		public booelan isBabyBoomer(){
-			//Unnecesary allocation of expensive object.
+			//
+			 allocation of expensive object.
 			Calendar gmtCal= Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 			gmtCal.set(1946,Calendar.JANUARY,1,0,0,0);
 			Date boomStart = gmtCal.getTime();
@@ -256,7 +258,8 @@ isBabyBoomer creates a new Calendar,TimeZone and two Date instances each time is
 	}
 ```	
 
-*sum* is declared as *Long* instead of *long* that means that the programs constructs  unnecesary Long instances. 
+*sum* is declared as *Long* instead of *long* that means that the programs constructs  
+ Long instances. 
 
 **_Object polls are normally bad ideas_**
 
@@ -327,7 +330,8 @@ To solve it store only _weak references_ to them, for example storing them as ke
 __Use a Heap Profiler from time to time to find unseen memory leaks__
 
 ##7. Avoid finalizers
- Finalizers are unpredictable, often dangerous and generally unnecesary. 
+ Finalizers are unpredictable, often dangerous and generally 
+ . 
 
 **_Never do anything time-critical in a finalizer._**
 >There is no guarantee they'll be executed promptly. 
@@ -1022,27 +1026,26 @@ A host class can export the a public static field or factory, whose type is the 
 ```
 
 ##22. Favor static member classes over nonstatic
-4 types od nested classes.
+4 types of nested classes.
 
 1. static
 2. nonstatic
 3. anonymous
 4. local
 
-A member class that does not require access to an enclosing instance must be _static_.  
+**Static**, a member class that does not require access to an enclosing instance must be _static_.  
 
 Storing references cost time, space and can cost not wanted behaviors of the garbage collector(Item 6)  
 
-Common use of static member class is a public helper in conjuctions with its outer class. A nested class enum _Operation_
-in  _Calculator_ class. `Calculator.Operation.PLUS`;
+Common use of static member class is a public helper in conjuctions with its outer class. A nested class enum _Operation_ in  _Calculator_ class. `Calculator.Operation.PLUS`;
 
-Nonstatic member class instances are rquired to have an enclosing instance.
+**Nonstatic** member class instances are rquired to have an enclosing instance.
 
-Anonymous classes are us to create _function objects_ on the fly. (Item 21)
+**Anonymous** classes are us to create _function objects_ on the fly. (Item 21)
 
-Local class from the official docs: Use it if you need to create more than one instance of a class, access its constructor, or introduce a new, named type (because, for example, you need to invoke additional methods later).
+**Local** class from the official docs: Use it if you need to create more than one instance of a class, access its constructor, or introduce a new, named type (because, for example, you need to invoke additional methods later).
 
-Anonymous class from the official docs: Use it if you need to declare fields or additional methods.
+Anonymous class, from the official docs: Use it if you need to declare fields or additional methods.
 
 
 # 5 GENERICS
@@ -2061,7 +2064,7 @@ Don't use **==** between boxed primitives.
 
 	first = new Integer(1);
 	second = new Integer(1);
-	first == second; //Use unboxing  Don't have to be true.
+	first == second; //Uses unboxing  Don't have to be true.
 ```
 Use Auto-unboxing to create new primitives
 ```java
@@ -2216,3 +2219,89 @@ Historically, native methods have had three main uses.
 * To write performance-critical parts
 
 New Java versions make use of NDK rarely advisable for improve performance.
+
+## 55. Optimize judiciously
+Strive to write good programs rather than fast ones, speed will follow.  
+If a good program is not fast enough, its architecture will allow it to be optimized.
+
+* More computing sins are committed in the name of efficiency (without necessarily achieving it) than for any other single reason — including blind stupidity.
+* We should forget about small efficiencies, say about 97% of the time: premature
+optimization is the root of all evil.
+* We follow two rules in the matter of optimization:
+	* Rule 1. Don't do it.
+	* Rule 2 (for experts only). Don't do it yet — that is, not until you have a perfectly clear and unoptimized solution.
+
+If you finally do it **measure performance before and after each attempted optimization**, and focus firstly in the  choice of algorithms rather than in low level optimizations.
+
+## 56. Adhere to generally accepted naming conventions
+**Typographical naming conventions**
+| Indentifier Type        |  Examples 								      |
+|-------------------------|-----------------------------------------------|
+| Package                 | com.google.inject, org.joda.time.format 	  |
+| Class or Interface      | Timer, FutureTask, LinkedHashMap, HttpServlet |
+| Method or Field         | remove, ensureCapacity, getCrc      		  |
+| Constant Field          | MIN_VALUE, NEGATIVE_INFINITY      			  |
+| Local Variable   		  | i, xref, houseNumber          				  |
+| Type Parameter 		  | T, E, K, V, X, T1, T2  						  |
+ 
+**Grammatical naming conventions**
+| Type  				   | Convention 				  				| Example
+|------------------------|----------------------------------------------|-----------------------------------------------------------|
+| Classes and enum types | Singular noun or noun phrase	 			    | Timer, BufferedWriter, ChessPiece							|
+| Interfaces             | Like classes      	             			| Collection, Comparator 									|
+| Interfaces             | With an adjective ending in able or ible 	| Runnable Iterable,  Accessible 							|
+| Annotation types       | Nouns, verbs, prepositions, adjectives ...	| BindingAnnotation, Inject, ImplementedBy, Singleton  		|
+| Static factories common names |  ---									|valueOf, of, getInstance, newInstance, getType, newType	|
+| **Methods that...**	 | 						---						| 							---								|
+| perform actions  		 | verb or verb 								|append, drawImage											|
+| return a boolean  	 | names beginning with _is_ or, _has_ 			|isDigit, isProbablePrime, isEmpty, isEnabled, hasSiblings	|
+| return a non-boolean or attribute | noun, a noun phrase, or begin with _get_ | size, hashCode, or getTime 						|
+| convert the type of an object | toType								| toString, toArray 										|
+| return a view (Item 5) of a different type  	| asType				| asList 													|
+| return a primitive with the same value 		| typeValue				| intValue 													|
+ 
+#9 Exceptions 
+## 57. Use exceptions only for exceptional conditions
+Exceptions are  for exceptional conditions.  
+Never use or (expose in the API) exceptions for ordinary control flow.
+
+## 58. Use checked exceptions for recoverable conditions and runtime exceptions for programming errors
+Throwables:
+
+* checked exceptions: for conditions from which the caller can reasonably be expected to recover
+* unchecked exceptions: shouldn't, be caught. recovery is impossible and continued execution would do more harm than good.
+	* runtime exceptions: to indicate programming errors. The great majority indicate precondition violations.
+	* errors : are reserved for use by the JVM. (as a convention)
+
+Unchecked throwables that you implement should **always** subclass _RuntimeException_.
+
+## 59. Avoid unnecessary use of checked exceptions
+Use checked exceptions only if these 2 conditions happen:
+
+* The  exceptional condition cannot be prevented by proper use of the API 
+* The programmer using the API can take some useful action once confronted with the exception.
+
+Refactor the checked exception into a unchecked exception to make the API more pleasant.
+
+Invocation with checked exception
+```java
+
+	try {
+		obj.action(args);
+	} catch(TheCheckedException e) {
+		// Handle exceptional condition
+		...
+	}
+```
+
+Invocation with state-testing method and unchecked exception
+```java
+	
+	if (obj.actionPermitted(args)) {
+		obj.action(args);
+	} else {
+		// Handle exceptional condition
+		...
+	}
+```
+ 
