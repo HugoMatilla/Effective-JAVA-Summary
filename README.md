@@ -2235,6 +2235,7 @@ If you finally do it **measure performance before and after each attempted optim
 
 ## 56. Adhere to generally accepted naming conventions
 **Typographical naming conventions**
+
 | Indentifier Type        |  Examples 								      |
 |-------------------------|-----------------------------------------------|
 | Package                 | com.google.inject, org.joda.time.format 	  |
@@ -2245,6 +2246,7 @@ If you finally do it **measure performance before and after each attempted optim
 | Type Parameter 		  | T, E, K, V, X, T1, T2  						  |
  
 **Grammatical naming conventions**
+
 | Type  				   | Convention 				  				| Example
 |------------------------|----------------------------------------------|-----------------------------------------------------------|
 | Classes and enum types | Singular noun or noun phrase	 			    | Timer, BufferedWriter, ChessPiece							|
