@@ -2247,7 +2247,7 @@ If you finally do it **measure performance before and after each attempted optim
  
 **Grammatical naming conventions**
 
-| Type  				   | Convention 				  				| Example
+| Type  				 | Convention 				  				    | Example
 |------------------------|----------------------------------------------|-----------------------------------------------------------|
 | Classes and enum types | Singular noun or noun phrase	 			    | Timer, BufferedWriter, ChessPiece							|
 | Interfaces             | Like classes      	             			| Collection, Comparator 									|
