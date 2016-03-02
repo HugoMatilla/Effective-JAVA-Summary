@@ -2258,9 +2258,9 @@ If you finally do it **measure performance before and after each attempted optim
 | perform actions  		 | verb or verb phrase							| append, drawImage											|
 | return a boolean  	 | names beginning with _is_ or, _has_ 			| isDigit, isProbablePrime, isEmpty, isEnabled, hasSiblings	|
 | return a non-boolean or attribute | noun, a noun phrase, or begin with _get_ | size, hashCode, or getTime 						|
-| convert the type of an object | _to_Type								| toString, toArray 										|
-| return a view (Item 5) of a different type  	| _as_Type				| asList 													|
-| return a primitive with the same value 		| _type_Value			| intValue 													|
+| convert the type of an object | _toType_								| toString, toArray 										|
+| return a view (Item 5) of a different type  	| _asType_				| asList 													|
+| return a primitive with the same value 		| _typeValue_			| intValue 													|
  
 #9 Exceptions 
 ## 57. Use exceptions only for exceptional conditions
