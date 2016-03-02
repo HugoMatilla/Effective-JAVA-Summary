@@ -2251,16 +2251,16 @@ If you finally do it **measure performance before and after each attempted optim
 |------------------------|----------------------------------------------|-----------------------------------------------------------|
 | Classes and enum types | Singular noun or noun phrase	 			    | Timer, BufferedWriter, ChessPiece							|
 | Interfaces             | Like classes      	             			| Collection, Comparator 									|
-| Interfaces             | With an adjective ending in able or ible 	| Runnable Iterable,  Accessible 							|
+| Interfaces             | With an adjective ending in _able_ or _ible_	| Runnable, Iterable,  Accessible 							|
 | Annotation types       | Nouns, verbs, prepositions, adjectives ...	| BindingAnnotation, Inject, ImplementedBy, Singleton  		|
-| Static factories common names |  ---									|valueOf, of, getInstance, newInstance, getType, newType	|
+| Static factories (common names) |  ---								| valueOf, of, getInstance, newInstance, getType, newType	|
 | **Methods that...**	 | 						---						| 							---								|
-| perform actions  		 | verb or verb 								|append, drawImage											|
-| return a boolean  	 | names beginning with _is_ or, _has_ 			|isDigit, isProbablePrime, isEmpty, isEnabled, hasSiblings	|
+| perform actions  		 | verb or verb phrase							| append, drawImage											|
+| return a boolean  	 | names beginning with _is_ or, _has_ 			| isDigit, isProbablePrime, isEmpty, isEnabled, hasSiblings	|
 | return a non-boolean or attribute | noun, a noun phrase, or begin with _get_ | size, hashCode, or getTime 						|
-| convert the type of an object | toType								| toString, toArray 										|
-| return a view (Item 5) of a different type  	| asType				| asList 													|
-| return a primitive with the same value 		| typeValue				| intValue 													|
+| convert the type of an object | _to_Type								| toString, toArray 										|
+| return a view (Item 5) of a different type  	| _as_Type				| asList 													|
+| return a primitive with the same value 		| _type_Value			| intValue 													|
  
 #9 Exceptions 
 ## 57. Use exceptions only for exceptional conditions
