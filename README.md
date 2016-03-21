@@ -2306,4 +2306,157 @@ Invocation with state-testing method and unchecked exception
 		...
 	}
 ```
- 
+## 60. Favor the use of standard exceptions
+| Exception                       |  Occasion for Use                                                              | 
+|---------------------------------|--------------------------------------------------------------------------------| 
+| IllegalArgumentException        |  Non-null parameter value is inappropriate                                     | 
+| IllegalStateException           |  Object state is inappropriate for method invocation                           | 
+| NullPointerException            |  Parameter value is null where prohibited                                      | 
+| IndexOutOfBoundsException       |  Index parameter value is out of range                                         | 
+| ConcurrentModificationException |  Concurrent modification of an object has been detected where it is prohibited | 
+| UnsupportedOperationException   |  Object does not support method                                                | 
+
+| Java 8 Exceptions                 | 
+|-----------------------------------| 
+| AclNotFoundException              | 
+| ActivationException               | 
+| AlreadyBoundException             | 
+| ApplicationException              | 
+| AWTException                      | 
+| BackingStoreException             | 
+| BadAttributeValueExpException     | 
+| BadBinaryOpValueExpException      | 
+| BadLocationException              | 
+| BadStringOperationException       | 
+| BrokenBarrierException            | 
+| CertificateException              | 
+| CloneNotSupportedException        | 
+| DataFormatException               | 
+| DatatypeConfigurationException    | 
+| DestroyFailedException            | 
+| ExecutionException                | 
+| ExpandVetoException               | 
+| FontFormatException               | 
+| GeneralSecurityException          | 
+| GSSException                      | 
+| IllegalClassFormatException       | 
+| InterruptedException              | 
+| IntrospectionException            | 
+| InvalidApplicationException       | 
+| InvalidMidiDataException          | 
+| InvalidPreferencesFormatException | 
+| InvalidTargetObjectTypeException  | 
+| IOException                       | 
+| JAXBException                     | 
+| JMException                       | 
+| KeySelectorException              | 
+| LambdaConversionException         | 
+| LastOwnerException                | 
+| LineUnavailableException          | 
+| MarshalException                  | 
+| MidiUnavailableException          | 
+| MimeTypeParseException            | 
+| MimeTypeParseException            | 
+| NamingException                   | 
+| NoninvertibleTransformException   | 
+| NotBoundException                 | 
+| NotOwnerException                 | 
+| ParseException                    | 
+| ParserConfigurationException      | 
+| PrinterException                  | 
+| PrintException                    | 
+| PrivilegedActionException         | 
+| PropertyVetoException             | 
+| ReflectiveOperationException      | 
+| RefreshFailedException            | 
+| RemarshalException                | 
+| RuntimeException                  | 
+| SAXException                      | 
+| ScriptException                   | 
+| ServerNotActiveException          | 
+| SOAPException                     | 
+| SQLException                      | 
+| TimeoutException                  | 
+| TooManyListenersException         | 
+| TransformerException              | 
+| TransformException                | 
+| UnmodifiableClassException        | 
+| UnsupportedAudioFileException     | 
+| UnsupportedCallbackException      | 
+| UnsupportedFlavorException        | 
+| UnsupportedLookAndFeelException   | 
+| URIReferenceException             | 
+| URISyntaxException                | 
+| UserException                     | 
+| XAException                       | 
+| XMLParseException                 | 
+| XMLSignatureException             | 
+| XMLStreamException                | 
+| XPathException                    | 
+
+## 61 Throw exceptions appropriate to the abstraction
+Higher layers should catch lower-level exceptions and, in their place, throw exceptions that can be explained in terms of the higher-level abstraction.
+```java
+
+	// Exception Translation
+	try {
+		// Use lower-level abstraction to do our bidding
+		...
+	} catch(LowerLevelException e) {
+		throw new HigherLevelException(...);
+	}
+```
+Do not overused. The best way to deal with exceptions from lower layers is to avoid them, by ensuring that lower-level methods succeed.
+
+**Exception chaining**
+When the lower-level exception is utile for the debugger, pass the lower-level to the higher-level exception, with an accessor method (Throwable.getCause) to retrieve the lower-level exception. 
+
+```java
+
+	// Exception with chaining-aware constructor
+	class HigherLevelException extends Exception {
+		HigherLevelException(Throwable cause) {
+		super(cause);
+		}
+	}
+```
+## 62 Document all exceptions thrown by each method
+Unchecked exceptions generally represent programming errors (Item 58), and familiarizing programmers with all of the errors they can make helps them avoid making these errors. 
+
+Always declare checked exceptions individually, and document precisely the conditions under which each one is thrown using the Javadoc @throws tag.
+
+Do not use the throws keyword to include unchecked exceptions in the method declaration.
+
+## 63 Include failure-capture information in detail messages
+It is critically important that the exception’s `toString` method return as much information as possible concerning
+the cause of the failure.
+To capture the failure, the detail message of an exception should contain the values of all parameters and fields that contributed to the exception.
+One way to ensure that is to require this information in their constructors instead of a string detail message. Also provide accessors to this parameters could help useful to recover from the failure
+
+```java
+
+	// Alternative IndexOutOfBoundsException.
+	public IndexOutOfBoundsException(int lowerBound, int upperBound, int index) {...}
+```
+
+## 64 Strive for failure atomicity
+A failed method invocation should leave the object in the state that it was in prior to the invocation.
+Options to achieve this:
+
+* Design immutable objects
+* Order the computation so that any part that may fail takes place before any part that modifies the object.
+* Write recovery code (Undo operation)
+* Perform the operation on a temporary copy of the object, and replace it once is completed.
+
+## 65 Don't ignore exceptions
+Don't let catch blocks empty.
+```java
+
+	// Empty catch block ignores exception - Highly suspect!
+	try {
+	...
+	} catch (SomeException e) {
+	}
+```
+
+# 10 Concurrency 
