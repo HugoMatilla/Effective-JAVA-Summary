@@ -2460,3 +2460,188 @@ Don't let catch blocks empty.
 ```
 
 # 10 Concurrency 
+## 66 Synchronize access to shared mutable data
+Synchronization prevent a thread from observing an object in an inconsistent state.
+Synchronization ensures that each thread entering a synchronized method or block sees the effects
+of all previous modifications that were guarded by the same lock.
+
+In Java reading or writing a variable is atomic unless type long or double. For all atomic operations it does not guarantee that a value written by one thread will be visible to another.
+
+Synchronization is required for reliable communication between threads as well as for mutual exclusion.
+
+```java 
+
+	// Broken! - How long would you expect this program to run?
+	public class StopThread {
+		private static boolean stopRequested;
+		
+		public static void main(String[] args) throws InterruptedException {
+			Thread backgroundThread = new Thread(new Runnable() {
+				public void run() {
+					int i = 0;
+					while (!stopRequested)
+						i++;
+			}
+		});
+		backgroundThread.start();
+
+		TimeUnit.SECONDS.sleep(1);
+		stopRequested = true;
+		}
+	}
+```
+
+Because of _hoisting_ the while loop is translated to this:
+
+```java
+
+	if (!done)
+		while (true)
+			i++;
+
+```			
+
+and therefore the loop never stops.
+
+```java
+
+	// Properly synchronized cooperative thread termination
+	public class StopThread {
+		private static boolean stopRequested;
+
+		private static synchronized void requestStop() {
+			stopRequested = true;
+		}
+		private static synchronized boolean stopRequested() {
+			return stopRequested;
+		}
+		
+		public static void main(String[] args) throws InterruptedException {
+			Thread backgroundThread = new Thread(new Runnable() {
+				public void run() {
+					int i = 0;
+					while (!stopRequested())
+						i++;
+				}
+		});
+		backgroundThread.start();
+		
+		TimeUnit.SECONDS.sleep(1);
+		requestStop();
+		}
+	}
+```
+Synchronization has no effect unless both read and write operations are synchronized.
+
+Other solution is using _volatile_ modifier, it performs no mutual exclusion, but it guarantees that any thread that reads the field will see the most recently written value.
+
+```java
+
+	public class StopThread {
+		private static volatile boolean stopRequested;
+		
+		public static void main(String[] args) throws InterruptedException {
+			Thread backgroundThread = new Thread(new Runnable() {
+				public void run() {
+					int i = 0;
+					while (!stopRequested)
+						i++;
+			}
+		});
+		backgroundThread.start();
+
+		TimeUnit.SECONDS.sleep(1);
+		stopRequested = true;
+		}
+	}
+```
+Be carefull with _volatile_ when using non atomic functions like ++
+
+```java
+
+	private static volatile int nextSerialNumber = 0;
+	
+	public static int generateSerialNumber() {
+		return nextSerialNumber++;
+	}
+```
+
+We can synchronize the access to nextSerialNumber and remove _volatile_ or use AtomicLong.
+AtomicLong can help us with the synchronization of long values
+
+```java
+
+	private static final AtomicLong nextSerialNum = new AtomicLong();
+	
+	public static long generateSerialNumber() {
+		return nextSerialNum.getAndIncrement();
+	}
+```
+_effectively immutable_: data object  modified by one thread to modify shared it with other threads, synchronizing only the act of sharing the object reference. Other threads can then read the object without further synchronization, so long as it isn't modified again.
+_safe publication_: Transferring such an object reference from one thread to others.
+
+
+_In general:_ When multiple threads share mutable data, each thread that reads or writes the data must perform synchronization
+_Best thing to do:_ **Not to share mutable data.**
+
+## 67 Avoid excessive synchronization
+Inside a synchronized region, do not invoke a  method (_alien_) that is designed to be overridden, or one provided by a client in the form of a function object (Item 21). Calling it from a synchronized region can cause exceptions,
+deadlocks, or data corruption.
+Move alien method invocations out of synchronized blocks. Taking a “snapshot” of the object that can then be safely traversed without a lock.
+
+```java
+
+	// Alien method moved outside of synchronized block - open calls
+	private void notifyElementAdded(E element) {
+		List<SetObserver<E>> snapshot = null;
+		synchronized(observers) {
+			snapshot = new ArrayList<SetObserver<E>>(observers);
+		}
+		for (SetObserver<E> observer : snapshot)
+			observer.added(this, element);
+	}
+```
+Or use a _concurrent collection_ (Item 69) known as CopyOnWriteArrayList. It is a variant of ArrayList in which all write operations are implemented by making a fresh copy of the entire underlying array.
+The internal array is never modified and iteration requires no locking.
+
+_open call_: An alien method invoked outside of a synchronized region
+
+_As Rule_:
+
+* **do as little work as possible inside synchronized regions** 
+* **limit the amount of work that you do from within synchronized regions** 
+
+##68 Prefer executors and tasks to threads
+Creating a work queue:
+```java
+
+	ExecutorService executor = Executors.newSingleThreadExecutor();
+```
+
+Submit a runnable for execution:
+```java
+
+	executor.execute(runnable);
+```
+Terminate gracefully the executor 
+```java
+
+	executor.shutdown();
+```
+ExecutorService possibilities:
+
+* wait for a particular task to complete: `background thread SetObserver`
+* wait for any or all of a collection of tasks to complete: `invokeAny` or `invokeAll`
+* wait for the executor service’s graceful termination to complete: `awaitTermination`
+* retrieve the results of tasks one by one as they complete: `ExecutorCompletionService`
+*...
+
+For more than one thread use a _thread pool_.
+For lightly loaded application, use: `Executors.new-CachedThreadPool`
+For heavily loaded application, use: `Executors.newFixedThreadPool`
+
+_executor service_: mechanism for executing tasks
+_task_: unit of work
+
+* Runnable
+* Callable, similar to Runnable but returns a value
