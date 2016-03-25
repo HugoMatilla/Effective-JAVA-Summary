@@ -2555,7 +2555,7 @@ Other solution is using _volatile_ modifier, it performs no mutual exclusion, bu
 		}
 	}
 ```
-Be carefull with _volatile_ when using non atomic functions like ++
+Be careful with _volatile_ when using non atomic functions like ++
 
 ```java
 
@@ -2578,10 +2578,12 @@ AtomicLong can help us with the synchronization of long values
 	}
 ```
 _effectively immutable_: data object  modified by one thread to modify shared it with other threads, synchronizing only the act of sharing the object reference. Other threads can then read the object without further synchronization, so long as it isn't modified again.
+
 _safe publication_: Transferring such an object reference from one thread to others.
 
 
 _In general:_ When multiple threads share mutable data, each thread that reads or writes the data must perform synchronization
+
 _Best thing to do:_ **Not to share mutable data.**
 
 ## 67 Avoid excessive synchronization
@@ -2641,6 +2643,7 @@ For lightly loaded application, use: `Executors.new-CachedThreadPool`
 For heavily loaded application, use: `Executors.newFixedThreadPool`
 
 _executor service_: mechanism for executing tasks
+
 _task_: unit of work
 
 * Runnable
