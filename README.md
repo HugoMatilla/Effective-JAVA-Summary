@@ -2656,17 +2656,14 @@ Given the difficulty of using wait and notify correctly, you should use the high
 * Concurrent Collections 
 * Synchronizers
 
-**Concurrent Collections** 
-High-performance concurrent implementations of standard collection interfaces (List, Queue, and Map)  
+**Concurrent Collections**: High-performance concurrent implementations of standard collection interfaces (List, Queue, and Map)  
 Use concurrent collections in preference to externally synchronized collections   
 Some interfaces have been extended with blocking operations, which wait (or block) until they can be successfully performed. This allows blocking queues to be used for work queues ( _producer-consumer queues_). One or more producer threads enqueue work items and from which one or more consumer threads dequeue and process
 items as they become available. ExecutorService implementations, including ThreadPoolExecutor, use a BlockingQueue (Item 68).
 
-**Synchronizers**
-objects that enable threads to wait for one another, allowing them to coordinate their activities (CountDownLatch, Semaphore, CyclicBarrier, Exchanger)
+**Synchronizers**: objects that enable threads to wait for one another, allowing them to coordinate their activities (CountDownLatch, Semaphore, CyclicBarrier, Exchanger)
 
-_wait_
-Always use the wait loop idiom to invoke the wait method; never invoke it outside of a loop. The loop serves to test the condition before and after waiting.
+**wait**: Always use the wait loop idiom to invoke the wait method; never invoke it outside of a loop. The loop serves to test the condition before and after waiting.
 ```java
 
 	// The standard idiom for using the wait method
@@ -2677,11 +2674,9 @@ Always use the wait loop idiom to invoke the wait method; never invoke it outsid
 		... // Perform action appropriate to condition
 	}
 ```
-_notify_  
-Wakes a single waiting thread, assuming such a thread exists.
+**notify**: Wakes a single waiting thread, assuming such a thread exists.
 
-_notifyAll_ 
-Wakes all waiting threads.
+**notifyAll**: Wakes all waiting threads.
 
 Use always use _notifyAll_ (and not forget to use the wait loop explained before)
 You may wake some other threads, but these threads will check the condition for which they're waiting and, finding it false, will continue waiting.
@@ -2746,7 +2741,7 @@ For performance on a static field: **lazy initialization holder class idiom**, a
 	static FieldType getField() { return FieldHolder.field; }
 ```	
 
-For performance on an instance field: **Double-check idiom**.
+For performance on an instance field: **double-check idiom**.
 ```java
 
 	// Double-check idiom for lazy initialization of instance fields
