@@ -2784,3 +2784,67 @@ tasks should be:
 
 ## 73 Avoid thread groups
 Thread groups are obsolete.
+
+# 11 Serialization
+## 74 Implement _Serializable_ judiciously
+Adding `implements Serializable` is the easiest way to serialize a class, but it decreases the flexibility
+to change a class's implementation once it has been released. The byte-stream encoding (or serialized form)
+becomes part of its exported API. 
+
+It has three major drawbacks: 
+
+* Class's private and package-private instance fields become part of its exported API (Item 13)
+* Change the class's internal representation, will cause make old versions of serialized objects incompatible.
+* Increases the likelihood of bugs and security holes.
+* Increases the testing burden associated with releasing a new version of a class.
+
+Implementing the Serializable interface has many real costs.  
+
+
+**should implement Serializable:**
+
+* value classes such as _Date_ and _BigInteger_  
+* as should most collection classes
+
+**rarely implement Serializable:** 
+
+* Classes representing active entities, such as thread pools
+* Classes designed for inheritance
+* Interfaces should rarely extend it
+* Inner classes (Item 22) 
+
+A subclass of a not serializable class can not be serializable, unless it has a parameterless constructor.
+
+## 75 Consider using a custom serialized form
+Do not accept the default serialized form without first considering whether it is appropriate.  
+The default serialized form is likely to be appropriate if an object's physical representation is identical to its logical content. Like a Point or Person Name.   
+Even if you decide that the default serialized form is appropriate, you often must provide a `readObject` method to ensure invariants and security
+
+Using the default serialized form when an object's physical representation differs substantially from its logical data content has four disadvantages:
+
+* It permanently ties the exported API to the current internal representation.
+* It can consume excessive space.
+* It can consume excessive time.
+* It can cause stack overflows.
+
+Every instance field that is not labeled _transient_ will be serialized when the defaultWriteObject method is invoked
+(Whether or not you use the default serialized)  
+Every instance field that can be made transient should be made so.(i.e. computed from “primary data fields)
+Mark _nontransient_ every field whose value is part of the logical state of the object.
+
+Impose synchronization on object serialization that you would impose on any other method that reads the entire state of the object.
+```java
+
+	// writeObject for synchronized class with default serialized form
+	private synchronized void writeObject(ObjectOutputStream s)
+		throws IOException {
+			s.defaultWriteObject();
+	}
+```
+Declare an explicit serial version UID in every serializable class you write.
+```java
+
+	private static final long serialVersionUID = randomLongValue ;
+```
+
+
