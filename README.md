@@ -2411,7 +2411,7 @@ Invocation with state-testing method and unchecked exception
 | ConcurrentModificationException |  Concurrent modification of an object has been detected where it is prohibited |
 | UnsupportedOperationException   |  Object does not support method                                                |
 
-|                          Java 8 Exceptions                          |
+|    Java 8 Exceptions              |                                 |
 |-----------------------------------|---------------------------------|
 | AclNotFoundException              | MimeTypeParseException          |
 | ActivationException               | NamingException                 |
