@@ -692,11 +692,11 @@ __Encapsulation__:
 
 __Make each class or member as inaccesible as possible__
 
-If a package-private top level class is used  by only one class make it a  private nested class of the class that uses it. ([Item 22](#22-favor-static-member-classes-over-nonstatic)
+If a package-private top level class is used  by only one class make it a  private nested class of the class that uses it. ([Item 22](#22-favor-static-member-classes-over-nonstatic))
 
 Is is acceptable to make a private member of a public class package-private in order to test it.
 
-__Instance fields should never be public__ ([Item 14](#14-in-public-classes-use-accessor-methods-not-public-fields) Class will not be thread-safe.
+__Instance fields should never be public__ ([Item 14](#14-in-public-classes-use-accessor-methods-not-public-fields)) Class will not be thread-safe.
 
 Static fields can be public if contain primitive values or references to inmutable objects. A final field containing a reference to a mutable object has all the disadvantages of a non final field.
 
@@ -951,7 +951,7 @@ Prohibit subclassing in classes that are not designed and documented to be safel
 
 * Declare the class final
 * Make all constructors private or package-private and add public static factories in place of the constructors. 
-([Item 15](#15-minimize-mutability)
+([Item 15](#15-minimize-mutability))
 
 Consider use [Item 16](#16-favor-composition-over-inheritance) if what you want is to increase the functionality of your class instead of subclassing.
 
