@@ -18,6 +18,7 @@ If you are the publisher and think this repository should not be public, just wr
 	- [8. Obey the general contract when overriding *equals*](#8-obey-the-general-contract-when-overriding-equals)
 	- [9. Always override _hashCode_ when you override *equals*](#9-always-override-hashcode-when-you-override-equals)
 	- [10. Always override _toString_](#10-always-override-tostring)
+	- [11. Override _clone_ judiciously](#11-override-clone-judiciously)
 	- [12. Consider implementing _Comparable_](#12-consider-implementing-comparable)
 - [4. CLASSES AND INTERFACES](#4-classes-and-interfaces)
 	- [13. Minimize the accesibility of classes and members](#13-minimize-the-accesibility-of-classes-and-members)
