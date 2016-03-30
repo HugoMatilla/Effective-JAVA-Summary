@@ -5,7 +5,7 @@ If you are the publisher and think this repository should not be public, just wr
 **Contributions:** Issues, comments, pull requests are welcome.
 
 #1. TABLE OF CONTENTS
-- [1 TABLE OF CONTENTS](#1-table-of-contents)
+- [1. TABLE OF CONTENTS](#1-table-of-contents)
 - [2. CREATING AND DESTROYING OBJECTS](#2-creating-and-destroying-objects)
 	- [1. Use STATIC FACTORY METHODS instead of constructors](#1-use-static-factory-methods-instead-of-constructors)
 	- [2. Use BUILDERS when faced with many constructors](#2-use-builders-when-faced-with-many-constructors)
@@ -14,12 +14,12 @@ If you are the publisher and think this repository should not be public, just wr
 	- [5. Avoid creating objects](#5-avoid-creating-objects)
 	- [6. Eliminate obsole object references](#6-eliminate-obsole-object-references)
 	- [7. Avoid finalizers](#7-avoid-finalizers)
-- [3 METHODS COMMON TO ALL OBJECTS](#3-methods-common-to-all-objects)
+- [3. METHODS COMMON TO ALL OBJECTS](#3-methods-common-to-all-objects)
 	- [8. Obey the general contract when overriding *equals*](#8-obey-the-general-contract-when-overriding-equals)
 	- [9. Always override _hashCode_ when you override *equals*](#9-always-override-hashcode-when-you-override-equals)
 	- [10. Always override _toString_](#10-always-override-tostring)
 	- [12. Consider implementing _Comparable_](#12-consider-implementing-comparable)
-- [4 CLASSES AND INTERFACES](#4-classes-and-interfaces)
+- [4. CLASSES AND INTERFACES](#4-classes-and-interfaces)
 	- [13. Minimize the accesibility of classes and members](#13-minimize-the-accesibility-of-classes-and-members)
 	- [14. In public classes, use accessor methods, not public fields](#14-in-public-classes-use-accessor-methods-not-public-fields)
 	- [15. Minimize Mutability](#15-minimize-mutability)
@@ -30,7 +30,7 @@ If you are the publisher and think this repository should not be public, just wr
 	- [20. Prefer class hierarchies to tagged classes](#20-prefer-class-hierarchies-to-tagged-classes)
 	- [21. Use function objects to represent strategies](#21-use-function-objects-to-represent-strategies)
 	- [22. Favor static member classes over nonstatic](#22-favor-static-member-classes-over-nonstatic)
-- [5 GENERICS](#5-generics)
+- [5. GENERICS](#5-generics)
 	- [23. Don't use raw types in new code](#23-dont-use-raw-types-in-new-code)
 	- [24. Eliminate unchecked warnings](#24-eliminate-unchecked-warnings)
 	- [25. Prefer lists to arrays](#25-prefer-lists-to-arrays)
@@ -38,7 +38,7 @@ If you are the publisher and think this repository should not be public, just wr
 	- [27. Favor generic Methods](#27-favor-generic-methods)
 	- [28. Use bounded wildcards to increase API flexibility](#28-use-bounded-wildcards-to-increase-api-flexibility)
 	- [29. Consider _typesafe heterogeneous containers_](#29-consider-typesafe-heterogeneous-containers)
-- [6 ENUMS AND ANNOTATIONS](#6-enums-and-annotations)
+- [6. ENUMS AND ANNOTATIONS](#6-enums-and-annotations)
 	- [30. Use enums instead of _int_ constants](#30-use-enums-instead-of-int-constants)
 	- [31. Use instance fields instead of ordinals](#31-use-instance-fields-instead-of-ordinals)
 	- [32. Use EnumSet instead of bit fields](#32-use-enumset-instead-of-bit-fields)
@@ -47,7 +47,7 @@ If you are the publisher and think this repository should not be public, just wr
 	- [35. Prefer annotations to naming patterns](#35-prefer-annotations-to-naming-patterns)
 	- [36. Consistently use the _Override_ annotation](#36-consistently-use-the-override-annotation)
 	- [37. Use marker interfaces to define types](#37-use-marker-interfaces-to-define-types)
-- [METHODS](#6-methods)
+- [7. METHODS](#6-methods)
 	- [38. Check parameters for validity](#38-check-parameters-for-validity)
 	- [39. Make defensive copies when needed.](#39-make-defensive-copies-when-needed)
 	- [40. Design method signatures carefully](#40-design-method-signatures-carefully)
@@ -55,7 +55,7 @@ If you are the publisher and think this repository should not be public, just wr
 	- [42. Use varargs judiciously](#42-use-varargs-judiciously)
 	- [43. Return empty arrays or collections, not nulls](#43-return-empty-arrays-or-collections-not-nulls)
 	- [44. Write _doc comments_ for all exposed API elemnts](#44-write-doc-comments-for-all-exposed-api-elemnts)
-- [GENERAL PROGRAMMING](#7-general-programming)
+- [8. GENERAL PROGRAMMING](#7-general-programming)
 	- [45. Minimize the scope of local variables.](#45-minimize-the-scope-of-local-variables)
 	- [46. Prefer for-each lopps to traditional for loops.](#46-prefer-for-each-lopps-to-traditional-for-loops)
 	- [47. Know and use libraries](#47-know-and-use-libraries)
@@ -68,7 +68,7 @@ If you are the publisher and think this repository should not be public, just wr
 	- [54. Use native methods judiciously](#54-use-native-methods-judiciously)
 	- [55. Optimize judiciously](#55-optimize-judiciously)
 	- [56. Adhere to generally accepted naming conventions](#56-adhere-to-generally-accepted-naming-conventions)
-- [9 EXCEPTIONS](#9-exceptions)
+- [9. EXCEPTIONS](#9-exceptions)
 	- [57. Use exceptions only for exceptional conditions](#57-use-exceptions-only-for-exceptional-conditions)
 	- [58. Use checked exceptions for recoverable conditions and runtime exceptions for programming errors](#58-use-checked-exceptions-for-recoverable-conditions-and-runtime-exceptions-for-programming-errors)
 	- [59. Avoid unnecessary use of checked exceptions](#59-avoid-unnecessary-use-of-checked-exceptions)
@@ -78,7 +78,7 @@ If you are the publisher and think this repository should not be public, just wr
 	- [63. Include failure-capture information in detail messages](#63-include-failure-capture-information-in-detail-messages)
 	- [64. Strive for failure atomicity](#64-strive-for-failure-atomicity)
 	- [65. Don't ignore exceptions](#65-dont-ignore-exceptions)
-- [10 CONCURRENCY](#10-concurrency)
+- [10. CONCURRENCY](#10-concurrency)
 	- [66. Synchronize access to shared mutable data](#66-synchronize-access-to-shared-mutable-data)
 	- [67. Avoid excessive synchronization](#67-avoid-excessive-synchronization)
 	- [68. Prefer executors and tasks to threads](#68-prefer-executors-and-tasks-to-threads)
@@ -87,7 +87,7 @@ If you are the publisher and think this repository should not be public, just wr
 	- [71. Use lazy initialization judiciously](#71-use-lazy-initialization-judiciously)
 	- [72. Don't depend on thread scheduler](#72-dont-depend-on-thread-scheduler)
 	- [73. Avoid thread groups](#73-avoid-thread-groups)
-- [11 SERIALIZATION](#11-serialization)
+- [11. SERIALIZATION](#11-serialization)
 	- [74. Implement _Serializable_ judiciously](#74-implement-serializable-judiciously)
 	- [75. Consider using a custom serialized form](#75-consider-using-a-custom-serialized-form)
 	- [76. Write _readObject_ methods defensively](#76-write-readobject-methods-defensively)
@@ -566,6 +566,94 @@ When practival, the _toString_ method return all of the  interesting information
 It is possible to specify the format of return value in the documentation.
 
 Always provide programmatic access to all of the information contained in the value returned by _toString_ so the users of the object don't need to parse the output of the _toString_
+
+##11. Override _clone_ judiciously
+Cloneable interface does not contain methods
+If a class implements Cloneable, Object's clone method returns a field-by-field copy of the object. 
+Otherwise it throws CloneNotSupportedException.
+
+If you override the clone method in a nonfinal class, you should return an object obtained by invoking _super.clone_.
+A class that implements _Cloneable_ is expected to provide a properly functioning public _clone_ method.
+
+Simple clone method if object does **not** contain fields that refer to mutable objects.
+
+```java
+
+	@Override public PhoneNumber clone() {
+		try {
+			//PhoneNumber.clone must cast the result of super.clone() before returning it.
+			return (PhoneNumber) super.clone(); 
+		} catch(CloneNotSupportedException e) {
+			throw new AssertionError(); // Can't happen
+		}
+	}
+```
+
+If object **contains** fields that refer to mutable objects, we need another solution. Mutable fields will point to same objects in memory and the original and the cloned method will share these objects.
+
+_clone_ is another constructor and therefore it must ensure not harming the original object and establishing invariants.  
+Calling _clone_ recursively in the mutable objects is the easiest way.
+
+```java
+
+	@Override public Stack clone() {
+		try {
+			Stack result = (Stack) super.clone();
+			// From Java 1.5, don't need casting when cloning arrays
+			result.elements = elements.clone();
+			return result;
+		} catch (CloneNotSupportedException e) {
+			throw new AssertionError();
+		}
+	}
+```
+
+Mutable objects and finals: The _clone_ architecture is incompatible with normal use of final fields referring to mutable objects.
+More complex objects would need specific approaches where recursively calling _clone_ won't work.
+
+A _clone_ method should not invoke any nonfinal methods on the clone under construction ([Item 17](#17-design-and-document-for-inheritance-or-else-prohibit-it)).
+
+Object's _clone_ method is declared to throw _CloneNotSupportedException_, but overriding clone methods can omit this declaration.  
+Public _clone_ methods should omit it. ([Item 59](#59-avoid-unnecessary-use-of-checked-exceptions)).  
+If a class overrides clone, the overriding method should mimic the behavior of _Object.clone_: 
+
+* it should be declared protected,
+* it should be declared to throw CloneNotSupportedException,
+* it should not implement Cloneable.
+
+Subclasses are free to implement Cloneable or not, just as if they extended Object directly
+
+_clone_ method must be properly synchronized just like any other method ([Item 66](#66-synchronize-access-to-shared-mutable-data)).
+
+Summary: classes that implement Cloneable should create a method that: 
+
+* override clone 
+* return type is the class
+* call _super.clone_ 
+* fix fields that need to be fixed 
+
+Better provide an alternative of object copying, or don't provide it at all.
+
+**Copy Constructor**
+```java
+
+	public Yum(Yum yum);
+```
+
+**Copy Factory**
+```java
+
+	public static Yum newInstance(Yum yum);
+```
+These alternatives:
+
+* don't rely on a risk-prone extra-linguistic object creation mechanism
+* don't demand adherence to thinly documented conventions
+* don't conflict with the proper use of final fields 
+* don't throw unnecessary checked exceptions
+* don't require casts.
+
+Furthermore they can use its Interface-based copy constructors and factories, _conversion constructors_ and _conversion factories_ and allow clients to choose the implementation type `public HashSet(Set set) -> TreeSet;`
 
 ##12. Consider implementing _Comparable_
 _Comparable_ is an interface. It is not declared in _Object_
