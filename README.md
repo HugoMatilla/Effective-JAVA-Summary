@@ -2,7 +2,7 @@ This is my summary of the Effective Java 2nd Edition by Joshua Bloch. I use it w
 
 If you are the publisher and think this repository should not be public, just write me an email at hugomatilla [at] gmail [dot]com and I will make it private.
 
-**Contributions:** Issues, comments, pull requests are welcome.
+**Contributions:** Issues, comments and pull requests are super welcome :)
 
 #1. TABLE OF CONTENTS
 - [1. TABLE OF CONTENTS](#1-table-of-contents)
