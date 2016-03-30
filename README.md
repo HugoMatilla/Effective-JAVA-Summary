@@ -1,13 +1,13 @@
-This is my summary of the Effective Java 2nd Edition by Joshua Bloch. I use it while learning and as quick reference. It is not intended to be an standalone substitution of the book so if you really want to learn the concepts here presented, buy and read the book and use this repo as a reference and guide.
+This is my summary of the Effective Java 2nd Edition by Joshua Bloch. I use it while learning and as quick reference. It is not intended to be an standalone substitution of the book so if you really want to learn the concepts here presented, buy and read the book and use this repository as a reference and guide.
 
-If you are the publisher and think this repo should not be public, just write me an email at hugomatilla [at] gmail [dot]com and I will make it private.
+If you are the publisher and think this repository should not be public, just write me an email at hugomatilla [at] gmail [dot]com and I will make it private.
 
 **Contributions:** Issues, comments, pull requests are welcome.
- 
-#1 TABLE OF CONTENTS
+
+#1. TABLE OF CONTENTS
 - [1 TABLE OF CONTENTS](#1-table-of-contents)
 - [2. CREATING AND DESTROYING OBJECTS](#2-creating-and-destroying-objects)
-	- [<A NAME="1"></A> 1. Use STATIC FACTORY METHODS instead of constructors](#a-name1a-1-use-static-factory-methods-instead-of-constructors)
+	- [1. Use STATIC FACTORY METHODS instead of constructors](#1-use-static-factory-methods-instead-of-constructors)
 	- [2. Use BUILDERS when faced with many constructors](#2-use-builders-when-faced-with-many-constructors)
 	- [3. Enforce the singleton property with a private constructor or an enum type](#3-enforce-the-singleton-property-with-a-private-constructor-or-an-enum-type)
 	- [4. Enforce noninstantiablillity with a private constructor](#4-enforce-noninstantiablillity-with-a-private-constructor)
@@ -97,8 +97,8 @@ If you are the publisher and think this repo should not be public, just write me
 
 
 
-# 2. CREATING AND DESTROYING OBJECTS
-##<A NAME="1"></A> 1. Use STATIC FACTORY METHODS instead of constructors
+#2. CREATING AND DESTROYING OBJECTS
+##1. Use STATIC FACTORY METHODS instead of constructors
 **_ADVANTAGES_**
 
 * Unlike constructors, they have names
@@ -289,7 +289,7 @@ Every call creates a new String instance. The argument *"stringette"* is itself 
 
 This one uses a single String instance rather than creating a new one.
 
-**_Use static factory methods in preference to constructors (Item 1)_**
+**_Use static factory methods in preference to constructors [Item 1](#1-use-static-factory-methods-instead-of-constructors)_**
 
 *Booelan.valueOf(String);* Is preferable to the constructor *Booelan(String)*.
 
@@ -460,7 +460,7 @@ Explicit termination methods are typically used in combination with the _try-fin
 
 In this cases always remember to invoke super.finalize.
 
-# 3 METHODS COMMON TO ALL OBJECTS
+#3. METHODS COMMON TO ALL OBJECTS
 ##8. Obey the general contract when overriding *equals*
 
 **_Dont override if:_**
@@ -587,7 +587,7 @@ For floating-point fields use _Float.compare_ or _Double.compare_
 
 For arrays start with the most significant field and work your way down.
 
-# 4 CLASSES AND INTERFACES
+#4. CLASSES AND INTERFACES
 ##13. Minimize the accesibility of classes and members
 
 __Encapsulation__:
@@ -603,11 +603,11 @@ __Encapsulation__:
 
 __Make each class or member as inaccesible as possible__
 
-If a package-private top level class is used  by only one class make it a  private nested class of the class that uses it. (Item 22)
+If a package-private top level class is used  by only one class make it a  private nested class of the class that uses it. ([Item 22](#22-favor-static-member-classes-over-nonstatic)
 
 Is is acceptable to make a private member of a public class package-private in order to test it.
 
-__Instance fields should never be public__ (Item 14) Class will not be thread-safe.
+__Instance fields should never be public__ ([Item 14](#14-in-public-classes-use-accessor-methods-not-public-fields) Class will not be thread-safe.
 
 Static fields can be public if contain primitive values or references to inmutable objects. A final field containing a reference to a mutable object has all the disadvantages of a non final field.
 
@@ -643,7 +643,7 @@ Degenerate classes should not be public
 	}
 ```
 
-* The don't benefit from _encapsulation_ (Item 13)
+* The don't benefit from _encapsulation_ ([Item 13](#13-minimize-the-accesibility-of-classes-and-members))
 
 * Can't change representation without changing the API.
 
@@ -861,9 +861,10 @@ Constructors must not invoke overridable methods. For _Serializable_ and  _Clone
 Prohibit subclassing in classes that are not designed and documented to be safely subclassed. 2 options:
 
 * Declare the class final
-* Make all constructors private or package-private and add public static factories in place of the constructors. (Item 15)
+* Make all constructors private or package-private and add public static factories in place of the constructors. 
+([Item 15](#15-minimize-mutability)
 
-Consider use Item 16 if what you want is to increase the functionality of your class instead of subclassing.
+Consider use [Item 16](#16-favor-composition-over-inheritance) if what you want is to increase the functionality of your class instead of subclassing.
 
 ##18. Prefer interfaces to abstract classes
 Java permits only single Inheritance, this restriction on abstract classes severely contrains their use as type functions.
@@ -876,7 +877,7 @@ Interfaces are ideal for defining mixins (a type that a class can implement in a
 
 Interfaces allow the construction of nonhierarchical type frameworks.
 
-Interfaces enable safe, powerful functionality enhancements (Wrapper class. Item 16)
+Interfaces enable safe, powerful functionality enhancements (Wrapper class. [Item 16](#16-favor-composition-over-inheritance))
 
 Combine the virtues of interfaces and abstract classes, by providing an abstract **skeletal implementation** class to go with each **nontrivial interface** that you export.
 
@@ -910,7 +911,7 @@ Combine the virtues of interfaces and abstract classes, by providing an abstract
 		}
 	}
 ```
-Sekeletal implementations are designed for inheritance so follow Item 17 guidelines.
+Sekeletal implementations are designed for inheritance so follow [Item 17](#17-design-and-document-for-inheritance-or-else-prohibit-it) guidelines.
 
 _simple implementation_ is like a skeletal implementation in that it implements the simplest possible working implementation.
 
@@ -931,7 +932,7 @@ Any other use, like the _constant interface_ should be avoided.
 	}
 ```
 
-Better use an enum type (Item 31), or a noninstantiable _utility class_ (Item 4)
+Better use an enum type ([Item 31](#31-use-instance-fields-instead-of-ordinals)), or a noninstantiable _utility class_ ([Item 4](#4-enforce-noninstantiablillity-with-a-private-constructor))
 
 ```java
 
@@ -1067,7 +1068,7 @@ Concrete strategies are typically _stateless_ threfore they should be singletons
 
 To be able to pass different strategies, clients should invoke methods from an _strategy interface_ instead of from a concrete class.
 
-**Comparator interface.** _Generic_(Item 26)
+**Comparator interface.** _Generic_([Item 26](#26-favor-generic-types))
 ```java
 
 	public interface Comparator<T>{
@@ -1129,21 +1130,21 @@ A host class can export the a public static field or factory, whose type is the 
 
 **Static**, a member class that does not require access to an enclosing instance must be _static_.  
 
-Storing references cost time, space and can cost not wanted behaviors of the garbage collector(Item 6)  
+Storing references cost time, space and can cost not wanted behaviors of the garbage collector([Item 6](#6-eliminate-obsole-object-references))  
 
 Common use of static member class is a public helper in conjuctions with its outer class. A nested class enum _Operation_ in  _Calculator_ class. `Calculator.Operation.PLUS`;
 
 **Nonstatic** member class instances are rquired to have an enclosing instance.
 
-**Anonymous** classes are us to create _function objects_ on the fly. (Item 21)
+**Anonymous** classes are us to create _function objects_ on the fly. ([Item 21](#21-use-function-objects-to-represent-strategies))
 
 **Local** class from the official docs: Use it if you need to create more than one instance of a class, access its constructor, or introduce a new, named type (because, for example, you need to invoke additional methods later).
 
 Anonymous class, from the official docs: Use it if you need to declare fields or additional methods.
 
 
-# 5 GENERICS
-## 23. Don't use raw types in new code
+#5. GENERICS
+##23. Don't use raw types in new code
 Generic classes and interfaces are the ones who have one or more _type parameter_ as _generic_, i.e. `List<E>`
 
 Each generic type defines a set of _parametrized types_ `List<String>`
@@ -1172,7 +1173,7 @@ Use of raw types lose safety and expresivenes of generics.
 
 Type safety is kept in a parametrized type like `List<Object>` but not in raw types (`List`).
 
-There are subtyping rules for generics. For example `List<String>` is a subtype of `List` but not of `List<Object>` (Item 25)
+There are subtyping rules for generics. For example `List<String>` is a subtype of `List` but not of `List<Object>` ([Item 25](#25-prefer-lists-to-arrays))
 
 **Unbounded Wildcard Types `Set<?>`**
 Used when a generic type is needed but we don't know or care the actual type.
@@ -1205,7 +1206,7 @@ Never add elements (other than null) into a `Collection<?>`
 | Generic method          | `static <E> List<E> asList(E[] a)` | 27     |
 | Type token              | `String.class`                     | 29     |
 
-## 24. Eliminate unchecked warnings
+##24. Eliminate unchecked warnings
 Eliminate every unchecked warning that you can, if you can't use _Suppress-Warnings_ annotation on the smallest scope possible.
 
 ```java
@@ -1214,7 +1215,7 @@ Eliminate every unchecked warning that you can, if you can't use _Suppress-Warni
 	Set<Lark> exaltation = new HashSet<lark>(); Good
 ```
 
-## 25. Prefer lists to arrays
+##25. Prefer lists to arrays
 Arrays are _covariant_: if `Sub` is a subtype of `Super`, `Sub[]` is a subtype of `Super[]`  
 Generics are _invariant_: for any two types `Type1` and `Type2`, `List<Type1>` in neither  sub or super type of `List<Type1>`
 
@@ -1236,8 +1237,8 @@ Therefore it is illegal to create an array of a generic type, a parameterized ty
 
 `new List<E>[]`, `new List<String>`, `new E[]`  will result in _generic array creation_ errors.
 
-## 26. Favor generic types
-Making Item 6. to use generics.
+##26. Favor generic types
+Making [Item 6](#6-eliminate-obsole-object-references) to use generics.
 ```java
 
 	public class Stack{
@@ -1315,7 +1316,7 @@ The appropriate suppression of the unchecked warning
 	}
 ```
 
-## 27. Favor generic Methods
+##27. Favor generic Methods
 Generic Method
 ```java
 
@@ -1385,10 +1386,10 @@ To avoid ic create a _generic static factory method_
 		return result;
 	}
 ```
-## 28. Use bounded wildcards to increase API flexibility
+##28. Use bounded wildcards to increase API flexibility
 
 
-Parameterized types are invariant.(Item 25) Ie `List<String>` is not a subtype of `List<Object>`
+Parameterized types are invariant.([Item 25](#25-prefer-lists-to-arrays)) Ie `List<String>` is not a subtype of `List<Object>`
 
 ```java
 
@@ -1446,7 +1447,7 @@ Comparable and Comparators are always consumers. Use `Comparable<? super T>` and
 
 If a type parameter appears only once in a method declaration, replace it with a wildcard.
 
-## 29. Consider _typesafe heterogeneous containers_
+##29. Consider _typesafe heterogeneous containers_
 A container for accessing a heterogeneous list of types in a typesafe way.
 
 Thanks to the type of the class literal. `Class<T>`
@@ -1491,11 +1492,11 @@ Thanks to the type of the class literal. `Class<T>`
 	}
 ```
 
-#6 ENUMS AND ANNOTATIONS
-## 30. Use enums instead of _int_ constants
+#6. ENUMS AND ANNOTATIONS
+##30. Use enums instead of _int_ constants
 Enums are classes that export one instance for each enumeration constant via a public static final field.
 Clients can not create instances or extend them.
-They are a generalization of singletons(Item 3)
+They are a generalization of singletons([Item 3](#3-enforce-the-singleton-property-with-a-private-constructor-or-an-enum-type))
 They are compile-time type safe.
 
 **Enums can have data associated**
@@ -1529,8 +1530,8 @@ They are compile-time type safe.
 		}
 	}
 ```
-Enums are immutable so their fields should be final(Item 15)
-Make fields private (Item 14)
+Enums are immutable so their fields should be final([Item 15](#15-minimize-mutability))
+Make fields private ([Item 14](#14-in-public-classes-use-accessor-methods-not-public-fields))
 
 Enums should be a member class inside a top-level class if it is not generally used.
 
@@ -1588,7 +1589,7 @@ Use it, if multiple enum constants share common behaviors.
 	}
 ```
 
-## 31. Use instance fields instead of ordinals
+##31. Use instance fields instead of ordinals
 Never derive a value of an enum to its ordinal
 ```java
 
@@ -1607,7 +1608,7 @@ Better approach
 		public int numberOfMusicians() {return numberOfMusicians;}
 	}
 ```
-## 32. Use EnumSet instead of bit fields
+##32. Use EnumSet instead of bit fields
 If the elements of an enumarated are used primarily in sets, use EnumSet.
 
 ```java
@@ -1625,7 +1626,7 @@ If the elements of an enumarated are used primarily in sets, use EnumSet.
 
 It is a good practice to accept the interface `Set` instead of the implementation `	EnumSet`.
 
-## 33. Use EnumMap instead of ordinal indexing
+##33. Use EnumMap instead of ordinal indexing
 
 Use EnumMap to associate data with an enum
 ```java
@@ -1643,7 +1644,7 @@ Use EnumMap to associate data with an enum
 ```
 In case you need a multidimensional relationship use `EnumMap<..., EnumMap<...>>`
 
-## 34. Emulate extensible enums with interfaces
+##34. Emulate extensible enums with interfaces
 Enums types can not extend another enum types.
 
 _Opcodes_ as a use case of enums extensibility.
@@ -1690,7 +1691,7 @@ _BasicOperation_ is not extensible, but the interface type _Operation_ is, and i
 	}
 ```
 
-## 35. Prefer annotations to naming patterns
+##35. Prefer annotations to naming patterns
 Sample of the _@Test_ annotation
 
 **Marker**
@@ -1754,7 +1755,7 @@ Sample of the _@Test_ annotation
 	}
 ```
 
-## 36. Consistently use the _Override_ annotation
+##36. Consistently use the _Override_ annotation
 Use the _Override_ annotation on every method declaration that you believe to override a super class declaration.
 
 ```java
@@ -1780,7 +1781,7 @@ The correct sign to override the super method is:
 ```
 With the use of Override the compiler would alert us about our mistake.
 
-## 37. Use marker interfaces to define types
+##37. Use marker interfaces to define types
 Marker interface in Java is interfaces with no field or methods or in simple word empty interface in java is called marker interface.
 
 A _marker interface_ is an interface that contains no method declarations, but "marks" a class that implements the interface as having  some property.
@@ -1791,15 +1792,15 @@ When your class implements `java.io.Serializable` interface it becomes Serializa
 * They can be targeted more precisely than marker annotations.
 * It's possible to add more information to an annotation type after it is already in use.
 
-# 7 METHODS
-## 38. Check parameters for validity
+#7. METHODS
+##38. Check parameters for validity
 Check parameters before execution as soon as possible.
 
 Add in public methods _@throw_, and use _assertions_ in non public methods
 
 Do it also in constructors.
 
-## 39. Make defensive copies when needed.
+##39. Make defensive copies when needed.
 
 You must program defensively, with the assumption that clients of your class will do their best to destroy its invariants.
 
@@ -1853,7 +1854,7 @@ Make a _defensive copy_ of each mutable parameter to the constructor.
 			throw new IllegalArgumentException(start + " after " + end );
 		}
 ```
-Defensive copies are made before checking the validity of the parameter (Item 38), and the validity check is performed on the copies rather than on the originals. It protects the class against changes to the parameters from another thread during the time between the parameters are checked and the time they are copied.(_Window of vulnerability_,time-of-check/time-of-use _TOCTOU_ attack)
+Defensive copies are made before checking the validity of the parameter ([Item 38](#38-check-parameters-for-validity)), and the validity check is performed on the copies rather than on the originals. It protects the class against changes to the parameters from another thread during the time between the parameters are checked and the time they are copied.(_Window of vulnerability_,time-of-check/time-of-use _TOCTOU_ attack)
 
 
 Do not use _clone_ method to make a defensive copy of a parameter whose type is subclass-able by untrusted parties.
@@ -1880,18 +1881,18 @@ Return _defensive copies_ of mutable internal fields.
 	}
 ```
 
-Preferable is to use **immutable objects**(Item 15)
+Preferable is to use **immutable objects**([Item 15](#15-minimize-mutability))
 
-## 40. Design method signatures carefully
+##40. Design method signatures carefully
 
-* Choose method names carefully. (Item 56)
+* Choose method names carefully. ([Item 56](#56-adhere-to-generally-accepted-naming-conventions))
 * Don't go overboard in providing convenience methods. Don't add too many.
-* Avoid long parameter list. Make a subset of methods, helper classes (Item 22), or a builder (Item 2) instead.
-* For parameter types, favor interfaces over classes (Item 52) No reason to write a method that takes a _HashMap_ on input, use _Map_ instead.
+* Avoid long parameter list. Make a subset of methods, helper classes ([Item 22](#22-favor-static-member-classes-over-nonstatic)), or a builder ([Item 2](#2-use-builders-when-faced-with-many-constructors)) instead.
+* For parameter types, favor interfaces over classes ([Item 52](#52-refer-to-objects-by-their-interface)) No reason to write a method that takes a _HashMap_ on input, use _Map_ instead.
 * Prefer two-element enum types to _boolean_ parameters. `public enum TemperatureScale {CELSIUS, FARENHEIT}`
 
 
-## 41. Use overloading judiciously
+##41. Use overloading judiciously
 The choice of which overloading to invoke is made at compile time.
 Selection among overloaded methods is static, while selection among overridden methods is dynamic.
 ```java
@@ -1956,7 +1957,7 @@ Do not have overloaded methods in APIs to avoid confusing the clients of the API
 
 A conservative policy to is never to export two overloadings with the same number of parameters. Use different names.`writeBoolean(boolean)`, `writeInt(int)`, and `writeLong(long)`
 
-For constructors you can use static factories (Item 1)
+For constructors you can use static factories ([Item 1](#1-use-static-factory-methods-instead-of-constructors))
 
 If parameters are radically different this rules can be violate but always ensure that all overloadings behave identically
 when passed the same parameters. To ensure this, have the more specific overloading forward to the more general.
@@ -1967,7 +1968,7 @@ when passed the same parameters. To ensure this, have the more specific overload
 	}
 ```
 
-## 42. Use varargs judiciously
+##42. Use varargs judiciously
 varargs methods are a convenient way to define methods that require a variable number of arguments, but they should not be overused.
 ```java
 
@@ -1981,7 +1982,7 @@ varargs methods are a convenient way to define methods that require a variable n
 	}
 ```
 
-## 43. Return empty arrays or collections, not nulls
+##43. Return empty arrays or collections, not nulls
 There is no reason ever to return null from an array- or collection-valued method instead of returning an empty array or collection
 
 Return an inmutable empty array instead of null.
@@ -2012,7 +2013,7 @@ Return an inmutable empty array instead of null.
 	}
  ```
 
-## 44. Write _doc comments_ for all exposed API elemnts
+##44. Write _doc comments_ for all exposed API elemnts
 To document your API properly, you must precede every exported class, interface, constructor, method, and field declaration with a doc comment.
 
 The doc comment for a method should describe succinctly:
@@ -2048,17 +2049,17 @@ Have special care in:
 
 Don't forget to documment:
 
-* The _thread-safety level_  (Item 70)
-* The _serialized form_ (Item 75), if the class is _serializable_
+* The _thread-safety level_  ([Item 70](#70-document-thread-safety))
+* The _serialized form_ ([Item 75](#75-consider-using-a-custom-serialized-form)), if the class is _serializable_
 
-# 8 GENERAL PROGRAMMING
-## 45. Minimize the scope of local variables.
+#8. GENERAL PROGRAMMING
+##45. Minimize the scope of local variables.
 Declare local variable where it is first used.  
 Most local variable declaration should contain an initializer.  
 Prefer for loops to while loops.  
 Keep methods small and focused.   
 
-## 46. Prefer for-each lopps to traditional for loops.
+##46. Prefer for-each lopps to traditional for loops.
 ```java
 
 	 // No longer the preferred idiom to iterate over a collection!
@@ -2124,7 +2125,7 @@ Situations where you can’t use a for-each loop:
 * **Transforming—If** you need to traverse a list or array and replace some or all of the values of its elements, then you need the list iterator or array index in order to set the value of an element.
 * **Parallel iteration—If** you need to traverse multiple collections in parallel, then you need explicit control over the iterator or index variable, so that all it- erators or index variables can be advanced in lockstep (as demonstrated unin-tentionally in the buggy card examples above).
 
-## 47. Know and use libraries
+##47. Know and use libraries
 By using a standard library:
 
 * Advantage of the knowledge of the experts who wrote it and the experience of those who used it before you.
@@ -2141,10 +2142,10 @@ Every programmer should be familiar with:
 * java.io
 * java.util.concurrent  
 
-## 48. Avoid float and double if exact answer are required
+##48. Avoid float and double if exact answer are required
 For monetary calculations use _int_(until 9 digits) or _long_ (until 18 digits) taken you care of the decimal part and you don't care too much about the rounding. Use _BigDecimal_ for numbers bigger that 18 digits and if you need full control of the rounding methods used.
 
-## 49. Prefer primitive types to boxed primitives
+##49. Prefer primitive types to boxed primitives
 Primitives: _int_, _double_, _boolean_   
 Boxed Primitives: _Integer_, _Double_, _Boolean_   
 Differences:
@@ -2181,12 +2182,12 @@ Performance can be perturbed when boxing primitives values due to the creation o
 When you **must** use boxed primitives:
 
 * As elements, keys and values in Collections
-* As type parameters in parametrized types (Chapter 5)
-* When making reflective invocations (Item 53)
+* As type parameters in parametrized types ([Chapter 5](#5-generics))
+* When making reflective invocations ([Item 53](#53-prefer-interfaces-to-reflection))
 
 In other cases prefer primitives.
 
-## 50. Avoid Strings where other types are more appropriate
+##50. Avoid Strings where other types are more appropriate
 * Strings are more cumbersome than other types.
 * Strings are less flexible than other types.
 * String are slower than other types.
@@ -2198,7 +2199,7 @@ In other cases prefer primitives.
 
 So, use String to represent text!
 
-## 51. Beware the performance of string concatenation
+##51. Beware the performance of string concatenation
 
 Using the string concatenation operator repeatedly to concatenate _n_ strings requires time quadratic in _n_.
 
@@ -2225,7 +2226,7 @@ To achieve acceptable performance, use StringBuilder in place of String.
 	}
 ```
 
-## 52. Refer to objects by their interface
+##52. Refer to objects by their interface
 If appropriate interface types exist, then parameters, return values, variables, and fields should all be declared using interface types.
 
 ```java
@@ -2253,7 +2254,7 @@ If there is not an appropriate interface we can refer to the object by a class. 
 * Framework classes
 * Classes that extend the interface functionality with extra methods.
 
-## 53. Prefer interfaces to reflection
+##53. Prefer interfaces to reflection
 _java.lang.reflection_ offers access to information about loaded classes.
 
 Given a _Class_ object, you can obtain _Constructor_, _Method_ and _Field_ instances.
@@ -2305,7 +2306,7 @@ A legitimate use of reflection is to manage a class's dependencies on other clas
 
 Reflection is powerful and useful in some sophisticated systems programming tasks. It has many disadvantages.
 Use reflection, if possible, only to instantiate objects and access the objects using an interface or a superclass that is known at compile time.
-## 54. Use native methods judiciously
+##54. Use native methods judiciously
 Historically, native methods have had three main uses.
 
 * They provided access to platform-specific facilities.
@@ -2314,7 +2315,7 @@ Historically, native methods have had three main uses.
 
 New Java versions make use of NDK rarely advisable for improve performance.
 
-## 55. Optimize judiciously
+##55. Optimize judiciously
 Strive to write good programs rather than fast ones, speed will follow.  
 If a good program is not fast enough, its architecture will allow it to be optimized.
 
@@ -2327,7 +2328,7 @@ optimization is the root of all evil.
 
 If you finally do it **measure performance before and after each attempted optimization**, and focus firstly in the  choice of algorithms rather than in low level optimizations.
 
-## 56. Adhere to generally accepted naming conventions
+##56. Adhere to generally accepted naming conventions
 **Typographical naming conventions**
 
 | Indentifier Type        |  Examples 								      |
@@ -2353,15 +2354,15 @@ If you finally do it **measure performance before and after each attempted optim
 | return a boolean  	 | names beginning with _is_ or, _has_ 			| isDigit, isProbablePrime, isEmpty, isEnabled, hasSiblings	|
 | return a non-boolean or attribute | noun, a noun phrase, or begin with _get_ | size, hashCode, or getTime 						|
 | convert the type of an object | _toType_								| toString, toArray 										|
-| return a view (Item 5) of a different type  	| _asType_				| asList 													|
+| return a view ([Item 5](#5-avoid-creating-objects))) of a different type  	| _asType_				| asList 													|
 | return a primitive with the same value 		| _typeValue_			| intValue 													|
 
-#9 EXCEPTIONS
-## 57. Use exceptions only for exceptional conditions
+#9. EXCEPTIONS
+##57. Use exceptions only for exceptional conditions
 Exceptions are  for exceptional conditions.  
 Never use or (expose in the API) exceptions for ordinary control flow.
 
-## 58. Use checked exceptions for recoverable conditions and runtime exceptions for programming errors
+##58. Use checked exceptions for recoverable conditions and runtime exceptions for programming errors
 Throwables:
 
 * checked exceptions: for conditions from which the caller can reasonably be expected to recover
@@ -2371,7 +2372,7 @@ Throwables:
 
 Unchecked throwables that you implement should **always** subclass _RuntimeException_.
 
-## 59. Avoid unnecessary use of checked exceptions
+##59. Avoid unnecessary use of checked exceptions
 Use checked exceptions only if these 2 conditions happen:
 
 * The  exceptional condition cannot be prevented by proper use of the API
@@ -2400,7 +2401,7 @@ Invocation with state-testing method and unchecked exception
 		...
 	}
 ```
-## 60. Favor the use of standard exceptions
+##60. Favor the use of standard exceptions
 | Exception                       |  Occasion for Use                                                              |
 |---------------------------------|--------------------------------------------------------------------------------|
 | IllegalArgumentException        |  Non-null parameter value is inappropriate                                     |
@@ -2488,7 +2489,7 @@ Invocation with state-testing method and unchecked exception
 | XMLStreamException                |
 | XPathException                    |
 
-## 61. Throw exceptions appropriate to the abstraction
+##61. Throw exceptions appropriate to the abstraction
 Higher layers should catch lower-level exceptions and, in their place, throw exceptions that can be explained in terms of the higher-level abstraction.
 ```java
 
@@ -2514,14 +2515,14 @@ When the lower-level exception is utile for the debugger, pass the lower-level t
 		}
 	}
 ```
-## 62. Document all exceptions thrown by each method
-Unchecked exceptions generally represent programming errors (Item 58), and familiarizing programmers with all of the errors they can make helps them avoid making these errors.
+##62. Document all exceptions thrown by each method
+Unchecked exceptions generally represent programming errors ([Item 58](#58-use-checked-exceptions-for-recoverable-conditions-and-runtime-exceptions-for-programming-errors)), and familiarizing programmers with all of the errors they can make helps them avoid making these errors.
 
 Always declare checked exceptions individually, and document precisely the conditions under which each one is thrown using the Javadoc @throws tag.
 
 Do not use the throws keyword to include unchecked exceptions in the method declaration.
 
-## 63. Include failure-capture information in detail messages
+##63. Include failure-capture information in detail messages
 It is critically important that the exception’s `toString` method return as much information as possible concerning
 the cause of the failure.
 To capture the failure, the detail message of an exception should contain the values of all parameters and fields that contributed to the exception.
@@ -2533,7 +2534,7 @@ One way to ensure that is to require this information in their constructors inst
 	public IndexOutOfBoundsException(int lowerBound, int upperBound, int index) {...}
 ```
 
-## 64. Strive for failure atomicity
+##64. Strive for failure atomicity
 A failed method invocation should leave the object in the state that it was in prior to the invocation.
 Options to achieve this:
 
@@ -2542,7 +2543,7 @@ Options to achieve this:
 * Write recovery code (Undo operation)
 * Perform the operation on a temporary copy of the object, and replace it once is completed.
 
-## 65. Don't ignore exceptions
+##65. Don't ignore exceptions
 Don't let catch blocks empty.
 ```java
 
@@ -2553,8 +2554,8 @@ Don't let catch blocks empty.
 	}
 ```
 
-# 10 CONCURRENCY
-## 66. Synchronize access to shared mutable data
+#10. CONCURRENCY
+##66. Synchronize access to shared mutable data
 Synchronization prevent a thread from observing an object in an inconsistent state.
 Synchronization ensures that each thread entering a synchronized method or block sees the effects
 of all previous modifications that were guarded by the same lock.
@@ -2680,8 +2681,8 @@ _In general:_ When multiple threads share mutable data, each thread that reads o
 
 _Best thing to do:_ **Not share mutable data.**
 
-## 67. Avoid excessive synchronization
-Inside a synchronized region, do not invoke a  method (_alien_) that is designed to be overridden, or one provided by a client in the form of a function object (Item 21). Calling it from a synchronized region can cause exceptions,
+##67. Avoid excessive synchronization
+Inside a synchronized region, do not invoke a  method (_alien_) that is designed to be overridden, or one provided by a client in the form of a function object ([Item 21](#21-use-function-objects-to-represent-strategies)). Calling it from a synchronized region can cause exceptions,
 deadlocks, or data corruption.
 Move alien method invocations out of synchronized blocks. Taking a “snapshot” of the object that can then be safely traversed without a lock.
 
@@ -2697,7 +2698,7 @@ Move alien method invocations out of synchronized blocks. Taking a “snapshot�
 			observer.added(this, element);
 	}
 ```
-Or use a _concurrent collection_ (Item 69) known as CopyOnWriteArrayList. It is a variant of ArrayList in which all write operations are implemented by making a fresh copy of the entire underlying array.
+Or use a _concurrent collection_ ([Item 69](#69-prefer-concurrency-utilities-to-wait-and-notify)) known as CopyOnWriteArrayList. It is a variant of ArrayList in which all write operations are implemented by making a fresh copy of the entire underlying array.
 The internal array is never modified and iteration requires no locking.
 
 **open call**: An alien method invoked outside of a synchronized region
@@ -2707,7 +2708,7 @@ _As Rule_:
 * **do as little work as possible inside synchronized regions**
 * **limit the amount of work that you do from within synchronized regions**
 
-## 68. Prefer executors and tasks to threads
+##68. Prefer executors and tasks to threads
 Creating a work queue:
 ```java
 
@@ -2743,17 +2744,17 @@ For heavily loaded application, use: `Executors.newFixedThreadPool`
 * Runnable
 * Callable, similar to Runnable but returns a value
 
-## 69. Prefer concurrency utilities to _wait_ and _notify_
+##69. Prefer concurrency utilities to _wait_ and _notify_
 Given the difficulty of using wait and notify correctly, you should use the higher-level concurrency utilities instead.
 
-* Executor Framework (Item 68)
+* Executor Framework ([Item 68](#68-prefer-executors-and-tasks-to-threads))
 * Concurrent Collections
 * Synchronizers
 
 **Concurrent Collections**: High-performance concurrent implementations of standard collection interfaces (List, Queue, and Map)  
 Use concurrent collections in preference to externally synchronized collections   
 Some interfaces have been extended with blocking operations, which wait (or block) until they can be successfully performed. This allows blocking queues to be used for work queues ( _producer-consumer queues_). One or more producer threads enqueue work items and from which one or more consumer threads dequeue and process
-items as they become available. ExecutorService implementations, including ThreadPoolExecutor, use a BlockingQueue (Item 68).
+items as they become available. ExecutorService implementations, including ThreadPoolExecutor, use a BlockingQueue ([Item 68](#68-prefer-executors-and-tasks-to-threads)).
 
 **Synchronizers**: objects that enable threads to wait for one another, allowing them to coordinate their activities (CountDownLatch, Semaphore, CyclicBarrier, Exchanger)
 
@@ -2776,7 +2777,7 @@ Use always use _notifyAll_ (and not forget to use the wait loop explained before
 You may wake some other threads, but these threads will check the condition for which they're waiting and, finding it false, will continue waiting.
 
 **There is seldom, if ever, a reason to use wait and notify in new code.** Use higher-level language
-## 70. Document thread safety
+##70. Document thread safety
 Looking for  the synchronized modifier in a method declaration is an implementation detail.
 To enable safe concurrent use, a class must clearly document what level of thread safety it supports.
 
@@ -2803,7 +2804,7 @@ Use private lock object idiom to prevent users to hold the lock for a long perio
 	}
 ```
 
-## 71. Use lazy initialization judiciously
+##71. Use lazy initialization judiciously
 Use it if a field is accessed only on a fraction of the instances of a class and it is costly to initialize the field.  
 It decreases the cost of initializing a class or creating an instance, but increase the cost of accessing it.  
 For multiple threads, lazy initialization is tricky.  
@@ -2865,7 +2866,7 @@ Instance field that can tolerate repeated initialization: **single-check idiom.*
 	}
 ```
 
-## 72. Don't depend on thread scheduler
+##72. Don't depend on thread scheduler
 Thread scheduler determines which runnable, get to run, and for how long.Operating systems will try to make this
 determination fairly, but the policy can vary. So any program that relies on the thread scheduler for correctness or performance is likely to be non portable.   
 To ensure that the average number of runnable threads is not significantly greater than the number of processors.
@@ -2876,18 +2877,18 @@ tasks should be:
 * independent of one another
 * not implement busy-wait
 
-## 73. Avoid thread groups
+##73. Avoid thread groups
 Thread groups are obsolete.
 
-# 11 SERIALIZATION
-## 74. Implement _Serializable_ judiciously
+#11. SERIALIZATION
+##74. Implement _Serializable_ judiciously
 Adding `implements Serializable` is the easiest way to serialize a class, but it decreases the flexibility
 to change a class's implementation once it has been released. The byte-stream encoding (or serialized form)
 becomes part of its exported API.
 
 It has three major drawbacks:
 
-* Class's private and package-private instance fields become part of its exported API (Item 13)
+* Class's private and package-private instance fields become part of its exported API ([Item 13](#13-minimize-the-accesibility-of-classes-and-members))
 * Change the class's internal representation, will cause make old versions of serialized objects incompatible.
 * Increases the likelihood of bugs and security holes.
 * Increases the testing burden associated with releasing a new version of a class.
@@ -2905,11 +2906,11 @@ Implementing the Serializable interface has many real costs.
 * Classes representing active entities, such as thread pools
 * Classes designed for inheritance
 * Interfaces should rarely extend it
-* Inner classes (Item 22)
+* Inner classes ([Item 22](#22-favor-static-member-classes-over-nonstatic))
 
 A subclass of a not serializable class can not be serializable, unless it has a parameterless constructor.
 
-## 75. Consider using a custom serialized form
+##75. Consider using a custom serialized form
 Do not accept the default serialized form without first considering whether it is appropriate.  
 The default serialized form is likely to be appropriate if an object's physical representation is identical to its logical content. Like a Point or Person Name.   
 Even if you decide that the default serialized form is appropriate, you often must provide a `readObject` method to ensure invariants and security
@@ -2940,11 +2941,11 @@ Declare an explicit serial version UID in every serializable class you write.
 
 	private static final long serialVersionUID = randomLongValue ;
 ```
-## 76. Write _readObject_ methods defensively
+##76. Write _readObject_ methods defensively
 _readObject_ method is a public constructor that takes a byte stream as its sole parameter. It demands  same care as any other public constructor:
 
-*  check its arguments for validity (Item 38)
-*  make defensive copies of parameters where appropriate (Item 39)
+*  check its arguments for validity ([Item 38](#38-check-parameters-for-validity))
+*  make defensive copies of parameters where appropriate ([Item 39](#39-make-defensive-copies-when-needed))
 
 ```java
 
@@ -2972,7 +2973,7 @@ Summary guidelines:
 * If an entire object graph must be validated after it is deserialized, use the _ObjectInputValidation_ interface [JavaSE6, Serialization].
 * Do not invoke any overridable methods in the class, directly or indirectly.
 
-## 77. For instance control, prefer _enum_ types to _readResolve_
+##77. For instance control, prefer _enum_ types to _readResolve_
 _Singleton_ classes would no longer be singletons if they “implements Serializable”.
 The _readResolve_ feature allows you to substitute another instance for the one created by _readObject_. So the original instance is returned.
 
@@ -2989,7 +2990,7 @@ Accessibility: _readResolve_ method on:
 	* package-private: it will apply only to subclasses in the same package.
 	* protected or public: it will apply to all subclasses that do not override it.
 
-## 78. Consider serialization proxies instead of serialized instances
+##78. Consider serialization proxies instead of serialized instances
 _serialization proxy_: A private static nested class of the serializable class that represents the logical state of an instance of the enclosing class.  
 It has a single constructor, whose parameter type is the enclosing class, and copies the data from its arguments.  
 No need of consistency checking or defensive copying.
@@ -3046,5 +3047,5 @@ Add a _readResolve_ method on the _SerializationProxy_ class to return a logical
 
 Limitations, not compatible with:
 
-* classes that are extendable by their clients (Item 17)
+* classes that are extendable by their clients ([Item 17](#17-design-and-document-for-inheritance-or-else-prohibit-it))
 * some classes whose object graphs contain circularities
