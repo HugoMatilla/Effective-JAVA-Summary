@@ -172,8 +172,7 @@ Used for example to:
 	}
 ```
 
-##5. Avoid creating 
- objects
+##5. Avoid creating objects
 
 **REUSE INMUTABLE OBJECTS**
 
@@ -1739,13 +1738,13 @@ You must program defensively, with the assumption that clients of your class wil
 	}
 ```
 
-Attak.  Because the client keep a copy (pointer) of the parameter, it can always change it after the construcntor.
+Attack.  Because the client keep a copy (pointer) of the parameter, it can always change it after the constructor.
 ```java
 	
 	Date start = new Date();
 	Date end = new Date();
 	Period p = new Period(start, end);
-	end.setYear(78)// Modifies internal od p!
+	end.setYear(78)// Modifies internal of p!
 ```
 
 Make a _defensive copy_ of each mutable parameter to the constructor.
@@ -2846,5 +2845,111 @@ Declare an explicit serial version UID in every serializable class you write.
 
 	private static final long serialVersionUID = randomLongValue ;
 ```
+# 76 Write _readObject_ methods defensively
+_readObject_ method is a public constructor that takes a byte stream as its sole parameter. It demands  same care as any other public constructor:
+
+*  check its arguments for validity (Item 38)
+*  make defensive copies of parameters where appropriate (Item 39)
+
+```java
+
+	// readObject method with defensive copying and validity checking
+	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+		s.defaultReadObject();
+		
+		// Defensively copy our mutable components
+		start = new Date(start.getTime());
+		end = new Date(end.getTime());
+
+		// Check that our invariants are satisfied
+		if (start.compareTo(end) > 0)
+			throw new InvalidObjectException(start +" after "+ end);
+	}
+```
+Every serializable immutable class containing private mutable components must defensively copy these components in its readObject method.
+
+Do not use the _writeUnshared_ and _readUnshared_ methods(Java 1.4). Are faster but not safer than defensive copying.
+
+Summary guidelines: 
+
+* For classes with object reference fields that must remain private, defensively copy each object in such a field. Mutable components of immutable classes fall into this category.
+* Check any invariants and throw an InvalidObjectException if a check fails. The checks should follow any defensive copying.
+* If an entire object graph must be validated after it is deserialized, use the _ObjectInputValidation_ interface [JavaSE6, Serialization].
+* Do not invoke any overridable methods in the class, directly or indirectly.
+
+# 77 For instance control, prefer _enum_ types to _readResolve_
+_Singleton_ classes would no longer be singletons if they “implements Serializable”.
+The _readResolve_ feature allows you to substitute another instance for the one created by _readObject_. So the original instance is returned.
+
+To prevent attacks when using _readResolve_ for instance control, all instance fields with object reference types must be declared transient.
+
+Another way to prevent attacks in instance-controlled classes  and when instances are known at compile time,is using _enum_. JVM guarantees that only will be one instance.
 
 
+Accessibility: _readResolve_ method on:
+
+* final class: private.
+* nonfinal class: 
+	* private: will not apply to any subclasses.
+	* package-private: it will apply only to subclasses in the same package. 
+	* protected or public: it will apply to all subclasses that do not override it. 
+
+# 78 Consider serialization proxies instead of serialized instances
+_serialization proxy_: A private static nested class of the serializable class that represents the logical state of an instance of the enclosing class.  
+It has a single constructor, whose parameter type is the enclosing class, and copies the data from its arguments.  
+No need of consistency checking or defensive copying. 
+Both the enclosing class and its serialization proxy must be declared to implement Serializable.  
+
+```java
+	
+
+		// Serialization proxy for Period class
+		private static class SerializationProxy implements Serializable {
+			private final Date start;
+			private final Date end;
+
+			SerializationProxy(Period p) {
+				this.start = p.start;
+				this.end = p.end;
+			}
+
+			private static final long serialVersionUID = 234098243823485285L; // Any number will do (Item 75)
+		}
+
+		
+	}	
+```
+
+_writeReplace_ translates an instance of the enclosing class to its serialization proxy prior to serialization.
+The serialization system will never generate a serialized instance of the enclosing class.
+```java
+
+	// writeReplace method for the serialization proxy pattern
+	private Object writeReplace() {
+		return new SerializationProxy(this);
+	}
+```
+
+If an attacker fabricates a serialized object in an attempt to violate the class's invariants, we throw an Exception.
+
+```java
+	
+	// readObject method for the serialization proxy pattern
+	private void readObject(ObjectInputStream stream) throws InvalidObjectException {
+		throw new InvalidObjectException("Proxy required");
+	}
+```	
+
+Add a _readResolve_ method on the _SerializationProxy_ class to return a logically equivalent instance of the enclosing class.
+```java
+	
+	// readResolve method for Period.SerializationProxy
+	private Object readResolve() {
+		return new Period(start, end); // Uses public constructor
+	}
+```
+
+Limitations, not compatible with:
+
+* classes that are extendable by their clients (Item 17)
+* some classes whose object graphs contain circularities
