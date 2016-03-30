@@ -2393,7 +2393,7 @@ Invocation with state-testing method and unchecked exception
 | XMLStreamException                | 
 | XPathException                    | 
 
-## 61 Throw exceptions appropriate to the abstraction
+## 61. Throw exceptions appropriate to the abstraction
 Higher layers should catch lower-level exceptions and, in their place, throw exceptions that can be explained in terms of the higher-level abstraction.
 ```java
 
@@ -2419,14 +2419,14 @@ When the lower-level exception is utile for the debugger, pass the lower-level t
 		}
 	}
 ```
-## 62 Document all exceptions thrown by each method
+## 62. Document all exceptions thrown by each method
 Unchecked exceptions generally represent programming errors (Item 58), and familiarizing programmers with all of the errors they can make helps them avoid making these errors. 
 
 Always declare checked exceptions individually, and document precisely the conditions under which each one is thrown using the Javadoc @throws tag.
 
 Do not use the throws keyword to include unchecked exceptions in the method declaration.
 
-## 63 Include failure-capture information in detail messages
+## 63. Include failure-capture information in detail messages
 It is critically important that the exception’s `toString` method return as much information as possible concerning
 the cause of the failure.
 To capture the failure, the detail message of an exception should contain the values of all parameters and fields that contributed to the exception.
@@ -2438,7 +2438,7 @@ One way to ensure that is to require this information in their constructors inst
 	public IndexOutOfBoundsException(int lowerBound, int upperBound, int index) {...}
 ```
 
-## 64 Strive for failure atomicity
+## 64. Strive for failure atomicity
 A failed method invocation should leave the object in the state that it was in prior to the invocation.
 Options to achieve this:
 
@@ -2447,7 +2447,7 @@ Options to achieve this:
 * Write recovery code (Undo operation)
 * Perform the operation on a temporary copy of the object, and replace it once is completed.
 
-## 65 Don't ignore exceptions
+## 65. Don't ignore exceptions
 Don't let catch blocks empty.
 ```java
 
@@ -2459,7 +2459,7 @@ Don't let catch blocks empty.
 ```
 
 # 10 Concurrency 
-## 66 Synchronize access to shared mutable data
+## 66. Synchronize access to shared mutable data
 Synchronization prevent a thread from observing an object in an inconsistent state.
 Synchronization ensures that each thread entering a synchronized method or block sees the effects
 of all previous modifications that were guarded by the same lock.
@@ -2585,7 +2585,7 @@ _In general:_ When multiple threads share mutable data, each thread that reads o
 
 _Best thing to do:_ **Not share mutable data.**
 
-## 67 Avoid excessive synchronization
+## 67. Avoid excessive synchronization
 Inside a synchronized region, do not invoke a  method (_alien_) that is designed to be overridden, or one provided by a client in the form of a function object (Item 21). Calling it from a synchronized region can cause exceptions,
 deadlocks, or data corruption.
 Move alien method invocations out of synchronized blocks. Taking a “snapshot” of the object that can then be safely traversed without a lock.
@@ -2612,7 +2612,7 @@ _As Rule_:
 * **do as little work as possible inside synchronized regions** 
 * **limit the amount of work that you do from within synchronized regions** 
 
-## 68 Prefer executors and tasks to threads
+## 68. Prefer executors and tasks to threads
 Creating a work queue:
 ```java
 
@@ -2648,7 +2648,7 @@ For heavily loaded application, use: `Executors.newFixedThreadPool`
 * Runnable
 * Callable, similar to Runnable but returns a value
 
-## 69 Prefer concurrency utilities to _wait_ and _notify_
+## 69. Prefer concurrency utilities to _wait_ and _notify_
 Given the difficulty of using wait and notify correctly, you should use the higher-level concurrency utilities instead.
 
 * Executor Framework (Item 68)
@@ -2681,7 +2681,7 @@ Use always use _notifyAll_ (and not forget to use the wait loop explained before
 You may wake some other threads, but these threads will check the condition for which they're waiting and, finding it false, will continue waiting.
 
 **There is seldom, if ever, a reason to use wait and notify in new code.** Use higher-level language
-## 70 Document thread safety
+## 70. Document thread safety
 Looking for  the synchronized modifier in a method declaration is an implementation detail.
 To enable safe concurrent use, a class must clearly document what level of thread safety it supports.
 
@@ -2708,7 +2708,7 @@ Use private lock object idiom to prevent users to hold the lock for a long perio
 	}
 ```
 
-## 71 Use lazy initialization judiciously
+## 71. Use lazy initialization judiciously
 Use it if a field is accessed only on a fraction of the instances of a class and it is costly to initialize the field.  
 It decreases the cost of initializing a class or creating an instance, but increase the cost of accessing it.  
 For multiple threads, lazy initialization is tricky.  
@@ -2770,7 +2770,7 @@ Instance field that can tolerate repeated initialization: **single-check idiom.*
 	}
 ```
 
-## 72 Don't depend on thread scheduler 
+## 72. Don't depend on thread scheduler 
 Thread scheduler determines which runnable, get to run, and for how long.Operating systems will try to make this
 determination fairly, but the policy can vary. So any program that relies on the thread scheduler for correctness or performance is likely to be non portable.   
 To ensure that the average number of runnable threads is not significantly greater than the number of processors.
@@ -2781,11 +2781,11 @@ tasks should be:
 * independent of one another
 * not implement busy-wait
 
-## 73 Avoid thread groups
+## 73. Avoid thread groups
 Thread groups are obsolete.
 
 # 11 Serialization
-## 74 Implement _Serializable_ judiciously
+## 74. Implement _Serializable_ judiciously
 Adding `implements Serializable` is the easiest way to serialize a class, but it decreases the flexibility
 to change a class's implementation once it has been released. The byte-stream encoding (or serialized form)
 becomes part of its exported API. 
@@ -2814,7 +2814,7 @@ Implementing the Serializable interface has many real costs.
 
 A subclass of a not serializable class can not be serializable, unless it has a parameterless constructor.
 
-## 75 Consider using a custom serialized form
+## 75. Consider using a custom serialized form
 Do not accept the default serialized form without first considering whether it is appropriate.  
 The default serialized form is likely to be appropriate if an object's physical representation is identical to its logical content. Like a Point or Person Name.   
 Even if you decide that the default serialized form is appropriate, you often must provide a `readObject` method to ensure invariants and security
@@ -2845,7 +2845,7 @@ Declare an explicit serial version UID in every serializable class you write.
 
 	private static final long serialVersionUID = randomLongValue ;
 ```
-# 76 Write _readObject_ methods defensively
+## 76. Write _readObject_ methods defensively
 _readObject_ method is a public constructor that takes a byte stream as its sole parameter. It demands  same care as any other public constructor:
 
 *  check its arguments for validity (Item 38)
@@ -2877,7 +2877,7 @@ Summary guidelines:
 * If an entire object graph must be validated after it is deserialized, use the _ObjectInputValidation_ interface [JavaSE6, Serialization].
 * Do not invoke any overridable methods in the class, directly or indirectly.
 
-# 77 For instance control, prefer _enum_ types to _readResolve_
+## 77. For instance control, prefer _enum_ types to _readResolve_
 _Singleton_ classes would no longer be singletons if they “implements Serializable”.
 The _readResolve_ feature allows you to substitute another instance for the one created by _readObject_. So the original instance is returned.
 
@@ -2894,7 +2894,7 @@ Accessibility: _readResolve_ method on:
 	* package-private: it will apply only to subclasses in the same package. 
 	* protected or public: it will apply to all subclasses that do not override it. 
 
-# 78 Consider serialization proxies instead of serialized instances
+## 78. Consider serialization proxies instead of serialized instances
 _serialization proxy_: A private static nested class of the serializable class that represents the logical state of an instance of the enclosing class.  
 It has a single constructor, whose parameter type is the enclosing class, and copies the data from its arguments.  
 No need of consistency checking or defensive copying. 
