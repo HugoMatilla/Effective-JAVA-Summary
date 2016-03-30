@@ -2354,7 +2354,7 @@ If you finally do it **measure performance before and after each attempted optim
 | return a boolean  	 | names beginning with _is_ or, _has_ 			| isDigit, isProbablePrime, isEmpty, isEnabled, hasSiblings	|
 | return a non-boolean or attribute | noun, a noun phrase, or begin with _get_ | size, hashCode, or getTime 						|
 | convert the type of an object | _toType_								| toString, toArray 										|
-| return a view ([Item 5](#5-avoid-creating-objects))) of a different type  	| _asType_				| asList 													|
+| return a view ([Item 5](#5-avoid-creating-objects)) of a different type  	| _asType_				| asList 													|
 | return a primitive with the same value 		| _typeValue_			| intValue 													|
 
 #9. EXCEPTIONS
@@ -2411,83 +2411,46 @@ Invocation with state-testing method and unchecked exception
 | ConcurrentModificationException |  Concurrent modification of an object has been detected where it is prohibited |
 | UnsupportedOperationException   |  Object does not support method                                                |
 
-| Java 8 Exceptions                 |
-|-----------------------------------|
-| AclNotFoundException              |
-| ActivationException               |
-| AlreadyBoundException             |
-| ApplicationException              |
-| AWTException                      |
-| BackingStoreException             |
-| BadAttributeValueExpException     |
-| BadBinaryOpValueExpException      |
-| BadLocationException              |
-| BadStringOperationException       |
-| BrokenBarrierException            |
-| CertificateException              |
-| CloneNotSupportedException        |
-| DataFormatException               |
-| DatatypeConfigurationException    |
-| DestroyFailedException            |
-| ExecutionException                |
-| ExpandVetoException               |
-| FontFormatException               |
-| GeneralSecurityException          |
-| GSSException                      |
-| IllegalClassFormatException       |
-| InterruptedException              |
-| IntrospectionException            |
-| InvalidApplicationException       |
-| InvalidMidiDataException          |
-| InvalidPreferencesFormatException |
-| InvalidTargetObjectTypeException  |
-| IOException                       |
-| JAXBException                     |
-| JMException                       |
-| KeySelectorException              |
-| LambdaConversionException         |
-| LastOwnerException                |
-| LineUnavailableException          |
-| MarshalException                  |
-| MidiUnavailableException          |
-| MimeTypeParseException            |
-| MimeTypeParseException            |
-| NamingException                   |
-| NoninvertibleTransformException   |
-| NotBoundException                 |
-| NotOwnerException                 |
-| ParseException                    |
-| ParserConfigurationException      |
-| PrinterException                  |
-| PrintException                    |
-| PrivilegedActionException         |
-| PropertyVetoException             |
-| ReflectiveOperationException      |
-| RefreshFailedException            |
-| RemarshalException                |
-| RuntimeException                  |
-| SAXException                      |
-| ScriptException                   |
-| ServerNotActiveException          |
-| SOAPException                     |
-| SQLException                      |
-| TimeoutException                  |
-| TooManyListenersException         |
-| TransformerException              |
-| TransformException                |
-| UnmodifiableClassException        |
-| UnsupportedAudioFileException     |
-| UnsupportedCallbackException      |
-| UnsupportedFlavorException        |
-| UnsupportedLookAndFeelException   |
-| URIReferenceException             |
-| URISyntaxException                |
-| UserException                     |
-| XAException                       |
-| XMLParseException                 |
-| XMLSignatureException             |
-| XMLStreamException                |
-| XPathException                    |
+|                          Java 8 Exceptions                          |
+|-----------------------------------|---------------------------------|
+| AclNotFoundException              | MimeTypeParseException          |
+| ActivationException               | NamingException                 |
+| AlreadyBoundException             | NoninvertibleTransformException |
+| ApplicationException              | NotBoundException               |
+| AWTException                      | NotOwnerException               |
+| BackingStoreException             | ParseException                  |
+| BadAttributeValueExpException     | ParserConfigurationException    |
+| BadBinaryOpValueExpException      | PrinterException                |
+| BadLocationException              | PrintException                  |
+| BadStringOperationException       | PrivilegedActionException       |
+| BrokenBarrierException            | PropertyVetoException           |
+| CertificateException              | ReflectiveOperationException    |
+| CloneNotSupportedException        | RefreshFailedException          |
+| DataFormatException               | RemarshalException              |
+| DatatypeConfigurationException    | RuntimeException                |
+| DestroyFailedException            | SAXException                    |
+| ExecutionException                | ScriptException                 |
+| ExpandVetoException               | ServerNotActiveException        |
+| FontFormatException               | SOAPException                   |
+| GeneralSecurityException          | SQLException                    |
+| GSSException                      | TimeoutException                |
+| IllegalClassFormatException       | TooManyListenersException       |
+| InterruptedException              | TransformerException            |
+| IntrospectionException            | TransformException              |
+| InvalidApplicationException       | UnmodifiableClassException      |
+| InvalidMidiDataException          | UnsupportedAudioFileException   |
+| InvalidPreferencesFormatException | UnsupportedCallbackException    |
+| InvalidTargetObjectTypeException  | UnsupportedFlavorException      |
+| IOException                       | UnsupportedLookAndFeelException |
+| JAXBException                     | URIReferenceException           |
+| JMException                       | URISyntaxException              |
+| KeySelectorException              | UserException                   |
+| LambdaConversionException         | XAException                     |
+| LastOwnerException                | XMLParseException               |
+| LineUnavailableException          | XMLSignatureException           |
+| MarshalException                  | XMLStreamException              |
+| MidiUnavailableException          | XPathException                  |
+| MimeTypeParseException            |                                 |
 
 ##61. Throw exceptions appropriate to the abstraction
 Higher layers should catch lower-level exceptions and, in their place, throw exceptions that can be explained in terms of the higher-level abstraction.
