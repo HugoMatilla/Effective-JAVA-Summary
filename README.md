@@ -2412,6 +2412,7 @@ Invocation with state-testing method and unchecked exception
 | UnsupportedOperationException   |  Object does not support method                                                |
 
 ### Java 8 Exceptions           
+| 					             |  					             | 					               |
 |--------------------------------|-----------------------------------|---------------------------------|
 | AclNotFoundException           | InvalidMidiDataException          | RefreshFailedException          |
 | ActivationException            | InvalidPreferencesFormatException | RemarshalException              |
