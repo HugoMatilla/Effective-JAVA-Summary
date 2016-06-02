@@ -104,12 +104,12 @@ _If you are the publisher and think this repository should not be public, just w
 
 * Unlike constructors, they have names
 * Unlike constructors, they are not requires to create a new object each time they're invoked
-* Unlike constructors, they can return an object of nay subtype of their return type
+* Unlike constructors, they can return an object of any subtype of their return type
 * They reduce verbosity of creating parameterized type instances
 
 **_DISADVANTAGES_**
 
-* If providing only static factory methods, classes without public or protected constructors cannot be subclassed (encourage to use composition instead inheritance http://www.objectmentor.com/resources/articles/lsp.pdf)
+* If providing only static factory methods, classes without public or protected constructors cannot be subclassed (encourage to use composition instead inheritance.
 * They are not readily distinguishable from other static methods (Some common names (each with a different pourpose) are: valueOf, of, getInstance, newInstance, getType and newType)
 
 ```java
@@ -139,7 +139,7 @@ Builder pattern simulates named optional parameters as in ADA and Python.
 			private final int servingSize:
 			private final int servings;
 
-			/Optional parameters - initialized to defalult values
+			//Optional parameters - initialized to default values
 			private int calories		= 0;
 			private int fat 			= 0;
 			private int carbohydrate 	= 0;
@@ -207,7 +207,7 @@ There are different ways to create singletons:
 	}
 ```
 
-One problem is that a privileged client can invoke  the private constructor reflectively. Against this attack the constructor needs to be  modified to send  an exception iif it is asked to create a second instance.
+One problem is that a privileged client can invoke  the private constructor reflectively. Against this attack the constructor needs to be  modified to send  an exception if it is asked to create a second instance.
 
 **_Singleton with static factory_**
 
@@ -226,13 +226,13 @@ In this approach it can be change to a non singleton class without changing the 
 
 **_Serialize a singleton_**
 
-It is needed a _readResolve_ method and declare all the fields _transient_ in addtion to the _implements Serializable_ to mantain the singleton guarantee.
+It is needed a _readResolve_ method and declare all the fields _transient_ in addition to the _implements Serializable_ to maintain the singleton guarantee.
 
 ```java
 
 	private Object readResolve(){
-	//Return the one true Elvis and let the garbage collector take care of the Elvis impersonator
-	return INSTANCE;
+		//Return the one true Elvis and let the garbage collector take care of the Elvis impersonator
+		return INSTANCE;
 	}
 ```
 
@@ -249,9 +249,11 @@ It is needed a _readResolve_ method and declare all the fields _transient_ in ad
 
 Equivalent to the public field, more concise, provides serialization machinery for free, and guarantee against multiple instantiation, even for reflection attacks and sophisticated serialization. _It is the best way to implement a singleton_.
 
-##4. Enforce noninstantiablillity with a private constructor
-For classes that group static methods and static fields.
+##4. Enforce noninstantiablility with a private constructor
+For classes that group static methods and static fields.  
+
 Used for example to:
+
 * Group related methods on primitive values or arrays.
 * Group static methods, including factory methods, for objects that implement a particular interface.
 * Group methods on a final class instead of extending the class.
@@ -260,7 +262,8 @@ Used for example to:
 ```java
 
 	public class UtilityClass{
-		// Supress deafult constructor for noninstantiablillity (Add comment to clarify why the constructor is expressly provided)
+		// Suppress default constructor for noninstantiablility
+		// (Add comment to clarify why the constructor is expressly provided)
 		private UtilityClass(){
 			throw new AssertionError();
 		}
@@ -292,7 +295,7 @@ This one uses a single String instance rather than creating a new one.
 
 **_Use static factory methods in preference to constructors [Item 1](#1-use-static-factory-methods-instead-of-constructors)_**
 
-*Booelan.valueOf(String);* Is preferable to the constructor *Booelan(String)*.
+*Boolean.valueOf(String);* Is preferable to the constructor *Boolean(String)*.
 
 **REUSE MUTABLE OBJECTS THAT WON'T BE MODIFIED**
 
@@ -303,9 +306,8 @@ This one uses a single String instance rather than creating a new one.
 	public class Person {
 	private final Date birthDate;
 	...
-		public booelan isBabyBoomer(){
-			//
-			 allocation of expensive object.
+		public boolean isBabyBoomer(){
+			// Unnecessary allocation of expensive object.
 			Calendar gmtCal= Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 			gmtCal.set(1946,Calendar.JANUARY,1,0,0,0);
 			Date boomStart = gmtCal.getTime();
@@ -339,7 +341,7 @@ isBabyBoomer creates a new Calendar,TimeZone and two Date instances each time is
 	}
 ```
 
-**_Prefer primitives to boxed primitives, and wtach out for unintentional autoboxing_**
+**_Prefer primitives to boxed primitives, and watch out for unintentional autoboxing_**
 
 ```java
 
@@ -358,7 +360,7 @@ isBabyBoomer creates a new Calendar,TimeZone and two Date instances each time is
 
 **_Object polls are normally bad ideas_**
 
-Unless objects in the pool are extremly heavyweight, like a database connections.
+Unless objects in the pool are extremely heavyweight, like a database connections.
 
 ##6. Eliminate obsole object references
 **_Can you spot the memory leak?_**
@@ -436,11 +438,11 @@ __Use a Heap Profiler from time to time to find unseen memory leaks__
 
 Uncaught exceptions inside a finalizer won't even print a warning.
 
-Ther is a severe performance penalty for using finalizers.
+There is a severe performance penalty for using finalizers.
 
 **_Possible Solution_**
 
-Provide an _explicit termiantion method_ like the _close_ on  _InputStream_, _OutputStream_, _java.sql.Connection_...
+Provide an _explicit termination method_ like the _close_ on  _InputStream_, _OutputStream_, _java.sql.Connection_...
 
 Explicit termination methods are typically used in combination with the _try-finally_ construct to ensure termination.
 ```java
@@ -464,10 +466,10 @@ In this cases always remember to invoke super.finalize.
 #3. METHODS COMMON TO ALL OBJECTS
 ##8. Obey the general contract when overriding *equals*
 
-**_Dont override if:_**
+**_Don't override if:_**
 
 * Each instance of the class is inherently unique. I.e._Thread_
-* You dont care wheter the class provides a "logical equallity" test. I.e. _java.util.Random_
+* You don't care whether the class provides a "logical equality" test. I.e. _java.util.Random_
 * A superclass has already overriden _equals_, and the superclass behavior is appropriate for this class I.e. _Set_
 * The class is private or package-private, and you are certain  that its _equals_ method will never be invoked
 
