@@ -195,7 +195,7 @@ Builder pattern simulates named optional parameters as in ADA and Python.
 ##3. Enforce the singleton property with a private constructor or an enum type
 There are different ways to create singletons:
 
-**_Public fnial field_**
+**_Public final field_**
 
 ```java
 
