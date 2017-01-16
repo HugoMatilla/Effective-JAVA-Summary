@@ -661,7 +661,7 @@ Furthermore they can use its Interface-based copy constructors and factories, _c
 ##12. Consider implementing _Comparable_
 _Comparable_ is an interface. It is not declared in _Object_
 
-Sorting an array of objects that implement _Comparable_ is as simple as `Array.sort(a);`
+Sorting an array of objects that implement _Comparable_ is as simple as `Arrays.sort(a);`
 
 The class will interoperate with many generic algorithms and collection implementations that depend on this interfce. You gain lot of power with small effort.
 
@@ -1182,7 +1182,7 @@ Using **anonymous classes**
 
 ```java
 
-	Array.sort(stringArray, new Comparator<String>(){
+	Arrays.sort(stringArray, new Comparator<String>(){
 		public int compare(String s1, String s2){
 			return s1.length() - s2.length();
 		}
