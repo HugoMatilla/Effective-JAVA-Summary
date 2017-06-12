@@ -704,18 +704,23 @@ __Instance fields should never be public__ ([Item 14](#14-in-public-classes-use-
 Static fields can be public if contain primitive values or references to inmutable objects. A final field containing a reference to a mutable object has all the disadvantages of a non final field.
 
 Nonzero-length array is always mutable.
+
 ```java
 
 	//Potential security hole!
 	public static final Thing[] VALUES = {...}
 ```
+
 Solution:
+
 ```java
 
 	private static final Thing[] PRIVATE_VALUES ={...}
 	public static final List<Thing> VALUES = Collections.unmodifiableList(Arrays.asList(PRIVATE_VALUES));
 ```
+
 Or:
+
 ```java
 
 	private static final Thing[] PRIVATE_VALUES ={...}
@@ -723,6 +728,7 @@ Or:
 		return PRIVATE_VALUES.clone;
 	}
 ```
+
 ## 14. In public classes, use accessor methods, not public fields
 
 Degenerate classes should not be public
@@ -1147,7 +1153,8 @@ Strategies are facilities that allow programs to store and transmit the ability 
 It is possible to define a object whose method perform operations on other objects.
 
 **Concrete strategy**
-``java
+
+```java
 
 	class StringLengthComparator{
 		public int compare(String s1, String s2){
@@ -1299,7 +1306,7 @@ Never add elements (other than null) into a `Collection<?>`
 | Type token              | `String.class`                     | 29     |
 
 ## 24. Eliminate unchecked warnings
-Eliminate every unchecked warning that you can, if you can't use _Suppress-Warnings_ annotation on the smallest scope possible.
+Eliminate every unchecked warning that you can, if you can´t use _Suppress-Warnings_ annotation on the smallest scope possible.
 
 ```java
 
@@ -1311,7 +1318,7 @@ Eliminate every unchecked warning that you can, if you can't use _Suppress-Warni
 Arrays are _covariant_: if `Sub` is a subtype of `Super`, `Sub[]` is a subtype of `Super[]`  
 Generics are _invariant_: for any two types `Type1` and `Type2`, `List<Type1>` in neither  sub or super type of `List<Type1>`
 
-``java
+```java
 
 	// Fails at runtime
 	Object[] objectArray = new Long[1];
@@ -1320,7 +1327,7 @@ Generics are _invariant_: for any two types `Type1` and `Type2`, `List<Type1>` i
 	// Won't compile
 	List<Object> ol = new ArrayList<Long>();//Incompatible types
 	ol.add("I don't fit in")
-``
+```
 
 Arrays are _reified_: Arrays know and enforce their element types at runtime.
 Generics are _erasure_: Enforce their type constrains only at compile time and discard (or _erase_) their element type information at runtime.
