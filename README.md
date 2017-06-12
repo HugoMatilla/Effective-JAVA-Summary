@@ -1563,7 +1563,7 @@ Thanks to the type of the class literal. `Class<T>`
 **Client**
 ```java
 
-	Favorites f - new Favorites();
+	Favorites f = new Favorites();
 	f.putFavorites(String.class, "JAVA");
 	f.putFavorites(Integer.class, 0xcafecace);
 	f.putFavorites(Class.class, Favorite.class);
