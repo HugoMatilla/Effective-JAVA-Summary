@@ -12,7 +12,7 @@ _If you are the publisher and think this repository should not be public, just w
 	- [3. Enforce the singleton property with a private constructor or an enum type](#3-enforce-the-singleton-property-with-a-private-constructor-or-an-enum-type)
 	- [4. Enforce noninstantiablillity with a private constructor](#4-enforce-noninstantiablillity-with-a-private-constructor)
 	- [5. Avoid creating objects](#5-avoid-creating-objects)
-	- [6. Eliminate obsole object references](#6-eliminate-obsole-object-references)
+	- [6. Eliminate obsolete object references](#6-eliminate-obsole-object-references)
 	- [7. Avoid finalizers](#7-avoid-finalizers)
 - [3. METHODS COMMON TO ALL OBJECTS](#3-methods-common-to-all-objects)
 	- [8. Obey the general contract when overriding *equals*](#8-obey-the-general-contract-when-overriding-equals)
@@ -21,7 +21,7 @@ _If you are the publisher and think this repository should not be public, just w
 	- [11. Override _clone_ judiciously](#11-override-clone-judiciously)
 	- [12. Consider implementing _Comparable_](#12-consider-implementing-comparable)
 - [4. CLASSES AND INTERFACES](#4-classes-and-interfaces)
-	- [13. Minimize the accesibility of classes and members](#13-minimize-the-accesibility-of-classes-and-members)
+	- [13. Minimize the accessibility of classes and members](#13-minimize-the-accesibility-of-classes-and-members)
 	- [14. In public classes, use accessor methods, not public fields](#14-in-public-classes-use-accessor-methods-not-public-fields)
 	- [15. Minimize Mutability](#15-minimize-mutability)
 	- [16. Favor composition over inheritance](#16-favor-composition-over-inheritance)
@@ -55,10 +55,10 @@ _If you are the publisher and think this repository should not be public, just w
 	- [41. Use overloading judiciously](#41-use-overloading-judiciously)
 	- [42. Use varargs judiciously](#42-use-varargs-judiciously)
 	- [43. Return empty arrays or collections, not nulls](#43-return-empty-arrays-or-collections-not-nulls)
-	- [44. Write _doc comments_ for all exposed API elemnts](#44-write-doc-comments-for-all-exposed-api-elemnts)
+	- [44. Write _doc comments_ for all exposed API elements](#44-write-doc-comments-for-all-exposed-api-elemnts)
 - [8. GENERAL PROGRAMMING](#7-general-programming)
 	- [45. Minimize the scope of local variables.](#45-minimize-the-scope-of-local-variables)
-	- [46. Prefer for-each lopps to traditional for loops.](#46-prefer-for-each-lopps-to-traditional-for-loops)
+	- [46. Prefer for-each loops to traditional for loops.](#46-prefer-for-each-lopps-to-traditional-for-loops)
 	- [47. Know and use libraries](#47-know-and-use-libraries)
 	- [48. Avoid float and double if exact answer are required](#48-avoid-float-and-double-if-exact-answer-are-required)
 	- [49. Prefer primitive types to boxed primitives](#49-prefer-primitive-types-to-boxed-primitives)
@@ -259,6 +259,7 @@ Used for example to:
 * Group methods on a final class instead of extending the class.
 
 **_Include a private constructor_**
+
 ```java
 
 	public class UtilityClass{
@@ -273,7 +274,7 @@ Used for example to:
 
 ## 5. Avoid creating objects
 
-**REUSE INMUTABLE OBJECTS**
+**REUSE IMMUTABLE OBJECTS**
 
 **_Don't do this_**
 
@@ -364,6 +365,7 @@ Unless objects in the pool are extremely heavyweight, like a database connection
 
 ## 6. Eliminate obsole object references
 **_Can you spot the memory leak?_**
+
 ```java
 
 	public class Stack{
@@ -393,7 +395,7 @@ Unless objects in the pool are extremely heavyweight, like a database connection
 	}
 ```
 
-If the stack grows and shrinks the objects popped will not be garbage collected. The stack mantains obsolete references (a reference that will never be dereferenced).
+If the stack grows and shrinks the objects popped will not be garbage collected. The stack maintains obsolete references (a reference that will never be dereferenced).
 
 **_Null out references_**
 
@@ -416,19 +418,18 @@ Null out objects only in classes that manages its own memory.
 
  Using _WeakHashMap_ is useful when if desired lifetime of cache entries is determined by external references to the key, not the value.
 
- Clean oldest entries in cache is a common practice. To acommplish this behaviors, it can be used: background threads, automatically delete older after a new insertion or the _LinkedHashMap_ and its method _removeEldestEntry.
+ Clean oldest entries in cache is a common practice. To accomplish this behaviors, it can be used: background threads, automatically delete older after a new insertion or the _LinkedHashMap_ and its method _removeEldestEntry.
 
 **_Memory leaks in listeners and callbacks_**
 
-If clients register callbacks, but never deregister them explicity.
+If clients register callbacks, but never deregister them explicitly.
 
 To solve it store only _weak references_ to them, for example storing them as keys in a _WeakHashMap_.
 
 __Use a Heap Profiler from time to time to find unseen memory leaks__
 
 ## 7. Avoid finalizers
- Finalizers are unpredictable, often dangerous and generally
- .
+Finalizers are unpredictable, often dangerous and generally.
 
 **_Never do anything time-critical in a finalizer._**
 >There is no guarantee they'll be executed promptly.
@@ -470,12 +471,12 @@ In this cases always remember to invoke super.finalize.
 
 * Each instance of the class is inherently unique. I.e._Thread_
 * You don't care whether the class provides a "logical equality" test. I.e. _java.util.Random_
-* A superclass has already overriden _equals_, and the superclass behavior is appropriate for this class I.e. _Set_
+* A superclass has already overridden _equals_, and the superclass behavior is appropriate for this class I.e. _Set_
 * The class is private or package-private, and you are certain  that its _equals_ method will never be invoked
 
 **_Override if:_**
 
-A class has a notion of _logical equality_ that differs from mere object identity, and a superclass has not already overriden _equals_ to implement the desired behavior.
+A class has a notion of _logical equality_ that differs from mere object identity, and a superclass has not already overridden _equals_ to implement the desired behavior.
 
 **_Equals implements an "equivalence relation"_**
 
@@ -491,7 +492,7 @@ A class has a notion of _logical equality_ that differs from mere object identit
 2. Use the _instanceof_ operator to check if the argument has the correct type
 3. Cast the argument to the correct type
 4. For each "significant" field in the class, check if that field of the argument matches the corresponding field of this object
-5. When you are finished writting your _equals_ method, ask yourself three questions: Is it Symmetric? Is it Transitive? Is it Consistent? (the other 2 usually take care of themselves)
+5. When you are finished writing your _equals_ method, ask yourself three questions: Is it Symmetric? Is it Transitive? Is it Consistent? (the other 2 usually take care of themselves)
 
 
 ```java
@@ -515,14 +516,14 @@ A class has a notion of _logical equality_ that differs from mere object identit
 
 * Always override _hashCode_ when you override _equals_
 * Don't try to be too clever (simplicity is your friend)
-* Don't substiture another type for _Object_ in the _equals_ declaration
+* Don't substitute another type for _Object_ in the _equals_ declaration
 
 
 ## 9. Always override _hashCode_ when you override *equals*
 
 **_Contract of hashCode_**
 
-* Whenever _hashCode_ is invoked in the same object it should return the same itnteger.
+* Whenever _hashCode_ is invoked in the same object it should return the same integer.
 * If two objects are equals according to the  _equals_, the should return the same integer calling _hashCode_.
 * Is not required (but recommended) that two non _equals_ objects return distinct _hashCode_.
 
@@ -572,7 +573,7 @@ Always provide programmatic access to all of the information contained in the va
 
 ## 11. Override _clone_ judiciously
 Cloneable interface does not contain methods
-If a class implements Cloneable, Object's clone method returns a field-by-field copy of the object. 
+If a class implements Cloneable, Object's clone method returns a field-by-field copy of the object.
 Otherwise it throws CloneNotSupportedException.
 
 If you override the clone method in a nonfinal class, you should return an object obtained by invoking _super.clone_.
@@ -585,7 +586,7 @@ Simple clone method if object does **not** contain fields that refer to mutable 
 	@Override public PhoneNumber clone() {
 		try {
 			//PhoneNumber.clone must cast the result of super.clone() before returning it.
-			return (PhoneNumber) super.clone(); 
+			return (PhoneNumber) super.clone();
 		} catch(CloneNotSupportedException e) {
 			throw new AssertionError(); // Can't happen
 		}
@@ -618,7 +619,7 @@ A _clone_ method should not invoke any nonfinal methods on the clone under const
 
 Object's _clone_ method is declared to throw _CloneNotSupportedException_, but overriding clone methods can omit this declaration.  
 Public _clone_ methods should omit it. ([Item 59](#59-avoid-unnecessary-use-of-checked-exceptions)).  
-If a class overrides clone, the overriding method should mimic the behavior of _Object.clone_: 
+If a class overrides clone, the overriding method should mimic the behavior of _Object.clone_:
 
 * it should be declared protected,
 * it should be declared to throw CloneNotSupportedException,
@@ -628,12 +629,12 @@ Subclasses are free to implement Cloneable or not, just as if they extended Obje
 
 _clone_ method must be properly synchronized just like any other method ([Item 66](#66-synchronize-access-to-shared-mutable-data)).
 
-Summary: classes that implement Cloneable should create a method that: 
+Summary: classes that implement Cloneable should create a method that:
 
-* override clone 
+* override clone
 * return type is the class
-* call _super.clone_ 
-* fix fields that need to be fixed 
+* call _super.clone_
+* fix fields that need to be fixed
 
 Better provide an alternative of object copying, or don't provide it at all.
 
@@ -652,7 +653,7 @@ These alternatives:
 
 * don't rely on a risk-prone extra-linguistic object creation mechanism
 * don't demand adherence to thinly documented conventions
-* don't conflict with the proper use of final fields 
+* don't conflict with the proper use of final fields
 * don't throw unnecessary checked exceptions
 * don't require casts.
 
@@ -703,18 +704,23 @@ __Instance fields should never be public__ ([Item 14](#14-in-public-classes-use-
 Static fields can be public if contain primitive values or references to inmutable objects. A final field containing a reference to a mutable object has all the disadvantages of a non final field.
 
 Nonzero-length array is always mutable.
+
 ```java
 
 	//Potential security hole!
 	public static final Thing[] VALUES = {...}
 ```
+
 Solution:
+
 ```java
 
 	private static final Thing[] PRIVATE_VALUES ={...}
 	public static final List<Thing> VALUES = Collections.unmodifiableList(Arrays.asList(PRIVATE_VALUES));
 ```
+
 Or:
+
 ```java
 
 	private static final Thing[] PRIVATE_VALUES ={...}
@@ -722,6 +728,7 @@ Or:
 		return PRIVATE_VALUES.clone;
 	}
 ```
+
 ## 14. In public classes, use accessor methods, not public fields
 
 Degenerate classes should not be public
@@ -952,7 +959,7 @@ Constructors must not invoke overridable methods. For _Serializable_ and  _Clone
 Prohibit subclassing in classes that are not designed and documented to be safely subclassed. 2 options:
 
 * Declare the class final
-* Make all constructors private or package-private and add public static factories in place of the constructors. 
+* Make all constructors private or package-private and add public static factories in place of the constructors.
 ([Item 15](#15-minimize-mutability))
 
 Consider use [Item 16](#16-favor-composition-over-inheritance) if what you want is to increase the functionality of your class instead of subclassing.
@@ -1006,7 +1013,7 @@ Sekeletal implementations are designed for inheritance so follow [Item 17](#17-d
 
 _simple implementation_ is like a skeletal implementation in that it implements the simplest possible working implementation.
 
-Cons: It is far easier to evolve an abstract class than an interface. Once an interface is released and widely implemented, it is almost imposible to change.
+Cons: It is far easier to evolve an abstract class than an interface. Once an interface is released and widely implemented, it is almost impossible to change.
 
 ## 19. Use interfaces only to define types
 When a class implements an interface, the interface serves as a _type_ that can be used to refer to instances of the class.
@@ -1146,7 +1153,8 @@ Strategies are facilities that allow programs to store and transmit the ability 
 It is possible to define a object whose method perform operations on other objects.
 
 **Concrete strategy**
-``java
+
+```java
 
 	class StringLengthComparator{
 		public int compare(String s1, String s2){
@@ -1298,7 +1306,7 @@ Never add elements (other than null) into a `Collection<?>`
 | Type token              | `String.class`                     | 29     |
 
 ## 24. Eliminate unchecked warnings
-Eliminate every unchecked warning that you can, if you can't use _Suppress-Warnings_ annotation on the smallest scope possible.
+Eliminate every unchecked warning that you can, if you can´t use _Suppress-Warnings_ annotation on the smallest scope possible.
 
 ```java
 
@@ -1310,7 +1318,7 @@ Eliminate every unchecked warning that you can, if you can't use _Suppress-Warni
 Arrays are _covariant_: if `Sub` is a subtype of `Super`, `Sub[]` is a subtype of `Super[]`  
 Generics are _invariant_: for any two types `Type1` and `Type2`, `List<Type1>` in neither  sub or super type of `List<Type1>`
 
-``java
+```java
 
 	// Fails at runtime
 	Object[] objectArray = new Long[1];
@@ -1319,7 +1327,7 @@ Generics are _invariant_: for any two types `Type1` and `Type2`, `List<Type1>` i
 	// Won't compile
 	List<Object> ol = new ArrayList<Long>();//Incompatible types
 	ol.add("I don't fit in")
-``
+```
 
 Arrays are _reified_: Arrays know and enforce their element types at runtime.
 Generics are _erasure_: Enforce their type constrains only at compile time and discard (or _erase_) their element type information at runtime.
@@ -1555,7 +1563,7 @@ Thanks to the type of the class literal. `Class<T>`
 **Client**
 ```java
 
-	Favorites f - new Favorites();
+	Favorites f = new Favorites();
 	f.putFavorites(String.class, "JAVA");
 	f.putFavorites(Integer.class, 0xcafecace);
 	f.putFavorites(Class.class, Favorite.class);
