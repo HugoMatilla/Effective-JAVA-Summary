@@ -1810,12 +1810,35 @@ Sample of the _@Test_ annotation
 
 `@Retention(RetentionPolicy.RUNTIME)`: indicates that the Test annotation should be retained at runtime.(It makes them visible to the test tool)
 
-`@Target(ElementType.METHOD)`indicates that is legal only on method declarations. Not in class, fields or other programms declarations
+`@Target(ElementType.METHOD)`indicates that is legal only on method declarations. Not in class, fields or other programs declarations
+
+__Retention RetentionPolicies__
+
+| Enum    | Description                              |
+|:--------|:-----------------------------------------|
+| CLASS   | Retain only at compile time, not runtime |
+| RUNTIME | Retain at compile and also runtime       |
+| SOURCE  | Discard by the compiler                  |
+
+__Target ElementTypes__
+
+| Enum            | Valid on...                                        |
+|:----------------|:---------------------------------------------------|
+| ANNOTATION_TYPE | Annotation type declaration                        |
+| CONSTRUCTOR     | constructors                                       |
+| FIELD           | the field (includes also enum constants)           |
+| LOCAL_VARIABLE  | local variables                                    |
+| METHOD          | methods                                            |
+| PACKAGE         | packages                                           |
+| PARAMETER       | parameter declaration                              |
+| TYPE            | class, interface, annotation and enums declaration |
+| TYPE_PARAMETER  | type parameter declarations                        |
+| TYPE_USE        | the use of a specific type                         |
 
 **Use**
 ```java
 
-	public class Smaple{
+	public class Sample{
 		@Test public static void m1(){}		// Test pass
 		public static void m2(){} 			// Not test applied
 		@Test public static void m3(){ 		// Test fail
@@ -1837,7 +1860,7 @@ Sample of the _@Test_ annotation
 			Class testClass = Class.forName(args[0]);
 			for (Method m : testClass.getDeclaredMethods()){
 				if (m.isAnnotationPresent(Test.class)){
-					test++;
+					tests++;
 					try{
 						m.invoke(null);
 						passed++;
