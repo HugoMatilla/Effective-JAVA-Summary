@@ -12,7 +12,7 @@ _If you are the publisher and think this repository should not be public, just w
 	- [3. Enforce the singleton property with a private constructor or an enum type](#3-enforce-the-singleton-property-with-a-private-constructor-or-an-enum-type)
 	- [4. Enforce noninstantiablillity with a private constructor](#4-enforce-noninstantiablillity-with-a-private-constructor)
 	- [5. Avoid creating objects](#5-avoid-creating-objects)
-	- [6. Eliminate obsolete object references](#6-eliminate-obsole-object-references)
+	- [6. Eliminate obsolete object references](#6-eliminate-obsolete-object-references)
 	- [7. Avoid finalizers](#7-avoid-finalizers)
 - [3. METHODS COMMON TO ALL OBJECTS](#3-methods-common-to-all-objects)
 	- [8. Obey the general contract when overriding *equals*](#8-obey-the-general-contract-when-overriding-equals)
@@ -58,7 +58,7 @@ _If you are the publisher and think this repository should not be public, just w
 	- [44. Write _doc comments_ for all exposed API elements](#44-write-doc-comments-for-all-exposed-api-elemnts)
 - [8. GENERAL PROGRAMMING](#7-general-programming)
 	- [45. Minimize the scope of local variables.](#45-minimize-the-scope-of-local-variables)
-	- [46. Prefer for-each loops to traditional for loops.](#46-prefer-for-each-lopps-to-traditional-for-loops)
+	- [46. Prefer for-each loops to traditional for loops.](#46-prefer-for-each-loops-to-traditional-for-loops)
 	- [47. Know and use libraries](#47-know-and-use-libraries)
 	- [48. Avoid float and double if exact answer are required](#48-avoid-float-and-double-if-exact-answer-are-required)
 	- [49. Prefer primitive types to boxed primitives](#49-prefer-primitive-types-to-boxed-primitives)
@@ -109,7 +109,7 @@ _If you are the publisher and think this repository should not be public, just w
 
 **_DISADVANTAGES_**
 
-* If providing only static factory methods, classes without public or protected constructors cannot be subclassed (encourage to use composition instead inheritance.
+* If providing only static factory methods, classes without public or protected constructors cannot be subclassed (encourage to use composition instead inheritance).
 * They are not readily distinguishable from other static methods (Some common names (each with a different pourpose) are: valueOf, of, getInstance, newInstance, getType and newType)
 
 ```java
@@ -181,7 +181,7 @@ Builder pattern simulates named optional parameters as in ADA and Python.
 			calories		= builder.calories;
 			fat 			= builder.fat;
 			sodium 			= builder.sodium;
-			carbohydrate	= builder.carbohydrate;
+			carbohydrate		= builder.carbohydrate;
 		}
 	}
 ```
@@ -289,7 +289,7 @@ Every call creates a new String instance. The argument *"stringette"* is itself 
 
 ```java
 
-	String s ="stringette";		
+	String s = "stringette";		
 ```
 
 This one uses a single String instance rather than creating a new one.
@@ -336,7 +336,7 @@ isBabyBoomer creates a new Calendar,TimeZone and two Date instances each time is
 			gmtCal.set(1965,Calendar.JANUARY,1,0,0,0);
 			BOOM_END = gmtCal.getTime();
 	}
-		public booelan isBabyBoomer(){
+		public boolean isBabyBoomer(){
 			return birthDate.compareTo(BOOM_START) >= 0 &&birthDate.compareTo(BOOM_END)<0;
 		}
 	}
@@ -363,7 +363,7 @@ isBabyBoomer creates a new Calendar,TimeZone and two Date instances each time is
 
 Unless objects in the pool are extremely heavyweight, like a database connections.
 
-## 6. Eliminate obsole object references
+## 6. Eliminate obsolete object references
 **_Can you spot the memory leak?_**
 
 ```java
@@ -371,10 +371,10 @@ Unless objects in the pool are extremely heavyweight, like a database connection
 	public class Stack{
 		private Object[] elements;
 		private int size = 0;
-		private static final int DEFAULT_INITAIL_CAPACITY = 16;
+		private static final int DEFAULT_INITIAL_CAPACITY = 16;
 
 		public Stack(){
-			elements = new Object [DEFAULT_INITAIL_CAPACITY];
+			elements = new Object [DEFAULT_INITIAL_CAPACITY];
 		}
 
 		public void push(Object e){
@@ -384,7 +384,7 @@ Unless objects in the pool are extremely heavyweight, like a database connection
 
 		public Object pop(){
 			if (size == 0)
-				throw new EmptyStacjException();
+				throw new EmptyStackException();
 			return elements[--size];
 		}
 
@@ -403,7 +403,7 @@ If the stack grows and shrinks the objects popped will not be garbage collected.
 
 	public pop(){
 		if (size == 0)
-			throw new EmptyStacjException();
+			throw new EmptyStackException();
 		Object result = elements[--size];
 		elements[size] = null; // Eliminate obsolete references.
 		return result;
@@ -418,7 +418,7 @@ Null out objects only in classes that manages its own memory.
 
  Using _WeakHashMap_ is useful when if desired lifetime of cache entries is determined by external references to the key, not the value.
 
- Clean oldest entries in cache is a common practice. To accomplish this behaviors, it can be used: background threads, automatically delete older after a new insertion or the _LinkedHashMap_ and its method _removeEldestEntry.
+ Clean oldest entries in cache is a common practice. To accomplish this behaviors, it can be used: background threads, automatically delete older after a new insertion or the _LinkedHashMap_ and its method _removeEldestEntry_.
 
 **_Memory leaks in listeners and callbacks_**
 
@@ -565,7 +565,7 @@ The second condition is the one that is more often violated.
 
 Providing a good _toString_ implementation makes your class much more pleasant to read.
 
-When practival, the _toString_ method return all of the  interesting information contained in the object.
+When practical, the _toString_ method return all of the  interesting information contained in the object.
 
 It is possible to specify the format of return value in the documentation.
 
@@ -664,7 +664,7 @@ _Comparable_ is an interface. It is not declared in _Object_
 
 Sorting an array of objects that implement _Comparable_ is as simple as `Arrays.sort(a);`
 
-The class will interoperate with many generic algorithms and collection implementations that depend on this interfce. You gain lot of power with small effort.
+The class will interoperate with many generic algorithms and collection implementations that depend on this interface. You gain lot of power with small effort.
 
 Follow this provisions (Reflexive, Transitive, Symmetric):
 
@@ -701,7 +701,7 @@ Is is acceptable to make a private member of a public class package-private in o
 
 __Instance fields should never be public__ ([Item 14](#14-in-public-classes-use-accessor-methods-not-public-fields)) Class will not be thread-safe.
 
-Static fields can be public if contain primitive values or references to inmutable objects. A final field containing a reference to a mutable object has all the disadvantages of a non final field.
+Static fields can be public if contain primitive values or references to immutable objects. A final field containing a reference to a mutable object has all the disadvantages of a non final field.
 
 Nonzero-length array is always mutable.
 
@@ -801,7 +801,7 @@ They are easier to design, implement and use. And they are less prone to errors 
 
 		// Accessors with no corresponding mutators
 		public double realPart() { return re;}
-		public double imaganaryPart() { return im;}
+		public double imaginaryPart() { return im;}
 
 		public Complex add(Complex c){
 			return new Complex(re + c.re, im + c.im);
@@ -820,9 +820,9 @@ They are easier to design, implement and use. And they are less prone to errors 
 
 The arithmetic operation __create and return a new instance__. (Functional approach)
 
-Inmutable objects are simple. They only have one state for its lifetime.
+Immutable objects are simple. They only have one state for its lifetime.
 
-Inmutable objects are thread-safe. Synchronization is not required. They can be shared freely and can reuse existing instances.
+Immutable objects are thread-safe. Synchronization is not required. They can be shared freely and can reuse existing instances.
 
 ```java
 
@@ -833,17 +833,17 @@ Inmutable objects are thread-safe. Synchronization is not required. They can be 
 
 Using static factories can create constants of frequently requested instances and serve them in future requests.
 
-Internals of the inmutable objects can also be share.
+Internals of the immutable objects can also be share.
 
 They make great building blocks for other objects.
 
-The disadvantes is that require a separate object for distinct values. In some cases it could reach to a performance problem.
+The disadvantages is that require a separate object for distinct values. In some cases it could reach to a performance problem.
 
-__How to deny subclassing in imnutable objects__
+__How to deny subclassing in immutable objects__
 
 1. Making it final
 
-2. Make all of its contructors private or package-private and add a public static factory
+2. Make all of its constructors private or package-private and add a public static factory
 
 ```java
 
@@ -864,7 +864,7 @@ __How to deny subclassing in imnutable objects__
 	}
 ```
 
-This technique allows flexibily of multiple implementations, it's possible to tune  the performance and permit to create more factories with names that clarify its function.
+This technique allows flexibility of multiple implementations, it's possible to tune  the performance and permit to create more factories with names that clarify its function.
 
 __Summary__
 
@@ -887,14 +887,14 @@ Fragility causes
 
 2. The superclass can aquire new methods in new releases that might not be added in the subclass.
 
-**Compostion**
+**Composition**
 
 Instead of extending, give your new class a private field that references an instance of the existing class.
 
 Each instance method in the new class (_forwarding class_)invokes the corresponding method (_forwarding methods_) on the contained instance of the existing class and returns the results.
 
 
-**Wrapper (Decorator Patterm)**
+**Wrapper (Decorator Pattern)**
 ```java
 
 	// Wrapper class - uses composition in place of inheritance
@@ -933,7 +933,7 @@ Each instance method in the new class (_forwarding class_)invokes the correspond
 
 		// It implemets the Set, using the interface, and create the forwarding methods.
 		public void clear() {s.clear();}
-		public boolean conatains(Object o) { return s.contains(o)}
+		public boolean contains(Object o) { return s.contains(o)}
 		...
 		public boolean add(E e) { return s.add(e)}
 		public boolean addAll (Collection< ? extends E> c){return s.addAll(c)}
@@ -952,7 +952,7 @@ To document  a class so that it can be safely subclassed, you must describe impl
 
 To allow programmers to write efficient subclasses without undue pain, a class may have to provide hooks into its internal working in the form of judiciously chosen protected methods.
 
-__Test the class for subclassing__. The only way to test a class desgined for inheritance is to write subclasses.
+__Test the class for subclassing__. The only way to test a class designed for inheritance is to write subclasses.
 
 Constructors must not invoke overridable methods. For _Serializable_ and  _Cloneable_ implementations neither _clone_ nor _readObject_ may  invoke overridable methods.
 
@@ -1009,7 +1009,7 @@ Combine the virtues of interfaces and abstract classes, by providing an abstract
 		}
 	}
 ```
-Sekeletal implementations are designed for inheritance so follow [Item 17](#17-design-and-document-for-inheritance-or-else-prohibit-it) guidelines.
+Skeletal implementations are designed for inheritance so follow [Item 17](#17-design-and-document-for-inheritance-or-else-prohibit-it) guidelines.
 
 _simple implementation_ is like a skeletal implementation in that it implements the simplest possible working implementation.
 
@@ -1268,7 +1268,7 @@ _Raw types_ is the generic type definition without type parameters. `List`
 	Stamp s = stamps.get(i); // No need casting
 ```
 
-Use of raw types lose safety and expresivenes of generics.
+Use of raw types lose safety and expressiveness of generics.
 
 Type safety is kept in a parametrized type like `List<Object>` but not in raw types (`List`).
 
@@ -1343,10 +1343,10 @@ Making [Item 6](#6-eliminate-obsole-object-references) to use generics.
 	public class Stack{
 		private E[] elements;
 		private int size = 0;
-		private static final int DEFAULT_INITAIL_CAPACITY = 16;
+		private static final int DEFAULT_INITIAL_CAPACITY = 16;
 
 		public Stack(){
-			elements = new E [DEFAULT_INITAIL_CAPACITY];//Error: Can't create an array of a non-reifiable type.
+			elements = new E [DEFAULT_INITIAL_CAPACITY];//Error: Can't create an array of a non-reifiable type.
 		}
 
 		public void push(E e){
@@ -1356,7 +1356,7 @@ Making [Item 6](#6-eliminate-obsole-object-references) to use generics.
 
 		public E pop(){
 			if (size == 0)
-				throw new EmptyStacjException();
+				throw new EmptyStackException();
 			E result = elements[--size];
 			elements[size] = null;
 			return result;
@@ -1370,7 +1370,7 @@ There will be one error:
 ```java
 
 	//Error: Generic array creation. Can't create an array of a non-reifiable type.
-	elements = new E [DEFAULT_INITAIL_CAPACITY];
+	elements = new E [DEFAULT_INITIAL_CAPACITY];
 ```
 **First option** (more commonly used.)
 
@@ -1382,7 +1382,7 @@ There will be one error:
 	//type of the array won't be E[]; it will always be Object[]!
 	@SupressWarnings("unchecked")
 	public Stack(){
-		elements = (E[]) new Object [DEFAULT_INITAIL_CAPACITY];
+		elements = (E[]) new Object [DEFAULT_INITIAL_CAPACITY];
 	}
 ```
 **Second Option**
@@ -1405,7 +1405,7 @@ The appropriate suppression of the unchecked warning
 
 	public E pop(){
 		if (size == 0)
-			throw new EmptyStacjException();
+			throw new EmptyStackException();
 
 		// push requires elements to be of type E, so cast is correct.
 		@SupressWarnings("unchecked") E result = elements[--size];
@@ -2107,7 +2107,7 @@ varargs methods are a convenient way to define methods that require a variable n
 ## 43. Return empty arrays or collections, not nulls
 There is no reason ever to return null from an array- or collection-valued method instead of returning an empty array or collection
 
-Return an inmutable empty array instead of null.
+Return an immutable empty array instead of null.
 ```java
 
 	// The right way to return an array from a collection
@@ -2181,7 +2181,7 @@ Most local variable declaration should contain an initializer.
 Prefer for loops to while loops.  
 Keep methods small and focused.   
 
-## 46. Prefer for-each lopps to traditional for loops.
+## 46. Prefer for-each loops to traditional for loops.
 ```java
 
 	 // No longer the preferred idiom to iterate over a collection!
@@ -2416,7 +2416,7 @@ Obtain many of the benefits of reflection incurring few of its costs by **creati
 			System.exit(1);
 		}
 
-		//Excersice the Set
+		//Excercise the Set
 		// Print the remaining arguments. The order depends in the class. If it is a HashSet
 		// the order will be random, if it is a TreeSet it will be alphabetically
 		s.addAll(Arrays.asList(args).subList(1,args.length));
