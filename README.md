@@ -1555,7 +1555,7 @@ Thanks to the type of the class literal. `Class<T>`
 ```java
 
 	public class Favorites{
-		public <T> void putFavorites(Class<T> type, T instance);
+		public void putFavorites(Class<T> type, T instance);
 		public <T> getFavorite(Class<T> type);
 	}
 ```
