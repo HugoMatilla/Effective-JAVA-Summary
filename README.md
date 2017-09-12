@@ -1073,7 +1073,7 @@ They have lot of boilerplate, bad readability, they increase memory footprint, a
 	class Figure{
 		enum Shaple {RECTANGLE, CIRCLE};
 
-		fina Shape shape;
+		final Shape shape;
 
 		// Rectangle fields
 		double length;
@@ -1659,7 +1659,7 @@ Use it, if multiple enum constants share common behaviors.
 		TUESDAY(PayType.WEEKDAY),
 		...
 		SATURDAY(PayType.WEEKEND),
-		SUNDAY(PayType.WEEKENd);
+		SUNDAY(PayType.WEEKEND);
 
 		private final PayType payType;
 
