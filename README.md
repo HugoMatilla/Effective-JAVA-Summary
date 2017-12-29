@@ -10,7 +10,7 @@ _If you are the publisher and think this repository should not be public, just w
 	- [1. Use STATIC FACTORY METHODS instead of constructors](#1-use-static-factory-methods-instead-of-constructors)
 	- [2. Use BUILDERS when faced with many constructors](#2-use-builders-when-faced-with-many-constructors)
 	- [3. Enforce the singleton property with a private constructor or an enum type](#3-enforce-the-singleton-property-with-a-private-constructor-or-an-enum-type)
-	- [4. Enforce noninstantiablillity with a private constructor](#4-enforce-noninstantiablillity-with-a-private-constructor)
+	- [4. Enforce noninstantiability with a private constructor](#4-enforce-noninstantiability-with-a-private-constructor)
 	- [5. Avoid creating objects](#5-avoid-creating-objects)
 	- [6. Eliminate obsolete object references](#6-eliminate-obsolete-object-references)
 	- [7. Avoid finalizers](#7-avoid-finalizers)
@@ -249,7 +249,7 @@ It is needed a _readResolve_ method and declare all the fields _transient_ in ad
 
 Equivalent to the public field, more concise, provides serialization machinery for free, and guarantee against multiple instantiation, even for reflection attacks and sophisticated serialization. _It is the best way to implement a singleton_.
 
-## 4. Enforce noninstantiablility with a private constructor
+## 4. Enforce noninstantiability with a private constructor
 For classes that group static methods and static fields.  
 
 Used for example to:
@@ -263,7 +263,7 @@ Used for example to:
 ```java
 
 	public class UtilityClass{
-		// Suppress default constructor for noninstantiablility
+		// Suppress default constructor for noninstantiability
 		// (Add comment to clarify why the constructor is expressly provided)
 		private UtilityClass(){
 			throw new AssertionError();
