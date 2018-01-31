@@ -1233,7 +1233,7 @@ Storing references cost time, space and can cost not wanted behaviors of the gar
 
 Common use of static member class is a public helper in conjuctions with its outer class. A nested class enum _Operation_ in  _Calculator_ class. `Calculator.Operation.PLUS`;
 
-**Nonstatic** member class instances are rquired to have an enclosing instance.
+**Nonstatic** member class instances are required to have an enclosing instance.
 
 **Anonymous** classes are us to create _function objects_ on the fly. ([Item 21](#21-use-function-objects-to-represent-strategies))
 
