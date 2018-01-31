@@ -1311,7 +1311,7 @@ Eliminate every unchecked warning that you can, if you can´t use _Suppress-Warn
 ```java
 
 	Set<Lark> exaltation = new HashSet(); Warning, unchecked convertion found.
-	Set<Lark> exaltation = new HashSet<lark>(); Good
+	Set<Lark> exaltation = new HashSet<Lark>(); Good
 ```
 
 ## 25. Prefer lists to arrays
