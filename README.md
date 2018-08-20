@@ -359,7 +359,7 @@ isBabyBoomer creates a new Calendar,TimeZone and two Date instances each time is
 *sum* is declared as *Long* instead of *long* that means that the programs constructs  
  Long instances.
 
-**_Object polls are normally bad ideas_**
+**_Object pools are normally bad ideas_**
 
 Unless objects in the pool are extremely heavyweight, like a database connections.
 
