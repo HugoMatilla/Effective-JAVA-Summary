@@ -103,7 +103,7 @@ _If you are the publisher and think this repository should not be public, just w
 **_ADVANTAGES_**
 
 * Unlike constructors, they have names
-* Unlike constructors, they are not requires to create a new object each time they're invoked
+* Unlike constructors, they are not required to create a new object each time they're invoked
 * Unlike constructors, they can return an object of any subtype of their return type
 * They reduce verbosity of creating parameterized type instances
 
