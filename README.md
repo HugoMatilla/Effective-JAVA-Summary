@@ -1334,7 +1334,7 @@ Generics are _erasure_: Enforce their type constrains only at compile time and d
 
 Therefore it is illegal to create an array of a generic type, a parameterized type or a type parameter.
 
-`new List<E>[]`, `new List<String>`, `new E[]`  will result in _generic array creation_ errors.
+`new List<E>[]`, `new List<String>[]`, `new E[]`  will result in _generic array creation_ errors.
 
 ## 26. Favor generic types
 Making [Item 6](#6-eliminate-obsole-object-references) to use generics.
