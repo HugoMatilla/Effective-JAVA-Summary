@@ -967,9 +967,9 @@ Consider using [Item 16](#16-favor-composition-over-inheritance) if what you wan
 ## 18. Prefer interfaces to abstract classes
 Java permits only single Inheritance, this restriction on abstract classes severely contrains their use as type functions.
 
-Intefaces is generally the best way to define a type that permits multiple implementations.
+Inteface is generally the best way to define a type that permits multiple implementations.
 
-Existing classes can be easily retrofitted to implement a new interface.
+Existing classes can be easily retro-fitted to implement a new interface.
 
 Interfaces are ideal for defining mixins (a type that a class can implement in addition to its primary type to declare that it provides some optional bahaviour)
 
@@ -1065,7 +1065,7 @@ To avoid the need of qualifying use _static import_.
 ## 20. Prefer class hierarchies to tagged classes
 Tagged classes are verbose, error-prone and inefficient.
 
-They have lot of boilerplate, bad readability, they increase memory footprint, and more shortcommings.
+They have lot of boilerplate, bad readability, increase memory footprint, and more shortcommings.
 
 ```java
 
@@ -1165,7 +1165,7 @@ It is possible to define a object whose method perform operations on other objec
 
 Concrete strategies are typically _stateless_ threfore they should be singletons.
 
-To be able to pass different strategies, clients should invoke methods from an _strategy interface_ instead of from a concrete class.
+To be able to pass different strategies, clients should invoke methods from a _strategy interface_ instead of a concrete class.
 
 **Comparator interface.** _Generic_([Item 26](#26-favor-generic-types))
 ```java
@@ -1235,7 +1235,7 @@ Common use of static member class is a public helper in conjuctions with its out
 
 **Nonstatic** member class instances are required to have an enclosing instance.
 
-**Anonymous** classes are us to create _function objects_ on the fly. ([Item 21](#21-use-function-objects-to-represent-strategies))
+**Anonymous** classes are used to create _function objects_ on the fly. ([Item 21](#21-use-function-objects-to-represent-strategies))
 
 **Local** class from the official docs: Use it if you need to create more than one instance of a class, access its constructor, or introduce a new, named type (because, for example, you need to invoke additional methods later).
 
