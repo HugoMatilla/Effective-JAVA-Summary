@@ -1275,7 +1275,7 @@ Type safety is kept in a parametrized type like `List<Object>` but not in raw ty
 There are subtyping rules for generics. For example `List<String>` is a subtype of `List` but not of `List<Object>` ([Item 25](#25-prefer-lists-to-arrays))
 
 **Unbounded Wildcard Types `Set<?>`**
-Used when a generic type is needed but we don't know or care the actual type.
+Used when a generic type is needed but we don't know or care about the actual type.
 
 Never add elements (other than null) into a `Collection<?>`
 
@@ -1310,7 +1310,7 @@ Eliminate every unchecked warning that you can, if you can´t use _Suppress-Warn
 
 ```java
 
-	Set<Lark> exaltation = new HashSet(); Warning, unchecked convertion found.
+	Set<Lark> exaltation = new HashSet(); Warning, unchecked conversion found.
 	Set<Lark> exaltation = new HashSet<Lark>(); Good
 ```
 
@@ -1376,10 +1376,10 @@ There will be one error:
 
 ```java
 
-	//Warning: Compiler can not prove the type safe, but we can.
+	// Warning: Compiler can not prove the type safe, but we can.
 	// This elements array will contain only E instances from push(E).
-	// This is sifficient to ensure type safety, but the runtime
-	//type of the array won't be E[]; it will always be Object[]!
+	// This is sufficient to ensure type safety, but the runtime
+	// type of the array won't be E[]; it will always be Object[]!
 	@SupressWarnings("unchecked")
 	public Stack(){
 		elements = (E[]) new Object [DEFAULT_INITIAL_CAPACITY];
