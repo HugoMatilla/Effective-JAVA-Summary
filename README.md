@@ -531,7 +531,7 @@ The second condition is the one that is more often violated.
 
 **_The Recipe_**
 
-1. Store constant value i.e. 17 in and integer called _result_.
+1. Store constant value i.e. 17 in an integer called _result_.
 2. For each field _f_ used in _equals_ do:
   * Compute _c_
     *	boolean: _(f ? 1 : 0)_
@@ -697,7 +697,7 @@ __Make each class or member as inaccesible as possible__
 
 If a package-private top level class is used  by only one class make it a  private nested class of the class that uses it. ([Item 22](#22-favor-static-member-classes-over-nonstatic))
 
-Is is acceptable to make a private member of a public class package-private in order to test it.
+It is acceptable to make a private member of a public class package-private in order to test it.
 
 __Instance fields should never be public__ ([Item 14](#14-in-public-classes-use-accessor-methods-not-public-fields)) Class will not be thread-safe.
 
@@ -741,7 +741,7 @@ Degenerate classes should not be public
 	}
 ```
 
-* The don't benefit from _encapsulation_ ([Item 13](#13-minimize-the-accesibility-of-classes-and-members))
+* They don't benefit from _encapsulation_ ([Item 13](#13-minimize-the-accesibility-of-classes-and-members))
 
 * Can't change representation without changing the API.
 
@@ -820,7 +820,7 @@ They are easier to design, implement and use. And they are less prone to errors 
 
 The arithmetic operation __create and return a new instance__. (Functional approach)
 
-Immutable objects are simple. They only have one state for its lifetime.
+Immutable objects are simple. They only have one state for their lifetime.
 
 Immutable objects are thread-safe. Synchronization is not required. They can be shared freely and can reuse existing instances.
 
@@ -833,11 +833,11 @@ Immutable objects are thread-safe. Synchronization is not required. They can be 
 
 Using static factories can create constants of frequently requested instances and serve them in future requests.
 
-Internals of the immutable objects can also be share.
+Internals of the immutable objects can also be shared.
 
 They make great building blocks for other objects.
 
-The disadvantages is that require a separate object for distinct values. In some cases it could reach to a performance problem.
+The disadvantage is that a separate object is required for distinct values. In some cases it could create a performance problem.
 
 __How to deny subclassing in immutable objects__
 
@@ -872,9 +872,9 @@ Classes should be immutable unless there are good reasons to make them mutable.
 
 If a  class can not be immutable, limit its mutability as much as possible.
 
-Make every field final unles there is a good reason not to do it.
+Make every field final unless there is a good reason not to do it.
 
-Some of the rules can be lightened to improve performance (caching, lazy initialization...).
+Some of the rules can be relaxed to improve performance (caching, lazy initialization...).
 
 ## 16. Favor composition over inheritance
 Inheritance in this case is when a class extends another (_implementation inheritance_) Not interface inheritance.
@@ -944,7 +944,7 @@ Each instance method in the new class (_forwarding class_)invokes the correspond
 
 ## 17. Design and document for inheritance or else prohibit it.
 
-The class must document it _self-use_ of overridable methods.
+The class must document its _self-use_ of overridable methods.
 
 Methods and constructors should document which _overridable_ methods or constructors (nonfinal, and public or protected ) invokes. The description begins with the phrase "This implementation."
 
@@ -962,7 +962,7 @@ Prohibit subclassing in classes that are not designed and documented to be safel
 * Make all constructors private or package-private and add public static factories in place of the constructors.
 ([Item 15](#15-minimize-mutability))
 
-Consider use [Item 16](#16-favor-composition-over-inheritance) if what you want is to increase the functionality of your class instead of subclassing.
+Consider using [Item 16](#16-favor-composition-over-inheritance) if what you want is to increase the functionality of your class instead of subclassing.
 
 ## 18. Prefer interfaces to abstract classes
 Java permits only single Inheritance, this restriction on abstract classes severely contrains their use as type functions.
