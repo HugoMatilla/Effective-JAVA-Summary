@@ -2077,11 +2077,11 @@ Overloading does not give the functionallity we want in the first sample. A poss
 
 Do not have overloaded methods in APIs to avoid confusing the clients of the API.
 
-A conservative policy to is never to export two overloadings with the same number of parameters. Use different names.`writeBoolean(boolean)`, `writeInt(int)`, and `writeLong(long)`
+A conservative policy is to never export two overloadings with the same number of parameters. Use different names.`writeBoolean(boolean)`, `writeInt(int)`, and `writeLong(long)`
 
 For constructors you can use static factories ([Item 1](#1-use-static-factory-methods-instead-of-constructors))
 
-If parameters are radically different this rules can be violate but always ensure that all overloadings behave identically
+If parameters are radically different this rule can be violated but always ensure that all overloadings behave identically
 when passed the same parameters. To ensure this, have the more specific overloading forward to the more general.
 ```java
 
@@ -2100,7 +2100,7 @@ varargs methods are a convenient way to define methods that require a variable n
 		for (int arg : remainingArgs)
 			if (arg < min)
 				min = arg;
-			return min;
+		return min;
 	}
 ```
 
@@ -2368,7 +2368,7 @@ It makes the program much more flexible. We could change the implementation of t
 
 	List<Subscriber> subscribers = new ArrayList<Subscriber>();
 ```
-**Caveat**: if the original implementation has a special functionality not required the interface contract and the code depended on that functionality, the new implementation must provide this functionality.
+**Caveat**: if the original implementation has a special functionality not required the interface contract and the code dependent on that functionality, the new implementation must provide this functionality.
 
 If there is not an appropriate interface we can refer to the object by a class. Like:
 
@@ -2383,7 +2383,7 @@ Given a _Class_ object, you can obtain _Constructor_, _Method_ and _Field_ insta
 
 Allows one class to use another, even if the latter class did not exist when the former was compiled.
 
-*	Lose of all benefits of compile-time type checking
+*	Lose all benefits of compile-time type checking
 *	Code to perform reflective access is clumsy and verbose
 *	Performance suffers.
 
@@ -2574,7 +2574,7 @@ Higher layers should catch lower-level exceptions and, in their place, throw exc
 		throw new HigherLevelException(...);
 	}
 ```
-Do not overused. The best way to deal with exceptions from lower layers is to avoid them, by ensuring that lower-level methods succeed.
+Do not overuse. The best way to deal with exceptions from lower layers is to avoid them, by ensuring that lower-level methods succeed.
 
 **Exception chaining**
 When the lower-level exception is utile for the debugger, pass the lower-level to the higher-level exception, with an accessor method (Throwable.getCause) to retrieve the lower-level exception.
@@ -2649,12 +2649,12 @@ Synchronization is required for reliable communication between threads as well a
 					int i = 0;
 					while (!stopRequested)
 						i++;
-			}
-		});
-		backgroundThread.start();
+				}
+			});
+			backgroundThread.start();
 
-		TimeUnit.SECONDS.sleep(1);
-		stopRequested = true;
+			TimeUnit.SECONDS.sleep(1);
+			stopRequested = true;
 		}
 	}
 ```
@@ -2893,10 +2893,10 @@ To break an initialization circularity: **synchronized accessor**
 
 	// Lazy initialization of instance field - synchronized accessor
 	private FieldType field;
-		synchronized FieldType getField() {
-			if (field == null)
-				field = computeFieldValue();
-			return field;
+	synchronized FieldType getField() {
+		if (field == null)
+			field = computeFieldValue();
+		return field;
 	}
 ```
 For performance on a static field: **lazy initialization holder class idiom**, adds practically nothing to the cost of access.
@@ -2931,11 +2931,11 @@ Instance field that can tolerate repeated initialization: **single-check idiom.*
 
 	// Single-check idiom - can cause repeated initialization!
 	private volatile FieldType field;
-		private FieldType getField() {
-			FieldType result = field;
-			if (result == null)
-				field = result = computeFieldValue();
-			return result;
+	private FieldType getField() {
+		FieldType result = field;
+		if (result == null)
+			field = result = computeFieldValue();
+		return result;
 	}
 ```
 
