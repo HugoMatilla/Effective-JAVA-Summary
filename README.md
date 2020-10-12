@@ -531,7 +531,7 @@ The second condition is the one that is more often violated.
 
 **_The Recipe_**
 
-1. Store constant value i.e. 17 in and integer called _result_.
+1. Store constant value i.e. 17 in an integer called _result_.
 2. For each field _f_ used in _equals_ do:
   * Compute _c_
     *	boolean: _(f ? 1 : 0)_
@@ -697,7 +697,7 @@ __Make each class or member as inaccesible as possible__
 
 If a package-private top level class is used  by only one class make it a  private nested class of the class that uses it. ([Item 22](#22-favor-static-member-classes-over-nonstatic))
 
-Is is acceptable to make a private member of a public class package-private in order to test it.
+It is acceptable to make a private member of a public class package-private in order to test it.
 
 __Instance fields should never be public__ ([Item 14](#14-in-public-classes-use-accessor-methods-not-public-fields)) Class will not be thread-safe.
 
@@ -741,7 +741,7 @@ Degenerate classes should not be public
 	}
 ```
 
-* The don't benefit from _encapsulation_ ([Item 13](#13-minimize-the-accesibility-of-classes-and-members))
+* They don't benefit from _encapsulation_ ([Item 13](#13-minimize-the-accesibility-of-classes-and-members))
 
 * Can't change representation without changing the API.
 
@@ -820,7 +820,7 @@ They are easier to design, implement and use. And they are less prone to errors 
 
 The arithmetic operation __create and return a new instance__. (Functional approach)
 
-Immutable objects are simple. They only have one state for its lifetime.
+Immutable objects are simple. They only have one state for their lifetime.
 
 Immutable objects are thread-safe. Synchronization is not required. They can be shared freely and can reuse existing instances.
 
@@ -833,11 +833,11 @@ Immutable objects are thread-safe. Synchronization is not required. They can be 
 
 Using static factories can create constants of frequently requested instances and serve them in future requests.
 
-Internals of the immutable objects can also be share.
+Internals of the immutable objects can also be shared.
 
 They make great building blocks for other objects.
 
-The disadvantages is that require a separate object for distinct values. In some cases it could reach to a performance problem.
+The disadvantage is that a separate object is required for distinct values. In some cases it could create a performance problem.
 
 __How to deny subclassing in immutable objects__
 
@@ -872,9 +872,9 @@ Classes should be immutable unless there are good reasons to make them mutable.
 
 If a  class can not be immutable, limit its mutability as much as possible.
 
-Make every field final unles there is a good reason not to do it.
+Make every field final unless there is a good reason not to do it.
 
-Some of the rules can be lightened to improve performance (caching, lazy initialization...).
+Some of the rules can be relaxed to improve performance (caching, lazy initialization...).
 
 ## 16. Favor composition over inheritance
 Inheritance in this case is when a class extends another (_implementation inheritance_) Not interface inheritance.
@@ -944,7 +944,7 @@ Each instance method in the new class (_forwarding class_)invokes the correspond
 
 ## 17. Design and document for inheritance or else prohibit it.
 
-The class must document it _self-use_ of overridable methods.
+The class must document its _self-use_ of overridable methods.
 
 Methods and constructors should document which _overridable_ methods or constructors (nonfinal, and public or protected ) invokes. The description begins with the phrase "This implementation."
 
@@ -962,14 +962,14 @@ Prohibit subclassing in classes that are not designed and documented to be safel
 * Make all constructors private or package-private and add public static factories in place of the constructors.
 ([Item 15](#15-minimize-mutability))
 
-Consider use [Item 16](#16-favor-composition-over-inheritance) if what you want is to increase the functionality of your class instead of subclassing.
+Consider using [Item 16](#16-favor-composition-over-inheritance) if what you want is to increase the functionality of your class instead of subclassing.
 
 ## 18. Prefer interfaces to abstract classes
 Java permits only single Inheritance, this restriction on abstract classes severely contrains their use as type functions.
 
-Intefaces is generally the best way to define a type that permits multiple implementations.
+Inteface is generally the best way to define a type that permits multiple implementations.
 
-Existing classes can be easily retrofitted to implement a new interface.
+Existing classes can be easily retro-fitted to implement a new interface.
 
 Interfaces are ideal for defining mixins (a type that a class can implement in addition to its primary type to declare that it provides some optional bahaviour)
 
@@ -1065,7 +1065,7 @@ To avoid the need of qualifying use _static import_.
 ## 20. Prefer class hierarchies to tagged classes
 Tagged classes are verbose, error-prone and inefficient.
 
-They have lot of boilerplate, bad readability, they increase memory footprint, and more shortcommings.
+They have lot of boilerplate, bad readability, increase memory footprint, and more shortcommings.
 
 ```java
 
@@ -1165,7 +1165,7 @@ It is possible to define a object whose method perform operations on other objec
 
 Concrete strategies are typically _stateless_ threfore they should be singletons.
 
-To be able to pass different strategies, clients should invoke methods from an _strategy interface_ instead of from a concrete class.
+To be able to pass different strategies, clients should invoke methods from a _strategy interface_ instead of a concrete class.
 
 **Comparator interface.** _Generic_([Item 26](#26-favor-generic-types))
 ```java
@@ -1235,7 +1235,7 @@ Common use of static member class is a public helper in conjuctions with its out
 
 **Nonstatic** member class instances are required to have an enclosing instance.
 
-**Anonymous** classes are us to create _function objects_ on the fly. ([Item 21](#21-use-function-objects-to-represent-strategies))
+**Anonymous** classes are used to create _function objects_ on the fly. ([Item 21](#21-use-function-objects-to-represent-strategies))
 
 **Local** class from the official docs: Use it if you need to create more than one instance of a class, access its constructor, or introduce a new, named type (because, for example, you need to invoke additional methods later).
 
@@ -1275,7 +1275,7 @@ Type safety is kept in a parametrized type like `List<Object>` but not in raw ty
 There are subtyping rules for generics. For example `List<String>` is a subtype of `List` but not of `List<Object>` ([Item 25](#25-prefer-lists-to-arrays))
 
 **Unbounded Wildcard Types `Set<?>`**
-Used when a generic type is needed but we don't know or care the actual type.
+Used when a generic type is needed but we don't know or care about the actual type.
 
 Never add elements (other than null) into a `Collection<?>`
 
@@ -1310,7 +1310,7 @@ Eliminate every unchecked warning that you can, if you can´t use _Suppress-Warn
 
 ```java
 
-	Set<Lark> exaltation = new HashSet(); Warning, unchecked convertion found.
+	Set<Lark> exaltation = new HashSet(); Warning, unchecked conversion found.
 	Set<Lark> exaltation = new HashSet<Lark>(); Good
 ```
 
@@ -1376,10 +1376,10 @@ There will be one error:
 
 ```java
 
-	//Warning: Compiler can not prove the type safe, but we can.
+	// Warning: Compiler can not prove the type safe, but we can.
 	// This elements array will contain only E instances from push(E).
-	// This is sifficient to ensure type safety, but the runtime
-	//type of the array won't be E[]; it will always be Object[]!
+	// This is sufficient to ensure type safety, but the runtime
+	// type of the array won't be E[]; it will always be Object[]!
 	@SupressWarnings("unchecked")
 	public Stack(){
 		elements = (E[]) new Object [DEFAULT_INITIAL_CAPACITY];
@@ -2077,11 +2077,11 @@ Overloading does not give the functionallity we want in the first sample. A poss
 
 Do not have overloaded methods in APIs to avoid confusing the clients of the API.
 
-A conservative policy to is never to export two overloadings with the same number of parameters. Use different names.`writeBoolean(boolean)`, `writeInt(int)`, and `writeLong(long)`
+A conservative policy is to never export two overloadings with the same number of parameters. Use different names.`writeBoolean(boolean)`, `writeInt(int)`, and `writeLong(long)`
 
 For constructors you can use static factories ([Item 1](#1-use-static-factory-methods-instead-of-constructors))
 
-If parameters are radically different this rules can be violate but always ensure that all overloadings behave identically
+If parameters are radically different this rule can be violated but always ensure that all overloadings behave identically
 when passed the same parameters. To ensure this, have the more specific overloading forward to the more general.
 ```java
 
@@ -2100,7 +2100,7 @@ varargs methods are a convenient way to define methods that require a variable n
 		for (int arg : remainingArgs)
 			if (arg < min)
 				min = arg;
-			return min;
+		return min;
 	}
 ```
 
@@ -2368,7 +2368,7 @@ It makes the program much more flexible. We could change the implementation of t
 
 	List<Subscriber> subscribers = new ArrayList<Subscriber>();
 ```
-**Caveat**: if the original implementation has a special functionality not required the interface contract and the code depended on that functionality, the new implementation must provide this functionality.
+**Caveat**: if the original implementation has a special functionality not required the interface contract and the code dependent on that functionality, the new implementation must provide this functionality.
 
 If there is not an appropriate interface we can refer to the object by a class. Like:
 
@@ -2383,7 +2383,7 @@ Given a _Class_ object, you can obtain _Constructor_, _Method_ and _Field_ insta
 
 Allows one class to use another, even if the latter class did not exist when the former was compiled.
 
-*	Lose of all benefits of compile-time type checking
+*	Lose all benefits of compile-time type checking
 *	Code to perform reflective access is clumsy and verbose
 *	Performance suffers.
 
@@ -2574,7 +2574,7 @@ Higher layers should catch lower-level exceptions and, in their place, throw exc
 		throw new HigherLevelException(...);
 	}
 ```
-Do not overused. The best way to deal with exceptions from lower layers is to avoid them, by ensuring that lower-level methods succeed.
+Do not overuse. The best way to deal with exceptions from lower layers is to avoid them, by ensuring that lower-level methods succeed.
 
 **Exception chaining**
 When the lower-level exception is utile for the debugger, pass the lower-level to the higher-level exception, with an accessor method (Throwable.getCause) to retrieve the lower-level exception.
@@ -2649,12 +2649,12 @@ Synchronization is required for reliable communication between threads as well a
 					int i = 0;
 					while (!stopRequested)
 						i++;
-			}
-		});
-		backgroundThread.start();
+				}
+			});
+			backgroundThread.start();
 
-		TimeUnit.SECONDS.sleep(1);
-		stopRequested = true;
+			TimeUnit.SECONDS.sleep(1);
+			stopRequested = true;
 		}
 	}
 ```
@@ -2893,10 +2893,10 @@ To break an initialization circularity: **synchronized accessor**
 
 	// Lazy initialization of instance field - synchronized accessor
 	private FieldType field;
-		synchronized FieldType getField() {
-			if (field == null)
-				field = computeFieldValue();
-			return field;
+	synchronized FieldType getField() {
+		if (field == null)
+			field = computeFieldValue();
+		return field;
 	}
 ```
 For performance on a static field: **lazy initialization holder class idiom**, adds practically nothing to the cost of access.
@@ -2931,11 +2931,11 @@ Instance field that can tolerate repeated initialization: **single-check idiom.*
 
 	// Single-check idiom - can cause repeated initialization!
 	private volatile FieldType field;
-		private FieldType getField() {
-			FieldType result = field;
-			if (result == null)
-				field = result = computeFieldValue();
-			return result;
+	private FieldType getField() {
+		FieldType result = field;
+		if (result == null)
+			field = result = computeFieldValue();
+		return result;
 	}
 ```
 
