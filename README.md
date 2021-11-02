@@ -21,7 +21,7 @@ _If you are the publisher and think this repository should not be public, just w
 	- [11. Override _clone_ judiciously](#11-override-clone-judiciously)
 	- [12. Consider implementing _Comparable_](#12-consider-implementing-comparable)
 - [4. CLASSES AND INTERFACES](#4-classes-and-interfaces)
-	- [13. Minimize the accessibility of classes and members](#13-minimize-the-accesibility-of-classes-and-members)
+	- [13. Minimize the accessibility of classes and members](#13-minimize-the-accessibility-of-classes-and-members)
 	- [14. In public classes, use accessor methods, not public fields](#14-in-public-classes-use-accessor-methods-not-public-fields)
 	- [15. Minimize Mutability](#15-minimize-mutability)
 	- [16. Favor composition over inheritance](#16-favor-composition-over-inheritance)
@@ -680,7 +680,7 @@ For floating-point fields use _Float.compare_ or _Double.compare_
 For arrays start with the most significant field and work your way down.
 
 # 4. CLASSES AND INTERFACES
-## 13. Minimize the accesibility of classes and members
+## 13. Minimize the accessibility of classes and members
 
 __Encapsulation__:
 
