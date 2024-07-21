@@ -1,6 +1,6 @@
 _This is my summary of the Effective Java 2nd Edition by Joshua Bloch. I use it while learning and as quick reference. It is not intended to be an standalone substitution of the book so if you really want to learn the concepts here presented, buy and read the book and use this repository as a reference and guide._
 
-_If you are the publisher and think this repository should not be public, just write me an email at hugomatilla [at] gmail [dot] com and I will make it private._
+_If you are the publisher and think this repository should not be public, just write me an email at hugomatilla \[at\] gmail \[dot\] com and I will make it private._
 
 **Contributions:** Issues, comments and pull requests are super welcome :smiley:
 
@@ -48,7 +48,7 @@ _If you are the publisher and think this repository should not be public, just w
 	- [35. Prefer annotations to naming patterns](#35-prefer-annotations-to-naming-patterns)
 	- [36. Consistently use the _Override_ annotation](#36-consistently-use-the-override-annotation)
 	- [37. Use marker interfaces to define types](#37-use-marker-interfaces-to-define-types)
-- [7. METHODS](#6-methods)
+- [7. METHODS](#7-methods)
 	- [38. Check parameters for validity](#38-check-parameters-for-validity)
 	- [39. Make defensive copies when needed.](#39-make-defensive-copies-when-needed)
 	- [40. Design method signatures carefully](#40-design-method-signatures-carefully)
@@ -56,7 +56,7 @@ _If you are the publisher and think this repository should not be public, just w
 	- [42. Use varargs judiciously](#42-use-varargs-judiciously)
 	- [43. Return empty arrays or collections, not nulls](#43-return-empty-arrays-or-collections-not-nulls)
 	- [44. Write _doc comments_ for all exposed API elements](#44-write-doc-comments-for-all-exposed-api-elemnts)
-- [8. GENERAL PROGRAMMING](#7-general-programming)
+- [8. GENERAL PROGRAMMING](#8-general-programming)
 	- [45. Minimize the scope of local variables.](#45-minimize-the-scope-of-local-variables)
 	- [46. Prefer for-each loops to traditional for loops.](#46-prefer-for-each-loops-to-traditional-for-loops)
 	- [47. Know and use libraries](#47-know-and-use-libraries)
@@ -741,7 +741,7 @@ Degenerate classes should not be public
 	}
 ```
 
-* They don't benefit from _encapsulation_ ([Item 13](#13-minimize-the-accesibility-of-classes-and-members))
+* They don't benefit from _encapsulation_ ([Item 13](#13-minimize-the-accessibility-of-classes-and-members))
 
 * Can't change representation without changing the API.
 
@@ -1030,7 +1030,7 @@ Any other use, like the _constant interface_ should be avoided.
 	}
 ```
 
-Better use an enum type ([Item 31](#31-use-instance-fields-instead-of-ordinals)), or a noninstantiable _utility class_ ([Item 4](#4-enforce-noninstantiablillity-with-a-private-constructor))
+Better use an enum type ([Item 31](#31-use-instance-fields-instead-of-ordinals)), or a noninstantiable _utility class_ ([Item 4](#4-enforce-noninstantiability-with-a-private-constructor))
 
 ```java
 
@@ -1229,7 +1229,7 @@ A host class can export the a public static field or factory, whose type is the 
 
 **Static**, a member class that does not require access to an enclosing instance must be _static_.  
 
-Storing references cost time, space and can cost not wanted behaviors of the garbage collector([Item 6](#6-eliminate-obsole-object-references))  
+Storing references cost time, space and can cost not wanted behaviors of the garbage collector([Item 6](#6-eliminate-obsolete-object-references))  
 
 Common use of static member class is a public helper in conjuctions with its outer class. A nested class enum _Operation_ in  _Calculator_ class. `Calculator.Operation.PLUS`;
 
@@ -1337,7 +1337,7 @@ Therefore it is illegal to create an array of a generic type, a parameterized ty
 `new List<E>[]`, `new List<String>[]`, `new E[]`  will result in _generic array creation_ errors.
 
 ## 26. Favor generic types
-Making [Item 6](#6-eliminate-obsole-object-references) to use generics.
+Making [Item 6](#6-eliminate-obsolete-object-references) to use generics.
 ```java
 
 	public class Stack{
@@ -2961,7 +2961,7 @@ becomes part of its exported API.
 
 It has three major drawbacks:
 
-* Class's private and package-private instance fields become part of its exported API ([Item 13](#13-minimize-the-accesibility-of-classes-and-members))
+* Class's private and package-private instance fields become part of its exported API ([Item 13](#13-minimize-the-accessibility-of-classes-and-members))
 * Change the class's internal representation, will cause make old versions of serialized objects incompatible.
 * Increases the likelihood of bugs and security holes.
 * Increases the testing burden associated with releasing a new version of a class.
@@ -3043,7 +3043,7 @@ Summary guidelines:
 
 * For classes with object reference fields that must remain private, defensively copy each object in such a field. Mutable components of immutable classes fall into this category.
 * Check any invariants and throw an InvalidObjectException if a check fails. The checks should follow any defensive copying.
-* If an entire object graph must be validated after it is deserialized, use the _ObjectInputValidation_ interface [JavaSE6, Serialization].
+* If an entire object graph must be validated after it is deserialized, use the _ObjectInputValidation_ interface \[JavaSE6, Serialization\].
 * Do not invoke any overridable methods in the class, directly or indirectly.
 
 ## 77. For instance control, prefer _enum_ types to _readResolve_
